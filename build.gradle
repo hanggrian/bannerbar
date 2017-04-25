@@ -48,7 +48,7 @@ ext.bintray = [
         group   : 'com.hendraanggrian',
         artifact: 'errorview',
         version : '0.0.1',
-        desc    : '',
+        desc    : 'Informative UI to display as error and empty state.',
         website : 'https://github.com/HendraAnggrian/errorview'
 ]
 

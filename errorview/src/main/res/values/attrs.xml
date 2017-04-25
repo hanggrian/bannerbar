@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ErrorView">
-        <attr name="emptyLogo" format="integer"/>
-        <attr name="emptyTitle" format="string"/>
-        <attr name="emptySubtitle" format="string"/>
+        <!-- error attributes -->
+        <attr name="errorBackground" format="reference"/>
+        <attr name="errorSrc" format="reference"/>
+        <attr name="errorText" format="string"/>
+        <attr name="errorButtonText" format="string"/>
+        <!-- empty attributes -->
+        <attr name="emptyBackground" format="reference"/>
+        <attr name="emptySrc" format="reference"/>
+        <attr name="emptyText" format="string"/>
         <attr name="emptyButtonText" format="string"/>
     </declare-styleable>
 </resources>

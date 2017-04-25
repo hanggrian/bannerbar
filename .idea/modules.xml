@@ -4,8 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/errorview.iml" filepath="$PROJECT_DIR$/errorview.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorview.iml" filepath="$PROJECT_DIR$/errorview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/errorview.iml" filepath="$PROJECT_DIR$/errorview.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorview/errorview-errorview.iml" filepath="$PROJECT_DIR$/errorview/errorview-errorview.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorview/errorview-errorview.iml" filepath="$PROJECT_DIR$/errorview/errorview-errorview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/errorview/errorview-errorview.iml" filepath="$PROJECT_DIR$/errorview/errorview-errorview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
     </modules>

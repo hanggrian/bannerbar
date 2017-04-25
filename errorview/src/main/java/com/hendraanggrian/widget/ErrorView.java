@@ -1,35 +1,48 @@
 package com.hendraanggrian.widget;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hendraanggrian.errorview.R;
+import com.hendraanggrian.errorview.State;
+import com.hendraanggrian.errorview.VisibilityUtils;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class ErrorView extends LinearLayout {
+public class ErrorView extends FrameLayout {
 
-    @NonNull private final ImageView imageView;
-    @NonNull private final TextView textViewTitle;
-    @NonNull private final TextView textViewSubtitle;
+    @NonNull private final ImageView imageViewBackground;
+    @NonNull private final ImageView imageViewSrc;
+    @NonNull private final TextView textView;
     @NonNull private final Button button;
 
-    private int emptyLogo;
-    @Nullable private String emptyTitle;
-    @Nullable private String emptySubtitle;
-    @Nullable private String emptyButtonText;
+    @DrawableRes int errorBackground;
+    @DrawableRes int errorSrc;
+    @Nullable String errorText;
+    @Nullable String errorButtonText;
+    @Nullable OnClickListener errorListener;
+
+    @DrawableRes int emptyBackground;
+    @DrawableRes int emptySrc;
+    @Nullable String emptyText;
+    @Nullable String emptyButtonText;
+    @Nullable OnClickListener emptyListener;
+
+    @Nullable RecyclerView recyclerView;
+    @Nullable RecyclerView.AdapterDataObserver observer;
 
     public ErrorView(Context context) {
         this(context, null);
@@ -41,83 +54,104 @@ public class ErrorView extends LinearLayout {
 
     public ErrorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        (((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))).inflate(R.layout.errorview, this, true);
-        setOrientation(VERTICAL);
-        setGravity(Gravity.CENTER);
-        imageView = (ImageView) findViewById(R.id.imageview_errorview);
-        textViewTitle = (TextView) findViewById(R.id.textview_errorview_title);
-        textViewSubtitle = (TextView) findViewById(R.id.textview_errorview_subtitle);
+        ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
+        imageViewBackground = (ImageView) findViewById(R.id.imageview_errorview_background);
+        imageViewSrc = (ImageView) findViewById(R.id.imageview_errorview_src);
+        textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
-
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, 0, 0);
         try {
-            emptyLogo = array.getResourceId(R.styleable.ErrorView_emptyLogo, -1);
-            emptyTitle = array.getString(R.styleable.ErrorView_emptyTitle);
-            emptySubtitle = array.getString(R.styleable.ErrorView_emptySubtitle);
+            errorBackground = array.getResourceId(R.styleable.ErrorView_errorBackground, -1);
+            errorSrc = array.getResourceId(R.styleable.ErrorView_errorSrc, R.drawable.ic_errorview_cloud);
+            errorText = array.getString(R.styleable.ErrorView_errorText);
+            errorButtonText = array.getString(R.styleable.ErrorView_errorButtonText);
+            emptyBackground = array.getResourceId(R.styleable.ErrorView_emptyBackground, -1);
+            emptySrc = array.getResourceId(R.styleable.ErrorView_emptySrc, -1);
+            emptyText = array.getString(R.styleable.ErrorView_emptyText);
             emptyButtonText = array.getString(R.styleable.ErrorView_emptyButtonText);
         } finally {
             array.recycle();
         }
-
-        setImage(imageView, emptyLogo);
-        setText(textViewTitle, emptyTitle);
-        setText(textViewSubtitle, emptySubtitle);
-        setText(button, emptyButtonText);
     }
 
-    public void showEmpty(boolean show) {
-        setVisibility(show ? VISIBLE : GONE);
-        if (show) {
-            setImage(imageView, emptyLogo);
-            setText(textViewTitle, emptyTitle);
-            setText(textViewSubtitle, emptySubtitle);
-            setText(button, emptyButtonText);
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (getParent() instanceof ViewGroup && ((ViewGroup) getParent()).getLayoutTransition() == null)
+            ((ViewGroup) getParent()).setLayoutTransition(new LayoutTransition());
+    }
+
+    public void setState(@NonNull State state) {
+        switch (state) {
+            case ERROR:
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, false);
+                VisibilityUtils.setVisible(this, true);
+                VisibilityUtils.setImage(imageViewBackground, errorBackground);
+                VisibilityUtils.setImage(imageViewSrc, errorSrc);
+                VisibilityUtils.setText(textView, errorText);
+                VisibilityUtils.setText(button, errorButtonText);
+                button.setOnClickListener(errorListener);
+                break;
+            case EMPTY:
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, false);
+                VisibilityUtils.setVisible(this, true);
+                VisibilityUtils.setImage(imageViewBackground, emptyBackground);
+                VisibilityUtils.setImage(imageViewSrc, emptySrc);
+                VisibilityUtils.setText(textView, emptyText);
+                VisibilityUtils.setText(button, emptyButtonText);
+                button.setOnClickListener(emptyListener);
+                break;
+            case HIDDEN:
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, true);
+                VisibilityUtils.setVisible(this, false);
+                break;
         }
     }
 
-    public void registerRecyclerView(@NonNull final RecyclerView.Adapter<?> adapter) {
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+    public void attachRecyclerView(@NonNull RecyclerView view) {
+        if (view.getAdapter() == null)
+            throw new IllegalArgumentException("Must set adapter to RecyclerView before attaching this ErrorView!");
+        recyclerView = view;
+        observer = new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
-                onItemRangeInserted(0, 0);
-                onItemRangeRemoved(0, 0);
+                if (recyclerView.getAdapter().getItemCount() > 0)
+                    setState(State.HIDDEN);
+                else if (recyclerView.getAdapter().getItemCount() == 0)
+                    setState(State.EMPTY);
             }
 
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
-                if (adapter.getItemCount() > 0)
-                    showEmpty(false);
+                onChanged();
             }
 
             @Override
             public void onItemRangeRemoved(int positionStart, int itemCount) {
-                if (adapter.getItemCount() == 0)
-                    showEmpty(true);
+                onChanged();
             }
-        });
+        };
+        observer.onChanged();
+        observer.onChanged(); // quick-fix for layout transition
+        recyclerView.getAdapter().registerAdapterDataObserver(observer);
     }
 
-    private static void setImage(@NonNull ImageView imageView, int logo) {
-        if (logo != -1) {
-            imageView.setImageResource(logo);
-            if (imageView.getVisibility() != VISIBLE)
-                imageView.setVisibility(VISIBLE);
-        } else if (imageView.getVisibility() != GONE) {
-            imageView.setVisibility(GONE);
-        }
+    public void detachRecyclerView() {
+        if (recyclerView == null || observer == null)
+            throw new RuntimeException("No RecyclerView attached to this ErrorView!");
+        recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
+        observer = null;
+        recyclerView = null;
     }
 
-    private static void setText(@NonNull TextView textView, @Nullable String text) {
-        if (!TextUtils.isEmpty(text)) {
-            textView.setText(text);
-            if (textView.getVisibility() != VISIBLE)
-                textView.setVisibility(VISIBLE);
-        } else if (textView.getVisibility() != GONE) {
-            textView.setVisibility(GONE);
-        }
+    public void setErrorOnClickListener(@Nullable OnClickListener listener) {
+        errorListener = listener;
     }
 
-    public enum Mode {
-        ERROR, EMPTY
+    public void setEmptyOnClickListener(@Nullable OnClickListener listener) {
+        emptyListener = listener;
     }
 }
