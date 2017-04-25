@@ -1,15 +1,12 @@
 package com.hendraanggrian.widget;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,6 +25,7 @@ public class ErrorView extends FrameLayout {
     @NonNull private final ImageView imageViewSrc;
     @NonNull private final TextView textView;
     @NonNull private final Button button;
+    private State state;
 
     @DrawableRes int errorBackground;
     @DrawableRes int errorSrc;
@@ -40,9 +38,6 @@ public class ErrorView extends FrameLayout {
     @Nullable String emptyText;
     @Nullable String emptyButtonText;
     @Nullable OnClickListener emptyListener;
-
-    @Nullable RecyclerView recyclerView;
-    @Nullable RecyclerView.AdapterDataObserver observer;
 
     public ErrorView(Context context) {
         this(context, null);
@@ -72,20 +67,17 @@ public class ErrorView extends FrameLayout {
         } finally {
             array.recycle();
         }
+        setState(State.HIDDEN);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (getParent() instanceof ViewGroup && ((ViewGroup) getParent()).getLayoutTransition() == null)
-            ((ViewGroup) getParent()).setLayoutTransition(new LayoutTransition());
+    public State getState() {
+        return state;
     }
 
     public void setState(@NonNull State state) {
+        this.state = state;
         switch (state) {
             case ERROR:
-                if (recyclerView != null)
-                    VisibilityUtils.setVisible(recyclerView, false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, errorBackground);
                 VisibilityUtils.setImage(imageViewSrc, errorSrc);
@@ -94,8 +86,6 @@ public class ErrorView extends FrameLayout {
                 button.setOnClickListener(errorListener);
                 break;
             case EMPTY:
-                if (recyclerView != null)
-                    VisibilityUtils.setVisible(recyclerView, false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, emptyBackground);
                 VisibilityUtils.setImage(imageViewSrc, emptySrc);
@@ -104,47 +94,9 @@ public class ErrorView extends FrameLayout {
                 button.setOnClickListener(emptyListener);
                 break;
             case HIDDEN:
-                if (recyclerView != null)
-                    VisibilityUtils.setVisible(recyclerView, true);
                 VisibilityUtils.setVisible(this, false);
                 break;
         }
-    }
-
-    public void attachRecyclerView(@NonNull RecyclerView view) {
-        if (view.getAdapter() == null)
-            throw new IllegalArgumentException("Must set adapter to RecyclerView before attaching this ErrorView!");
-        recyclerView = view;
-        observer = new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                if (recyclerView.getAdapter().getItemCount() > 0)
-                    setState(State.HIDDEN);
-                else if (recyclerView.getAdapter().getItemCount() == 0)
-                    setState(State.EMPTY);
-            }
-
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                onChanged();
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                onChanged();
-            }
-        };
-        observer.onChanged();
-        observer.onChanged(); // quick-fix for layout transition
-        recyclerView.getAdapter().registerAdapterDataObserver(observer);
-    }
-
-    public void detachRecyclerView() {
-        if (recyclerView == null || observer == null)
-            throw new RuntimeException("No RecyclerView attached to this ErrorView!");
-        recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
-        observer = null;
-        recyclerView = null;
     }
 
     public void setErrorOnClickListener(@Nullable OnClickListener listener) {

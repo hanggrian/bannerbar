@@ -21,7 +21,6 @@ dependencies {
     }
 
     compile deps.supportAppcompat
-    compile deps.supportRecyclerview
 }
 
 publish {
