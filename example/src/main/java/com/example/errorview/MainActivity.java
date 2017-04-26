@@ -9,7 +9,11 @@ import butterknife.BindViews;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindViews({R.id.button_main_simple}) Button[] buttons;
+    @BindViews({
+            R.id.button_main_example1,
+            R.id.button_main_example2,
+            R.id.button_main_example3
+    }) Button[] buttons;
 
     @Override
     public int getContentView() {
@@ -26,8 +30,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_main_simple:
-                startActivity(new Intent(this, SimpleActivity.class));
+            case R.id.button_main_example1:
+                startActivity(new Intent(this, Example1Activity.class));
+                break;
+            case R.id.button_main_example2:
+                startActivity(new Intent(this, Example2Activity.class));
+                break;
+            case R.id.button_main_example3:
+                startActivity(new Intent(this, Example3Activity.class));
                 break;
         }
     }

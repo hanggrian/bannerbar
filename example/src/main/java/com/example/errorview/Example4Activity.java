@@ -15,6 +15,7 @@ import com.example.errorview.model.Post;
 import com.example.errorview.retrofit.Reference;
 import com.hendraanggrian.widget.ErrorView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,21 +30,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class PostsFragment extends BaseFragment<Post> implements SwipeRefreshLayout.OnRefreshListener {
+public class Example4Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.swiperefreshlayout_posts) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.recyclerview_posts) RecyclerView recyclerView;
-    @BindView(R.id.errorview_posts) ErrorView errorView;
+    @BindView(R.id.swiperefreshlayout_example4) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recyclerview_example4) RecyclerView recyclerView;
+    @BindView(R.id.errorview_example4) ErrorView errorView;
+    private List<Post> list;
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_posts;
+        return R.layout.activity_example4;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        list = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new PostsAdapter());
         swipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -84,7 +87,7 @@ public class PostsFragment extends BaseFragment<Post> implements SwipeRefreshLay
 
         @Override
         public PostsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.item_post, parent, false));
+            return new ViewHolder(LayoutInflater.from(Example4Activity.this).inflate(R.layout.item_post, parent, false));
         }
 
         @Override

@@ -14,7 +14,7 @@ public final class VisibilityUtils {
     public static boolean setVisible(@NonNull View view, boolean visible) {
         if (visible && view.getVisibility() != VISIBLE)
             view.setVisibility(VISIBLE);
-        else if (view.getVisibility() != GONE)
+        else if (!visible && view.getVisibility() != GONE)
             view.setVisibility(GONE);
         return visible;
     }

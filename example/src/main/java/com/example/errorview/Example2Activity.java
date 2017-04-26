@@ -14,14 +14,14 @@ import butterknife.BindView;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class SimpleActivity extends BaseActivity {
+public class Example2Activity extends BaseActivity {
 
-    @BindView(R.id.toolbar_simple) Toolbar toolbar;
-    @BindView(R.id.errorview_simple) ErrorView errorView;
+    @BindView(R.id.toolbar_example2) Toolbar toolbar;
+    @BindView(R.id.errorview_example2) ErrorView errorView;
 
     @Override
     public int getContentView() {
-        return R.layout.activity_simple;
+        return R.layout.activity_example2;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SimpleActivity extends BaseActivity {
         errorView.setAction("Retry", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SimpleActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Example2Activity.this, "Clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }

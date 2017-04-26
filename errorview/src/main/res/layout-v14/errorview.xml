@@ -9,6 +9,7 @@
         android:scaleType="centerCrop"/>
 
     <LinearLayout
+        android:id="@+id/viewgroup_errorview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -20,14 +21,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:contentDescription="@string/errorview_src_description"/>
+            android:contentDescription="@string/errorview_logo_description"/>
 
         <TextView
             android:id="@+id/textview_errorview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:textColorSecondary"/>
 
         <Button
@@ -38,6 +38,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:textColor="?colorAccent"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone"/>
     </LinearLayout>
 </merge>

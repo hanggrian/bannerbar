@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.errorview"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.errorview">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -18,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SimpleActivity"/>
+        <activity android:name=".Example1Activity"/>
+        <activity android:name=".Example2Activity"/>
+        <activity android:name=".Example3Activity"/>
     </application>
 
 </manifest>
