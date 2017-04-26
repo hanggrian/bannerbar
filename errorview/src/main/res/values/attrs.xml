@@ -6,7 +6,7 @@
 
     <declare-styleable name="ErrorView">
         <!-- content -->
-        <attr name="errorBackground" format="reference"/>
+        <attr name="errorBackdrop" format="reference"/>
         <attr name="errorLogo" format="reference"/>
         <attr name="errorText" format="string"/>
         <attr name="errorTextAppearance" format="reference"/>

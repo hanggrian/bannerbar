@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_example1_make"
+        android:title="Make"
+        app:showAsAction="always"/>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_example1_length_short"
+            android:checked="true"
+            android:title="Short"/>
+        <item
+            android:id="@+id/item_example1_length_long"
+            android:title="Long"/>
+        <item
+            android:id="@+id/item_example1_length_indefinite"
+            android:title="Indefinite"/>
+    </group>
+</menu>

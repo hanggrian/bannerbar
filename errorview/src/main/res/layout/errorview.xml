@@ -2,10 +2,10 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/imageview_errorview_background"
+        android:id="@+id/imageview_errorview_backdrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/errorview_background_description"
+        android:contentDescription="@string/errorview_backdrop_description"
         android:scaleType="centerCrop"/>
 
     <LinearLayout

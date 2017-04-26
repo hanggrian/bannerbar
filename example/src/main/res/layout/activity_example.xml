@@ -2,10 +2,8 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.errorview.Example2Activity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,23 +11,17 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_example2"
+            android:id="@+id/toolbar_example"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:navigationIcon="?homeAsUpIndicator"
-            app:title="With button"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Example"/>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/framelayout_example"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <com.hendraanggrian.widget.ErrorView
-            android:id="@+id/errorview_example2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:errorLogo="@drawable/ic_errorview_cloud"
-            app:errorText="No internet connection"/>
-    </FrameLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

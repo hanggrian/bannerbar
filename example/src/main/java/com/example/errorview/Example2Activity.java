@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import com.hendraanggrian.widget.ErrorView;
 
@@ -16,24 +15,22 @@ import butterknife.BindView;
  */
 public class Example2Activity extends BaseActivity {
 
-    @BindView(R.id.toolbar_example2) Toolbar toolbar;
-    @BindView(R.id.errorview_example2) ErrorView errorView;
+    @BindView(R.id.toolbar_example) Toolbar toolbar;
+    @BindView(R.id.framelayout_example) FrameLayout frameLayout;
 
     @Override
     public int getContentView() {
-        return R.layout.activity_example2;
+        return R.layout.activity_example;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-        errorView.setAction("Retry", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Example2Activity.this, "Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
+                .setBackdrop(R.drawable.bg_empty)
+                .setContentMarginBottom((int) getResources().getDimension(R.dimen.example2_content_margin))
+                .show();
     }
 
     @Override

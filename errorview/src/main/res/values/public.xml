@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="errorBackground" type="attr"/>
+    <public name="errorBackdrop" type="attr"/>
     <public name="errorLogo" type="attr"/>
     <public name="errorText" type="attr"/>
     <public name="errorTextAppearance" type="attr"/>

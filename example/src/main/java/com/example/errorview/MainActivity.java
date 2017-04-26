@@ -11,8 +11,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @BindViews({
             R.id.button_main_example1,
-            R.id.button_main_example2,
-            R.id.button_main_example3
+            R.id.button_main_example2
     }) Button[] buttons;
 
     @Override
@@ -35,9 +34,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.button_main_example2:
                 startActivity(new Intent(this, Example2Activity.class));
-                break;
-            case R.id.button_main_example3:
-                startActivity(new Intent(this, Example3Activity.class));
                 break;
         }
     }

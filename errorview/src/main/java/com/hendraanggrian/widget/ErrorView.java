@@ -1,11 +1,16 @@
 package com.hendraanggrian.widget;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -23,18 +28,34 @@ import android.widget.TextView;
 
 import com.hendraanggrian.errorview.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import static com.hendraanggrian.errorview.VisibilityUtils.setVisible;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class ErrorView extends FrameLayout {
+public final class ErrorView extends FrameLayout {
 
-    @NonNull private final ViewGroup viewGroup;
-    @NonNull private final ImageView imageViewBackground;
-    @NonNull private final ImageView imageViewLogo;
-    @NonNull private final TextView textView;
-    @NonNull private final Button button;
+    private static final CharSequence TAG = "com.hendraanggrian.widget.ErrorView";
+    private static final int LONG_DELAY = 3500;
+    private static final int SHORT_DELAY = 2000;
+
+    public static final int LENGTH_INDEFINITE = -1;
+    public static final int LENGTH_SHORT = -2;
+    public static final int LENGTH_LONG = -3;
+
+    private final ViewGroup viewGroup;
+    private final ImageView imageViewBackdrop;
+    private final ImageView imageViewLogo;
+    private final TextView textView;
+    private final Button button;
+
+    @Nullable private FrameLayout parent;
+    @Nullable private Integer delay;
+    @Nullable private OnShowListener showListener;
+    @Nullable private OnDismissListener dismissListener;
 
     public ErrorView(@NonNull Context context) {
         this(context, null);
@@ -52,14 +73,14 @@ public class ErrorView extends FrameLayout {
         super(context, attrs);
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup_errorview);
-        imageViewBackground = (ImageView) findViewById(R.id.imageview_errorview_background);
+        imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
         imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
         textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
             // content
-            setBackground(a.getDrawable(R.styleable.ErrorView_errorBackground));
+            setBackdrop(a.getDrawable(R.styleable.ErrorView_errorBackdrop));
             setLogo(a.getDrawable(R.styleable.ErrorView_errorLogo));
             setText(a.getText(R.styleable.ErrorView_errorText));
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
@@ -78,59 +99,95 @@ public class ErrorView extends FrameLayout {
         }
     }
 
-    @Override
-    public void setBackground(Drawable background) {
-        if (imageViewBackground == null)
-            throw new RuntimeException("Set background with app:errorBackground!");
-        if (setVisible(imageViewBackground, background != null)) {
-            imageViewBackground.setImageDrawable(background);
-        }
+    @NonNull
+    public ErrorView setBackdrop(@Nullable Bitmap backdrop) {
+        if (setVisible(imageViewBackdrop, backdrop != null))
+            imageViewBackdrop.setImageBitmap(backdrop);
+        return this;
     }
 
-    @Override
-    public void setBackgroundResource(@DrawableRes int resId) {
-        if (setVisible(imageViewBackground, resId != 0)) {
-            imageViewBackground.setImageResource(resId);
-        }
+    @NonNull
+    public ErrorView setBackdrop(@Nullable Uri backdrop) {
+        if (setVisible(imageViewBackdrop, backdrop != null))
+            imageViewBackdrop.setImageURI(backdrop);
+        return this;
     }
 
-    public void setLogo(@Nullable Drawable logo) {
-        if (setVisible(imageViewLogo, logo != null)) {
+    @NonNull
+    public ErrorView setBackdrop(@Nullable Drawable backdrop) {
+        if (setVisible(imageViewBackdrop, backdrop != null))
+            imageViewBackdrop.setImageDrawable(backdrop);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setBackdrop(@DrawableRes int backdrop) {
+        if (setVisible(imageViewBackdrop, backdrop != 0))
+            imageViewBackdrop.setImageResource(backdrop);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setLogo(@Nullable Bitmap logo) {
+        if (setVisible(imageViewLogo, logo != null))
+            imageViewLogo.setImageBitmap(logo);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setLogo(@Nullable Uri logo) {
+        if (setVisible(imageViewLogo, logo != null))
+            imageViewLogo.setImageURI(logo);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setLogo(@Nullable Drawable logo) {
+        if (setVisible(imageViewLogo, logo != null))
             imageViewLogo.setImageDrawable(logo);
-        }
+        return this;
     }
 
-    public void setLogoResource(@DrawableRes int resId) {
-        if (setVisible(imageViewLogo, resId != 0)) {
-            imageViewLogo.setImageResource(resId);
-        }
+    @NonNull
+    public ErrorView setLogo(@DrawableRes int logo) {
+        if (setVisible(imageViewLogo, logo != 0))
+            imageViewLogo.setImageResource(logo);
+        return this;
     }
 
-    public void setText(@StringRes int text) {
-        setText(getResources().getText(text));
+    @NonNull
+    public ErrorView setText(@StringRes int text) {
+        return setText(getResources().getText(text));
     }
 
-    public void setText(@Nullable CharSequence text) {
-        if (setVisible(textView, !TextUtils.isEmpty(text))) {
+    @NonNull
+    public ErrorView setText(@Nullable CharSequence text) {
+        if (setVisible(textView, !TextUtils.isEmpty(text)))
             textView.setText(text);
-        }
+        return this;
     }
 
+    @NonNull
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void setTextAppearance(@StyleRes int res) {
+    public ErrorView setTextAppearance(@StyleRes int res) {
         textView.setTextAppearance(res);
+        return this;
     }
 
+    @NonNull
     @SuppressWarnings("deprecation")
-    public void setTextAppearance(@NonNull Context context, @StyleRes int res) {
+    public ErrorView setTextAppearance(@NonNull Context context, @StyleRes int res) {
         textView.setTextAppearance(context, res);
+        return this;
     }
 
-    public void setAction(@StringRes int text, @Nullable final OnClickListener listener) {
-        setAction(getResources().getText(text), listener);
+    @NonNull
+    public ErrorView setAction(@StringRes int text, @Nullable OnClickListener listener) {
+        return setAction(getResources().getText(text), listener);
     }
 
-    public void setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
+    @NonNull
+    public ErrorView setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
         if (setVisible(button, !TextUtils.isEmpty(text))) {
             button.setText(text);
             button.setOnClickListener(new OnClickListener() {
@@ -138,28 +195,122 @@ public class ErrorView extends FrameLayout {
                 public void onClick(View v) {
                     if (listener != null)
                         listener.onClick(ErrorView.this);
+                    dismiss();
                 }
             });
         }
+        return this;
     }
 
-    public void setContentMargin(int left, int top, int right, int bottom) {
+    @NonNull
+    public ErrorView setContentMargin(int left, int top, int right, int bottom) {
         ((LayoutParams) viewGroup.getLayoutParams()).setMargins(left, top, right, bottom);
+        return this;
     }
 
-    public void setContentMarginLeft(int left) {
+    @NonNull
+    public ErrorView setContentMarginLeft(int left) {
         ((LayoutParams) viewGroup.getLayoutParams()).leftMargin = left;
+        return this;
     }
 
-    public void setContentMarginTop(int top) {
+    @NonNull
+    public ErrorView setContentMarginTop(int top) {
         ((LayoutParams) viewGroup.getLayoutParams()).topMargin = top;
+        return this;
     }
 
-    public void setContentMarginRight(int right) {
+    @NonNull
+    public ErrorView setContentMarginRight(int right) {
         ((LayoutParams) viewGroup.getLayoutParams()).rightMargin = right;
+        return this;
     }
 
-    public void setContentMarginBottom(int bottom) {
+    @NonNull
+    public ErrorView setContentMarginBottom(int bottom) {
         ((LayoutParams) viewGroup.getLayoutParams()).bottomMargin = bottom;
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setOnShowListener(@NonNull OnShowListener listener) {
+        showListener = listener;
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setOnDismissListener(@NonNull OnDismissListener listener) {
+        dismissListener = listener;
+        return this;
+    }
+
+    public void show() {
+        if (parent != null) {
+            // remove old ErrorView
+            while (parent.findViewWithTag(TAG) != null)
+                ((ErrorView) parent.findViewWithTag(TAG)).dismiss();
+            // attach new one
+            parent.addView(this);
+            if (showListener != null)
+                showListener.onShown(this);
+            if (delay != null) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (parent != null && parent.findViewWithTag(TAG) != null)
+                            dismiss();
+                    }
+                }, delay);
+            }
+        }
+    }
+
+    public void dismiss() {
+        if (parent != null) {
+            parent.removeView(this);
+            if (dismissListener != null)
+                dismissListener.onDismissed(this);
+        }
+    }
+
+    @NonNull
+    public static ErrorView make(@NonNull FrameLayout parent, @StringRes int text, @Duration int duration) {
+        return make(parent, parent.getResources().getString(text), duration);
+    }
+
+    @NonNull
+    public static ErrorView make(@NonNull final FrameLayout parent, @NonNull CharSequence text, @Duration int duration) {
+        if (parent.getLayoutTransition() == null)
+            parent.setLayoutTransition(new LayoutTransition());
+        ErrorView errorView = new ErrorView(parent.getContext());
+        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        errorView.parent = parent;
+        errorView.setText(text);
+        switch (duration) {
+            case LENGTH_INDEFINITE:
+                errorView.delay = null;
+                break;
+            case LENGTH_SHORT:
+                errorView.delay = SHORT_DELAY;
+                break;
+            case LENGTH_LONG:
+                errorView.delay = LONG_DELAY;
+                break;
+        }
+        errorView.setTag(TAG);
+        return errorView;
+    }
+
+    public interface OnShowListener {
+        void onShown(@NonNull ErrorView view);
+    }
+
+    public interface OnDismissListener {
+        void onDismissed(@NonNull ErrorView view);
+    }
+
+    @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Duration {
     }
 }
