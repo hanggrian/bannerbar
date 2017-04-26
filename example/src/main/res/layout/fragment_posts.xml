@@ -21,6 +21,5 @@
         android:id="@+id/errorview_posts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:emptyText="Can't load search result"
         app:errorText="Error title"/>
 </FrameLayout>

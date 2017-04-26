@@ -1,63 +1,34 @@
 package com.example.errorview;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.BindViews;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.drawerlayout_main) DrawerLayout drawerLayout;
-    @BindView(R.id.toolbar_main) Toolbar toolbar;
-    @BindView(R.id.navigationview_main) NavigationView navigationView;
-    private Unbinder unbinder;
+    @BindViews({R.id.button_main_simple}) Button[] buttons;
+
+    @Override
+    public int getContentView() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.setCheckedItem(R.id.item_main_posts);
-        replaceFragment(new PostsFragment());
+        for (Button button : buttons)
+            button.setOnClickListener(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_main_posts:
-                replaceFragment(new PostsFragment());
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_main_simple:
+                startActivity(new Intent(this, SimpleActivity.class));
                 break;
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void replaceFragment(@NonNull Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.viewgroup_main, fragment)
-                .commitNow();
     }
 }

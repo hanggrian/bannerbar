@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <public name="errorBackground" type="attr"/>
+    <public name="errorLogo" type="drawable"/>
+    <public name="errorText" type="drawable"/>
+
     <public name="ic_errorview_cloud" type="drawable"/>
 </resources>

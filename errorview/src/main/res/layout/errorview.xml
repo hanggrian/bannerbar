@@ -20,8 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:contentDescription="@string/errorview_src_description"
-            android:src="@drawable/ic_errorview_cloud"/>
+            android:contentDescription="@string/errorview_src_description"/>
 
         <TextView
             android:id="@+id/textview_errorview"

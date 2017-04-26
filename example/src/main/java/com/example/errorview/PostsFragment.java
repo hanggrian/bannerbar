@@ -1,7 +1,6 @@
 package com.example.errorview;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.errorview.model.Post;
 import com.example.errorview.retrofit.Reference;
-import com.hendraanggrian.errorview.State;
 import com.hendraanggrian.widget.ErrorView;
 
 import java.util.List;
@@ -48,7 +46,6 @@ public class PostsFragment extends BaseFragment<Post> implements SwipeRefreshLay
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new PostsAdapter());
         swipeRefreshLayout.setOnRefreshListener(this);
-        errorView.registerRecyclerView(recyclerView);
     }
 
     @Override
@@ -70,17 +67,10 @@ public class PostsFragment extends BaseFragment<Post> implements SwipeRefreshLay
                     public void accept(List<Post> posts) throws Exception {
                         list.addAll(posts);
                         recyclerView.getAdapter().notifyItemRangeInserted(0, list.size());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                errorView.setState(State.ERROR);
-                            }
-                        }, 5000);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        errorView.setState(State.ERROR);
                     }
                 }, new Action() {
                     @Override
