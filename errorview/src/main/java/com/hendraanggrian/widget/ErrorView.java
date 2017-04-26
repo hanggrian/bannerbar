@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,10 @@ public class ErrorView extends FrameLayout {
     @Nullable String emptyButtonText;
     @Nullable OnClickListener emptyListener;
 
+    State state;
+    @Nullable RecyclerView recyclerView;
+    @Nullable RecyclerView.AdapterDataObserver observer;
+
     public ErrorView(Context context) {
         this(context, null);
     }
@@ -72,21 +77,58 @@ public class ErrorView extends FrameLayout {
         setState(State.HIDDEN);
     }
 
+    public void registerRecyclerView(@NonNull final RecyclerView recyclerView) {
+        if (recyclerView.getAdapter() == null)
+            throw new IllegalStateException("set adapter to this RecyclerView before registering!");
+        this.recyclerView = recyclerView;
+        this.observer = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                if (state != State.ERROR)
+                    setState(recyclerView.getAdapter().getItemCount() == 0
+                            ? State.EMPTY
+                            : State.HIDDEN);
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                onChanged();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                onChanged();
+            }
+        };
+        recyclerView.getAdapter().registerAdapterDataObserver(observer);
+    }
+
     public void setState(@NonNull State state) {
         switch (state) {
             case ERROR:
                 if (hideId != -1)
                     VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), false);
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, errorBackground);
                 VisibilityUtils.setImage(imageViewLogo, errorLogo);
                 VisibilityUtils.setText(textView, errorText);
                 VisibilityUtils.setText(button, errorButtonText);
-                button.setOnClickListener(errorListener);
+                if (errorListener != null)
+                    button.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            errorListener.onClick(ErrorView.this);
+                            setState(State.HIDDEN);
+                        }
+                    });
                 break;
             case EMPTY:
                 if (hideId != -1)
                     VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), false);
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, emptyBackground);
                 VisibilityUtils.setImage(imageViewLogo, emptyLogo);
@@ -97,16 +139,10 @@ public class ErrorView extends FrameLayout {
             case HIDDEN:
                 if (hideId != -1)
                     VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), true);
+                if (recyclerView != null)
+                    VisibilityUtils.setVisible(recyclerView, true);
                 VisibilityUtils.setVisible(this, false);
                 break;
         }
-    }
-
-    public void setErrorOnClickListener(@Nullable OnClickListener listener) {
-        errorListener = listener;
-    }
-
-    public void setEmptyOnClickListener(@Nullable OnClickListener listener) {
-        emptyListener = listener;
     }
 }

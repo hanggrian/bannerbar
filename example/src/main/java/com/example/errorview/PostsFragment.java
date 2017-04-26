@@ -48,6 +48,7 @@ public class PostsFragment extends BaseFragment<Post> implements SwipeRefreshLay
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new PostsAdapter());
         swipeRefreshLayout.setOnRefreshListener(this);
+        errorView.registerRecyclerView(recyclerView);
     }
 
     @Override
