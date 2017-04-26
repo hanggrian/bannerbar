@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,19 +23,19 @@ import com.hendraanggrian.errorview.VisibilityUtils;
 public class ErrorView extends FrameLayout {
 
     @NonNull private final ImageView imageViewBackground;
-    @NonNull private final ImageView imageViewSrc;
+    @NonNull private final ImageView imageViewLogo;
     @NonNull private final TextView textView;
     @NonNull private final Button button;
-    private State state;
+    private final int hideId;
 
     @DrawableRes int errorBackground;
-    @DrawableRes int errorSrc;
+    @DrawableRes int errorLogo;
     @Nullable String errorText;
     @Nullable String errorButtonText;
     @Nullable OnClickListener errorListener;
 
     @DrawableRes int emptyBackground;
-    @DrawableRes int emptySrc;
+    @DrawableRes int emptyLogo;
     @Nullable String emptyText;
     @Nullable String emptyButtonText;
     @Nullable OnClickListener emptyListener;
@@ -51,49 +52,51 @@ public class ErrorView extends FrameLayout {
         super(context, attrs, defStyleAttr);
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
         imageViewBackground = (ImageView) findViewById(R.id.imageview_errorview_background);
-        imageViewSrc = (ImageView) findViewById(R.id.imageview_errorview_src);
+        imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
         textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, 0, 0);
         try {
             errorBackground = array.getResourceId(R.styleable.ErrorView_errorBackground, -1);
-            errorSrc = array.getResourceId(R.styleable.ErrorView_errorSrc, R.drawable.ic_errorview_cloud);
+            errorLogo = array.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview_cloud);
             errorText = array.getString(R.styleable.ErrorView_errorText);
             errorButtonText = array.getString(R.styleable.ErrorView_errorButtonText);
             emptyBackground = array.getResourceId(R.styleable.ErrorView_emptyBackground, -1);
-            emptySrc = array.getResourceId(R.styleable.ErrorView_emptySrc, -1);
+            emptyLogo = array.getResourceId(R.styleable.ErrorView_emptyLogo, -1);
             emptyText = array.getString(R.styleable.ErrorView_emptyText);
             emptyButtonText = array.getString(R.styleable.ErrorView_emptyButtonText);
+            hideId = array.getResourceId(R.styleable.ErrorView_hideId, -1);
         } finally {
             array.recycle();
         }
         setState(State.HIDDEN);
     }
 
-    public State getState() {
-        return state;
-    }
-
     public void setState(@NonNull State state) {
-        this.state = state;
         switch (state) {
             case ERROR:
+                if (hideId != -1)
+                    VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, errorBackground);
-                VisibilityUtils.setImage(imageViewSrc, errorSrc);
+                VisibilityUtils.setImage(imageViewLogo, errorLogo);
                 VisibilityUtils.setText(textView, errorText);
                 VisibilityUtils.setText(button, errorButtonText);
                 button.setOnClickListener(errorListener);
                 break;
             case EMPTY:
+                if (hideId != -1)
+                    VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), false);
                 VisibilityUtils.setVisible(this, true);
                 VisibilityUtils.setImage(imageViewBackground, emptyBackground);
-                VisibilityUtils.setImage(imageViewSrc, emptySrc);
+                VisibilityUtils.setImage(imageViewLogo, emptyLogo);
                 VisibilityUtils.setText(textView, emptyText);
                 VisibilityUtils.setText(button, emptyButtonText);
                 button.setOnClickListener(emptyListener);
                 break;
             case HIDDEN:
+                if (hideId != -1)
+                    VisibilityUtils.setVisible(((View) getParent()).findViewById(hideId), true);
                 VisibilityUtils.setVisible(this, false);
                 break;
         }
