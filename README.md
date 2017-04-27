@@ -8,7 +8,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.2.0'
+    compile 'com.hendraanggrian:errorview:0.2.2'
 }
 ```
 
@@ -16,7 +16,7 @@ Usage
 -----
 Create ErrorView like a Toast or Snackbar.
 ```java
-ErrorView.create(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
+ErrorView.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
     .setLogo(R.drawable.ic_errorview_cloud)
     .setAction("Retry", new View.OnClickListener() {
         @Override

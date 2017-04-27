@@ -48,7 +48,6 @@ public class Example1Activity extends BaseActivity {
                 break;
             case R.id.item_example1_make:
                 ErrorView.make(frameLayout, "No internet connection", getLength())
-                        .setLogo(R.drawable.ic_errorview_cloud)
                         .setAction("Retry", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

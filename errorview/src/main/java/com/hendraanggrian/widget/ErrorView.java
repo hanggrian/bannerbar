@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -16,8 +18,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,20 +42,19 @@ import static com.hendraanggrian.errorview.VisibilityUtils.setVisible;
  */
 public final class ErrorView extends FrameLayout {
 
-    private static final CharSequence TAG = "com.hendraanggrian.widget.ErrorView";
-    private static final int LONG_DELAY = 3500;
-    private static final int SHORT_DELAY = 2000;
+    private static final CharSequence TAG = ErrorView.class.getCanonicalName();
+    private static final int DELAY_LONG = 3500;
+    private static final int DELAY_SHORT = 2000;
 
     public static final int LENGTH_INDEFINITE = -1;
-    public static final int LENGTH_SHORT = -2;
-    public static final int LENGTH_LONG = -3;
+    public static final int LENGTH_LONG = -2;
+    public static final int LENGTH_SHORT = -3;
 
     private final ViewGroup viewGroup;
     private final ImageView imageViewBackdrop;
     private final ImageView imageViewLogo;
     private final TextView textView;
     private final Button button;
-
     @Nullable private FrameLayout parent;
     @Nullable private Integer delay;
     @Nullable private OnShowListener showListener;
@@ -78,10 +81,13 @@ public final class ErrorView extends FrameLayout {
         textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
+        TypedValue v = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.windowBackground, v, true);
         try {
             // content
-            setBackdrop(a.getDrawable(R.styleable.ErrorView_errorBackdrop));
-            setLogo(a.getDrawable(R.styleable.ErrorView_errorLogo));
+            setBackgroundColor(v.data);
+            setBackdrop(a.getResourceId(R.styleable.ErrorView_errorBackdrop, 0));
+            setLogo(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview_cloud));
             setText(a.getText(R.styleable.ErrorView_errorText));
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
                 setTextAppearance(context, a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
@@ -128,6 +134,20 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    public ErrorView setBackdropColor(@ColorInt int color) {
+        if (setVisible(imageViewBackdrop, color != 0))
+            imageViewBackdrop.setColorFilter(color);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setBackdropColorRes(@ColorRes int colorRes) {
+        return setBackdropColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? getContext().getColor(colorRes)
+                : ContextCompat.getColor(getContext(), colorRes));
+    }
+
+    @NonNull
     public ErrorView setLogo(@Nullable Bitmap logo) {
         if (setVisible(imageViewLogo, logo != null))
             imageViewLogo.setImageBitmap(logo);
@@ -156,15 +176,15 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setText(@StringRes int text) {
-        return setText(getResources().getText(text));
-    }
-
-    @NonNull
     public ErrorView setText(@Nullable CharSequence text) {
         if (setVisible(textView, !TextUtils.isEmpty(text)))
             textView.setText(text);
         return this;
+    }
+
+    @NonNull
+    public ErrorView setText(@StringRes int text) {
+        return setText(getResources().getText(text));
     }
 
     @NonNull
@@ -182,11 +202,6 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setAction(@StringRes int text, @Nullable OnClickListener listener) {
-        return setAction(getResources().getText(text), listener);
-    }
-
-    @NonNull
     public ErrorView setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
         if (setVisible(button, !TextUtils.isEmpty(text))) {
             button.setText(text);
@@ -200,6 +215,11 @@ public final class ErrorView extends FrameLayout {
             });
         }
         return this;
+    }
+
+    @NonNull
+    public ErrorView setAction(@StringRes int text, @Nullable OnClickListener listener) {
+        return setAction(getResources().getText(text), listener);
     }
 
     @NonNull
@@ -244,12 +264,10 @@ public final class ErrorView extends FrameLayout {
         return this;
     }
 
-    public void show() {
+    @NonNull
+    public ErrorView show() {
         if (parent != null) {
-            // remove old ErrorView
-            while (parent.findViewWithTag(TAG) != null)
-                ((ErrorView) parent.findViewWithTag(TAG)).dismiss();
-            // attach new one
+            dismiss(parent);
             parent.addView(this);
             if (showListener != null)
                 showListener.onShown(this);
@@ -263,6 +281,7 @@ public final class ErrorView extends FrameLayout {
                 }, delay);
             }
         }
+        return this;
     }
 
     public void dismiss() {
@@ -271,6 +290,11 @@ public final class ErrorView extends FrameLayout {
             if (dismissListener != null)
                 dismissListener.onDismissed(this);
         }
+    }
+
+    public static void dismiss(@NonNull ViewGroup parent) {
+        while (parent.findViewWithTag(TAG) != null)
+            ((ErrorView) parent.findViewWithTag(TAG)).dismiss();
     }
 
     @NonNull
@@ -291,10 +315,10 @@ public final class ErrorView extends FrameLayout {
                 errorView.delay = null;
                 break;
             case LENGTH_SHORT:
-                errorView.delay = SHORT_DELAY;
+                errorView.delay = DELAY_SHORT;
                 break;
             case LENGTH_LONG:
-                errorView.delay = LONG_DELAY;
+                errorView.delay = DELAY_LONG;
                 break;
         }
         errorView.setTag(TAG);
