@@ -4,10 +4,12 @@ import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -81,13 +83,10 @@ public final class ErrorView extends FrameLayout {
         textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
-        TypedValue v = new TypedValue();
-        context.getTheme().resolveAttribute(android.R.attr.windowBackground, v, true);
         try {
             // content
-            setBackgroundColor(v.data);
-            setBackdrop(a.getResourceId(R.styleable.ErrorView_errorBackdrop, 0));
-            setLogo(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview_cloud));
+            setBackdropDrawable(a.getResourceId(R.styleable.ErrorView_errorBackdrop, 0));
+            setLogoDrawable(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview_cloud));
             setText(a.getText(R.styleable.ErrorView_errorText));
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
                 setTextAppearance(context, a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
@@ -106,28 +105,28 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setBackdrop(@Nullable Bitmap backdrop) {
+    public ErrorView setBackdropBitmap(@Nullable Bitmap backdrop) {
         if (setVisible(imageViewBackdrop, backdrop != null))
             imageViewBackdrop.setImageBitmap(backdrop);
         return this;
     }
 
     @NonNull
-    public ErrorView setBackdrop(@Nullable Uri backdrop) {
+    public ErrorView setBackdropUri(@Nullable Uri backdrop) {
         if (setVisible(imageViewBackdrop, backdrop != null))
             imageViewBackdrop.setImageURI(backdrop);
         return this;
     }
 
     @NonNull
-    public ErrorView setBackdrop(@Nullable Drawable backdrop) {
+    public ErrorView setBackdropDrawable(@Nullable Drawable backdrop) {
         if (setVisible(imageViewBackdrop, backdrop != null))
             imageViewBackdrop.setImageDrawable(backdrop);
         return this;
     }
 
     @NonNull
-    public ErrorView setBackdrop(@DrawableRes int backdrop) {
+    public ErrorView setBackdropDrawable(@DrawableRes int backdrop) {
         if (setVisible(imageViewBackdrop, backdrop != 0))
             imageViewBackdrop.setImageResource(backdrop);
         return this;
@@ -135,9 +134,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropColor(@ColorInt int color) {
-        if (setVisible(imageViewBackdrop, color != 0))
-            imageViewBackdrop.setColorFilter(color);
-        return this;
+        return setBackdropDrawable(new ColorDrawable(color));
     }
 
     @NonNull
@@ -148,28 +145,35 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setLogo(@Nullable Bitmap logo) {
+    public ErrorView setBackdropColorAttr(@AttrRes int attr) {
+        TypedValue v = new TypedValue();
+        getContext().getTheme().resolveAttribute(attr, v, true);
+        return setBackdropColor(v.data);
+    }
+
+    @NonNull
+    public ErrorView setLogoBitmap(@Nullable Bitmap logo) {
         if (setVisible(imageViewLogo, logo != null))
             imageViewLogo.setImageBitmap(logo);
         return this;
     }
 
     @NonNull
-    public ErrorView setLogo(@Nullable Uri logo) {
+    public ErrorView setLogoUri(@Nullable Uri logo) {
         if (setVisible(imageViewLogo, logo != null))
             imageViewLogo.setImageURI(logo);
         return this;
     }
 
     @NonNull
-    public ErrorView setLogo(@Nullable Drawable logo) {
+    public ErrorView setLogoDrawable(@Nullable Drawable logo) {
         if (setVisible(imageViewLogo, logo != null))
             imageViewLogo.setImageDrawable(logo);
         return this;
     }
 
     @NonNull
-    public ErrorView setLogo(@DrawableRes int logo) {
+    public ErrorView setLogoDrawable(@DrawableRes int logo) {
         if (setVisible(imageViewLogo, logo != 0))
             imageViewLogo.setImageResource(logo);
         return this;
@@ -267,15 +271,15 @@ public final class ErrorView extends FrameLayout {
     @NonNull
     public ErrorView show() {
         if (parent != null) {
-            dismiss(parent);
+            dismissAll(parent);
             parent.addView(this);
             if (showListener != null)
                 showListener.onShown(this);
             if (delay != null) {
-                new Handler().postDelayed(new Runnable() {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (parent != null && parent.findViewWithTag(TAG) != null)
+                        if (parent != null)
                             dismiss();
                     }
                 }, delay);
@@ -292,7 +296,7 @@ public final class ErrorView extends FrameLayout {
         }
     }
 
-    public static void dismiss(@NonNull ViewGroup parent) {
+    public static void dismissAll(@NonNull ViewGroup parent) {
         while (parent.findViewWithTag(TAG) != null)
             ((ErrorView) parent.findViewWithTag(TAG)).dismiss();
     }

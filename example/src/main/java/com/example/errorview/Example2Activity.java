@@ -28,8 +28,8 @@ public class Example2Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
         ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
-                .setBackdrop(R.drawable.bg_empty)
-                .setLogo(0)
+                .setBackdropDrawable(R.drawable.bg_empty)
+                .setLogoDrawable(null)
                 .setContentMarginBottom((int) getResources().getDimension(R.dimen.example2_content_margin))
                 .show();
     }

@@ -8,7 +8,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.2.2'
+    compile 'com.hendraanggrian:errorview:0.2.6'
 }
 ```
 
