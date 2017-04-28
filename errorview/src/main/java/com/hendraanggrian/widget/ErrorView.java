@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hendraanggrian.errorview.R;
@@ -52,12 +53,18 @@ public final class ErrorView extends FrameLayout {
     public static final int LENGTH_LONG = -2;
     public static final int LENGTH_SHORT = -3;
 
-    private final ViewGroup viewGroup;
+    @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Duration {
+    }
+
+    private final LayoutParams containerLayoutParams;
     private final ImageView imageViewBackdrop;
     private final ImageView imageViewLogo;
     private final TextView textView;
     private final Button button;
-    @Nullable private FrameLayout parent;
+
+    @Nullable private ViewGroup parent;
     @Nullable private Integer delay;
     @Nullable private OnShowListener showListener;
     @Nullable private OnDismissListener dismissListener;
@@ -77,7 +84,7 @@ public final class ErrorView extends FrameLayout {
     public ErrorView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs);
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
-        viewGroup = (ViewGroup) findViewById(R.id.viewgroup_errorview);
+        containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
         imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
         textView = (TextView) findViewById(R.id.textview_errorview);
@@ -93,12 +100,12 @@ public final class ErrorView extends FrameLayout {
             else
                 setTextAppearance(a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
             // positioning
-            float marginLeft = a.getDimension(R.styleable.ErrorView_contentMarginLeft, 0);
-            float marginTop = a.getDimension(R.styleable.ErrorView_contentMarginTop, 0);
-            float marginRight = a.getDimension(R.styleable.ErrorView_contentMarginRight, 0);
-            float marginBottom = a.getDimension(R.styleable.ErrorView_contentMarginBottom, 0);
+            int marginLeft = (int) a.getDimension(R.styleable.ErrorView_contentMarginLeft, 0);
+            int marginTop = (int) a.getDimension(R.styleable.ErrorView_contentMarginTop, 0);
+            int marginRight = (int) a.getDimension(R.styleable.ErrorView_contentMarginRight, 0);
+            int marginBottom = (int) a.getDimension(R.styleable.ErrorView_contentMarginBottom, 0);
             if (marginLeft != 0 || marginTop != 0 || marginRight != 0 || marginBottom != 0)
-                setContentMargin((int) marginLeft, (int) marginTop, (int) marginRight, (int) marginBottom);
+                setContentMargin(marginLeft, marginTop, marginRight, marginBottom);
         } finally {
             a.recycle();
         }
@@ -145,9 +152,9 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setBackdropColorAttr(@AttrRes int attr) {
+    public ErrorView setBackdropColorAttr(@AttrRes int colorAttr) {
         TypedValue v = new TypedValue();
-        getContext().getTheme().resolveAttribute(attr, v, true);
+        getContext().getTheme().resolveAttribute(colorAttr, v, true);
         return setBackdropColor(v.data);
     }
 
@@ -206,6 +213,26 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    public ErrorView setTextColor(@ColorInt int color) {
+        textView.setTextColor(color);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setTextColorRes(@ColorRes int colorRes) {
+        return setTextColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? getContext().getColor(colorRes)
+                : ContextCompat.getColor(getContext(), colorRes));
+    }
+
+    @NonNull
+    public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
+        TypedValue v = new TypedValue();
+        getContext().getTheme().resolveAttribute(colorAttr, v, true);
+        return setTextColor(v.data);
+    }
+
+    @NonNull
     public ErrorView setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
         if (setVisible(button, !TextUtils.isEmpty(text))) {
             button.setText(text);
@@ -227,32 +254,66 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public ErrorView setActionAppearance(@StyleRes int res) {
+        button.setTextAppearance(res);
+        return this;
+    }
+
+    @NonNull
+    @SuppressWarnings("deprecation")
+    public ErrorView setActionAppearance(@NonNull Context context, @StyleRes int res) {
+        button.setTextAppearance(context, res);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setActionColor(@ColorInt int color) {
+        button.setTextColor(color);
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setActionColorRes(@ColorRes int colorRes) {
+        return setActionColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? getContext().getColor(colorRes)
+                : ContextCompat.getColor(getContext(), colorRes));
+    }
+
+    @NonNull
+    public ErrorView setActionColorAttr(@AttrRes int colorAttr) {
+        TypedValue v = new TypedValue();
+        getContext().getTheme().resolveAttribute(colorAttr, v, true);
+        return setActionColor(v.data);
+    }
+
+    @NonNull
     public ErrorView setContentMargin(int left, int top, int right, int bottom) {
-        ((LayoutParams) viewGroup.getLayoutParams()).setMargins(left, top, right, bottom);
+        containerLayoutParams.setMargins(left, top, right, bottom);
         return this;
     }
 
     @NonNull
     public ErrorView setContentMarginLeft(int left) {
-        ((LayoutParams) viewGroup.getLayoutParams()).leftMargin = left;
+        containerLayoutParams.leftMargin = left;
         return this;
     }
 
     @NonNull
     public ErrorView setContentMarginTop(int top) {
-        ((LayoutParams) viewGroup.getLayoutParams()).topMargin = top;
+        containerLayoutParams.topMargin = top;
         return this;
     }
 
     @NonNull
     public ErrorView setContentMarginRight(int right) {
-        ((LayoutParams) viewGroup.getLayoutParams()).rightMargin = right;
+        containerLayoutParams.rightMargin = right;
         return this;
     }
 
     @NonNull
     public ErrorView setContentMarginBottom(int bottom) {
-        ((LayoutParams) viewGroup.getLayoutParams()).bottomMargin = bottom;
+        containerLayoutParams.bottomMargin = bottom;
         return this;
     }
 
@@ -297,8 +358,23 @@ public final class ErrorView extends FrameLayout {
     }
 
     public static void dismissAll(@NonNull ViewGroup parent) {
-        while (parent.findViewWithTag(TAG) != null)
-            ((ErrorView) parent.findViewWithTag(TAG)).dismiss();
+        View child = parent.findViewWithTag(TAG);
+        while (child != null && child instanceof ErrorView) {
+            ((ErrorView) child).dismiss();
+            child = parent.findViewWithTag(TAG);
+        }
+    }
+
+    @NonNull
+    public static ErrorView make(@NonNull RelativeLayout parent, @StringRes int text, @Duration int duration) {
+        return make(parent, parent.getResources().getString(text), duration);
+    }
+
+    @NonNull
+    public static ErrorView make(@NonNull RelativeLayout parent, @NonNull CharSequence text, @Duration int duration) {
+        ErrorView errorView = make((ViewGroup) parent, text, duration);
+        errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return errorView;
     }
 
     @NonNull
@@ -307,11 +383,17 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public static ErrorView make(@NonNull final FrameLayout parent, @NonNull CharSequence text, @Duration int duration) {
+    public static ErrorView make(@NonNull FrameLayout parent, @NonNull CharSequence text, @Duration int duration) {
+        ErrorView errorView = make((ViewGroup) parent, text, duration);
+        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return errorView;
+    }
+
+    @NonNull
+    private static ErrorView make(@NonNull ViewGroup parent, @NonNull CharSequence text, @Duration int duration) {
         if (parent.getLayoutTransition() == null)
             parent.setLayoutTransition(new LayoutTransition());
         ErrorView errorView = new ErrorView(parent.getContext());
-        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         errorView.parent = parent;
         errorView.setText(text);
         switch (duration) {
@@ -335,10 +417,5 @@ public final class ErrorView extends FrameLayout {
 
     public interface OnDismissListener {
         void onDismissed(@NonNull ErrorView view);
-    }
-
-    @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Duration {
     }
 }
