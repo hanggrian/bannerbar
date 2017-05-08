@@ -33,13 +33,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hendraanggrian.commons.content.Themes;
+import com.hendraanggrian.commons.view.Views;
+import com.hendraanggrian.errorview.HttpErrorCode;
 import com.hendraanggrian.errorview.R;
-import com.hendraanggrian.errorview.ThemeUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static com.hendraanggrian.errorview.VisibilityUtils.setVisible;
+import static com.hendraanggrian.commons.view.Views.setVisible;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -91,14 +93,12 @@ public final class ErrorView extends FrameLayout {
         super(context, attrs);
         // setup views
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
-        setBackgroundColor(ThemeUtils.getColorFromAttrRes(getContext(), android.R.attr.windowBackground, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                ? getContext().getColor(android.R.color.transparent)
-                : ContextCompat.getColor(getContext(), android.R.color.transparent)));
+        setBackgroundColor(Themes.getColorFromAttrRes(getContext(), android.R.attr.windowBackground, ContextCompat.getColor(getContext(), android.R.color.transparent)));
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
-        imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
-        imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
-        textView = (TextView) findViewById(R.id.textview_errorview);
-        button = (Button) findViewById(R.id.button_errorview);
+        imageViewBackdrop = Views.findViewById(this, R.id.imageview_errorview_backdrop);
+        imageViewLogo = Views.findViewById(this, R.id.imageview_errorview_logo);
+        textView = Views.findViewById(this, R.id.textview_errorview);
+        button = Views.findViewById(this, R.id.button_errorview);
         // apply styling
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
@@ -154,14 +154,12 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropColorRes(@ColorRes int colorRes) {
-        return setBackdropColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                ? getContext().getColor(colorRes)
-                : ContextCompat.getColor(getContext(), colorRes));
+        return setBackdropColor(ContextCompat.getColor(getContext(), colorRes));
     }
 
     @NonNull
     public ErrorView setBackdropColorAttr(@AttrRes int colorAttr) {
-        return setBackdropColor(ThemeUtils.getColorFromAttrRes(getContext(), colorAttr, 0));
+        return setBackdropColor(Themes.getColorFromAttrRes(getContext(), colorAttr, 0));
     }
 
     @NonNull
@@ -205,6 +203,27 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    @SuppressWarnings("ConstantConditions")
+    public <E extends Exception> ErrorView setText(@Nullable E e) {
+        if (setVisible(textView, e != null))
+            setText(e.getMessage());
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setTextHttpCode(int httpCode) {
+        return setTextHttpCode(HttpErrorCode.valueOf(httpCode));
+    }
+
+    @NonNull
+    @SuppressWarnings("ConstantConditions")
+    public ErrorView setTextHttpCode(@Nullable HttpErrorCode code) {
+        if (setVisible(textView, code != null))
+            textView.setText(code.desc);
+        return this;
+    }
+
+    @NonNull
     @SuppressWarnings("deprecation")
     public ErrorView setTextAppearance(@StyleRes int res) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -222,14 +241,12 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setTextColorRes(@ColorRes int colorRes) {
-        return setTextColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                ? getContext().getColor(colorRes)
-                : ContextCompat.getColor(getContext(), colorRes));
+        return setTextColor(ContextCompat.getColor(getContext(), colorRes));
     }
 
     @NonNull
     public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
-        return setTextColor(ThemeUtils.getColorFromAttrRes(getContext(), colorAttr, 0));
+        return setTextColor(Themes.getColorFromAttrRes(getContext(), colorAttr, 0));
     }
 
     @NonNull
@@ -271,9 +288,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setActionColorRes(@ColorRes int colorRes) {
-        return setActionColor(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                ? getContext().getColor(colorRes)
-                : ContextCompat.getColor(getContext(), colorRes));
+        return setActionColor(ContextCompat.getColor(getContext(), colorRes));
     }
 
     @NonNull
@@ -367,6 +382,11 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    public static ErrorView make(@NonNull RelativeLayout parent, @NonNull HttpErrorCode code, @Duration int duration) {
+        return make(parent, code.desc, duration);
+    }
+
+    @NonNull
     public static ErrorView make(@NonNull RelativeLayout parent, @NonNull CharSequence text, @Duration int duration) {
         ErrorView errorView = make((ViewGroup) parent, text, duration);
         errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -376,6 +396,11 @@ public final class ErrorView extends FrameLayout {
     @NonNull
     public static ErrorView make(@NonNull FrameLayout parent, @StringRes int text, @Duration int duration) {
         return make(parent, parent.getResources().getString(text), duration);
+    }
+
+    @NonNull
+    public static ErrorView make(@NonNull FrameLayout parent, @NonNull HttpErrorCode code, @Duration int duration) {
+        return make(parent, code.desc, duration);
     }
 
     @NonNull

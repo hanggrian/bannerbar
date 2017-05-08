@@ -34,14 +34,17 @@ ext.deps = [
         supportAppcompat   : 'com.android.support:appcompat-v7:25.3.1',
         supportRecyclerview: 'com.android.support:recyclerview-v7:25.3.1',
         supportTestRunner  : 'com.android.support.test:runner:0.5',
-        supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
+        supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2',
+        // utils
+        commonsContent     : 'com.hendraanggrian:commons-content:0.1',
+        commonsView        : 'com.hendraanggrian:commons-view:0.5'
 ]
 
 ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'com.hendraanggrian',
         artifact: 'errorview',
-        version : '0.4.1',
+        version : '0.4.3',
         desc    : 'Informative UI to display as error and empty state.',
         website : 'https://github.com/HendraAnggrian/errorview'
 ]
