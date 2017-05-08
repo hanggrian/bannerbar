@@ -23,24 +23,19 @@ android {
 }
 
 dependencies {
-    testCompile deps.junit
-    androidTestCompile(deps.testRunner) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile(deps.testEspresso) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-
+    compile project(':errorview')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-
     compile 'com.jakewharton:butterknife:8.5.1'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
-    compile project(':errorview')
+    androidTestCompile(deps.supportTestRunner) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile(deps.supportTestEspresso) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    testCompile deps.junit
 }

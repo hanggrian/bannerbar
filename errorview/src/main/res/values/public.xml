@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <public name="errorViewStyle" type="attr"/>
+
     <public name="errorBackdrop" type="attr"/>
     <public name="errorLogo" type="attr"/>
     <public name="errorText" type="attr"/>
@@ -10,5 +11,7 @@
     <public name="contentMarginRight" type="attr"/>
     <public name="contentMarginBottom" type="attr"/>
 
-    <public name="ic_errorview_cloud" type="drawable"/>
+    <public name="bg_errorview" type="drawable"/>
+    <public name="ic_errorview" type="drawable"/>
+    <public name="ic_errorview_small" type="drawable"/>
 </resources>

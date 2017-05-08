@@ -20,34 +20,28 @@ task clean(type: Delete) {
 
 ext.config = [
         sdk       : [
-                'min'   : 11,
+                'min'   : 9,
                 'target': 25
         ],
         buildTools: '25.0.2',
         testRunner: 'android.support.test.runner.AndroidJUnitRunner'
 ]
 
-def versionJunit = '4.12'
-def versionTestRunner = '0.5'
-def versionTestEspresso = '2.2.2'
-def versionSupport = '25.3.1'
-
 ext.deps = [
         // test
-        junit              : "junit:junit:$versionJunit",
-        // android test
-        testRunner         : "com.android.support.test:runner:$versionTestRunner",
-        testEspresso       : "com.android.support.test.espresso:espresso-core:$versionTestEspresso",
+        junit              : 'junit:junit:4.12',
         // android
-        supportAppcompat   : "com.android.support:appcompat-v7:$versionSupport",
-        supportRecyclerview: "com.android.support:recyclerview-v7:$versionSupport"
+        supportAppcompat   : 'com.android.support:appcompat-v7:25.3.1',
+        supportRecyclerview: 'com.android.support:recyclerview-v7:25.3.1',
+        supportTestRunner  : 'com.android.support.test:runner:0.5',
+        supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
 ]
 
 ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'com.hendraanggrian',
         artifact: 'errorview',
-        version : '0.3.0',
+        version : '0.4.0',
         desc    : 'Informative UI to display as error and empty state.',
         website : 'https://github.com/HendraAnggrian/errorview'
 ]

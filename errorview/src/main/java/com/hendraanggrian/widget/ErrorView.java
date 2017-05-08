@@ -1,6 +1,7 @@
 package com.hendraanggrian.widget;
 
 import android.animation.LayoutTransition;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -17,7 +18,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
@@ -49,11 +49,16 @@ public final class ErrorView extends FrameLayout {
     private static final int DELAY_LONG = 3500;
     private static final int DELAY_SHORT = 2000;
 
+    @IntDef({DELAY_LONG, DELAY_SHORT})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface Delay {
+    }
+
     public static final int LENGTH_INDEFINITE = -1;
     public static final int LENGTH_LONG = -2;
     public static final int LENGTH_SHORT = -3;
 
-    @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
+    @IntDef({LENGTH_INDEFINITE, LENGTH_LONG, LENGTH_SHORT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Duration {
     }
@@ -65,7 +70,7 @@ public final class ErrorView extends FrameLayout {
     private final Button button;
 
     @Nullable private ViewGroup parent;
-    @Nullable private Integer delay;
+    @Delay private int delay;
     @Nullable private OnShowListener showListener;
     @Nullable private OnDismissListener dismissListener;
 
@@ -83,22 +88,21 @@ public final class ErrorView extends FrameLayout {
 
     public ErrorView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs);
+        // setup views
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
         imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
         textView = (TextView) findViewById(R.id.textview_errorview);
         button = (Button) findViewById(R.id.button_errorview);
+        // apply styling
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
             // content
-            setBackdropDrawable(a.getResourceId(R.styleable.ErrorView_errorBackdrop, 0));
-            setLogoDrawable(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview_cloud));
+            setBackdropDrawable(a.getResourceId(R.styleable.ErrorView_errorBackdrop, R.drawable.bg_errorview));
+            setLogoDrawable(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview));
             setText(a.getText(R.styleable.ErrorView_errorText));
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-                setTextAppearance(context, a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
-            else
-                setTextAppearance(a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
+            setTextAppearance(a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
             // positioning
             int marginLeft = (int) a.getDimension(R.styleable.ErrorView_contentMarginLeft, 0);
             int marginTop = (int) a.getDimension(R.styleable.ErrorView_contentMarginTop, 0);
@@ -199,16 +203,12 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public ErrorView setTextAppearance(@StyleRes int res) {
-        textView.setTextAppearance(res);
-        return this;
-    }
-
-    @NonNull
     @SuppressWarnings("deprecation")
-    public ErrorView setTextAppearance(@NonNull Context context, @StyleRes int res) {
-        textView.setTextAppearance(context, res);
+    public ErrorView setTextAppearance(@StyleRes int res) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            textView.setTextAppearance(res);
+        else
+            textView.setTextAppearance(getContext(), res);
         return this;
     }
 
@@ -254,16 +254,12 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public ErrorView setActionAppearance(@StyleRes int res) {
-        button.setTextAppearance(res);
-        return this;
-    }
-
-    @NonNull
     @SuppressWarnings("deprecation")
-    public ErrorView setActionAppearance(@NonNull Context context, @StyleRes int res) {
-        button.setTextAppearance(context, res);
+    public ErrorView setActionAppearance(@StyleRes int res) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            button.setTextAppearance(res);
+        else
+            button.setTextAppearance(getContext(), res);
         return this;
     }
 
@@ -336,7 +332,7 @@ public final class ErrorView extends FrameLayout {
             parent.addView(this);
             if (showListener != null)
                 showListener.onShown(this);
-            if (delay != null) {
+            if (delay > 0) {
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -390,16 +386,14 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    @SuppressLint("SwitchIntDef")
     private static ErrorView make(@NonNull ViewGroup parent, @NonNull CharSequence text, @Duration int duration) {
-        if (parent.getLayoutTransition() == null)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && parent.getLayoutTransition() == null)
             parent.setLayoutTransition(new LayoutTransition());
         ErrorView errorView = new ErrorView(parent.getContext());
         errorView.parent = parent;
         errorView.setText(text);
         switch (duration) {
-            case LENGTH_INDEFINITE:
-                errorView.delay = null;
-                break;
             case LENGTH_SHORT:
                 errorView.delay = DELAY_SHORT;
                 break;
