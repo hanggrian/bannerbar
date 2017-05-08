@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hendraanggrian.errorview.R;
+import com.hendraanggrian.errorview.ThemeUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -90,6 +91,9 @@ public final class ErrorView extends FrameLayout {
         super(context, attrs);
         // setup views
         ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
+        setBackgroundColor(ThemeUtils.getColorFromAttrRes(getContext(), android.R.attr.windowBackground, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? getContext().getColor(android.R.color.transparent)
+                : ContextCompat.getColor(getContext(), android.R.color.transparent)));
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
         imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
@@ -138,7 +142,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropDrawable(@DrawableRes int backdrop) {
-        if (setVisible(imageViewBackdrop, backdrop != 0))
+        if (setVisible(imageViewBackdrop, backdrop > 0))
             imageViewBackdrop.setImageResource(backdrop);
         return this;
     }
@@ -157,9 +161,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropColorAttr(@AttrRes int colorAttr) {
-        TypedValue v = new TypedValue();
-        getContext().getTheme().resolveAttribute(colorAttr, v, true);
-        return setBackdropColor(v.data);
+        return setBackdropColor(ThemeUtils.getColorFromAttrRes(getContext(), colorAttr, 0));
     }
 
     @NonNull
@@ -185,7 +187,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setLogoDrawable(@DrawableRes int logo) {
-        if (setVisible(imageViewLogo, logo != 0))
+        if (setVisible(imageViewLogo, logo > 0))
             imageViewLogo.setImageResource(logo);
         return this;
     }
@@ -227,9 +229,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
-        TypedValue v = new TypedValue();
-        getContext().getTheme().resolveAttribute(colorAttr, v, true);
-        return setTextColor(v.data);
+        return setTextColor(ThemeUtils.getColorFromAttrRes(getContext(), colorAttr, 0));
     }
 
     @NonNull
