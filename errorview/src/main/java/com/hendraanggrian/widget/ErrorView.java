@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -33,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hendraanggrian.commons.content.Drawables;
 import com.hendraanggrian.commons.content.Themes;
 import com.hendraanggrian.commons.view.Views;
 import com.hendraanggrian.errorview.HttpErrorCode;
@@ -92,8 +92,8 @@ public final class ErrorView extends FrameLayout {
     public ErrorView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs);
         // setup views
-        ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.errorview, this, true);
-        setBackgroundColor(Themes.getColorFromAttrRes(getContext(), android.R.attr.windowBackground, ContextCompat.getColor(getContext(), android.R.color.transparent)));
+        LayoutInflater.from(context).inflate(R.layout.errorview, this, true);
+        setBackgroundColor(Themes.getColor(getContext(), android.R.attr.windowBackground, ContextCompat.getColor(getContext(), android.R.color.transparent)));
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = Views.findViewById(this, R.id.imageview_errorview_backdrop);
         imageViewLogo = Views.findViewById(this, R.id.imageview_errorview_logo);
@@ -149,17 +149,17 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropColor(@ColorInt int color) {
-        return setBackdropDrawable(new ColorDrawable(color));
+        return setBackdropDrawable(Drawables.fromColor(color));
     }
 
     @NonNull
     public ErrorView setBackdropColorRes(@ColorRes int colorRes) {
-        return setBackdropColor(ContextCompat.getColor(getContext(), colorRes));
+        return setBackdropDrawable(Drawables.fromColorRes(getContext(), colorRes));
     }
 
     @NonNull
     public ErrorView setBackdropColorAttr(@AttrRes int colorAttr) {
-        return setBackdropColor(Themes.getColorFromAttrRes(getContext(), colorAttr, 0));
+        return setBackdropDrawable(Drawables.fromColorAttr(getContext(), colorAttr));
     }
 
     @NonNull
@@ -246,7 +246,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
-        return setTextColor(Themes.getColorFromAttrRes(getContext(), colorAttr, 0));
+        return setTextColor(Themes.getColor(getContext(), colorAttr, textView.getCurrentTextColor()));
     }
 
     @NonNull
