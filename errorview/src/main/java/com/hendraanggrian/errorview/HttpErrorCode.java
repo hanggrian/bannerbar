@@ -51,18 +51,21 @@ public enum HttpErrorCode {
     NOT_EXTENDED(510, "Not Extended"),
     NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required");
 
-    @IntRange(from = 400, to = 511) public final int code;
-    @NonNull public final String desc;
+    private final int code;
+    @NonNull private final String what;
 
-    HttpErrorCode(@IntRange(from = 400, to = 511) int code, @NonNull String desc) {
+    HttpErrorCode(@IntRange(from = 400, to = 511) int code, @NonNull String what) {
         this.code = code;
-        this.desc = desc;
+        this.what = what;
+    }
+
+    @Override
+    public String toString() {
+        return what;
     }
 
     @NonNull
-    public static HttpErrorCode valueOf(int code) {
-        if (code < 400 || code > 511)
-            throw new IllegalArgumentException(code + " is not in HTTP error code range.");
+    public static HttpErrorCode valueOf(@IntRange(from = 400, to = 511) int code) {
         for (HttpErrorCode errorCode : values())
             if (errorCode.code == code)
                 return errorCode;

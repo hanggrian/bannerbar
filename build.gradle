@@ -37,14 +37,14 @@ ext.deps = [
         supportTestEspresso: 'com.android.support.test.espresso:espresso-core:2.2.2',
         // utils
         commonsContent     : 'com.hendraanggrian:commons-content:0.2',
-        commonsView        : 'com.hendraanggrian:commons-view:0.6'
+        commonsView        : 'com.hendraanggrian:commons-view:0.7'
 ]
 
 ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'com.hendraanggrian',
         artifact: 'errorview',
-        version : '0.4.4',
+        version : '0.5.0',
         desc    : 'Informative UI to display as error and empty state.',
         website : 'https://github.com/HendraAnggrian/errorview'
 ]

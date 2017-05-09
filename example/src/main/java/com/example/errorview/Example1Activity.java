@@ -1,11 +1,11 @@
 package com.example.errorview;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -48,10 +48,12 @@ public class Example1Activity extends BaseActivity {
                 break;
             case R.id.item_example1_make:
                 ErrorView.make(frameLayout, "No internet connection", getLength())
-                        .setAction("Retry", new View.OnClickListener() {
+                        .setAction("Retry", null)
+                        .setOnDismissListener(new ErrorView.OnDismissListener() {
                             @Override
-                            public void onClick(View v) {
-                                Toast.makeText(Example1Activity.this, "Dismissed.", Toast.LENGTH_SHORT).show();
+                            public void onDismissed(@NonNull ErrorView view, @ErrorView.DismissEvent int event) {
+                                Toast.makeText(Example1Activity.this, String.valueOf("dismiss event: " + event), Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         })
                         .show();

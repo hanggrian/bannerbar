@@ -10,7 +10,7 @@ Usage
 Create `ErrorView` like a `Toast` or `Snackbar`.
 ```java
 ErrorView.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
-    .setLogo(R.drawable.ic_errorview_cloud)
+    .setLogo(R.drawable.ic_launcher)
     .setAction("Retry", new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -42,7 +42,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.4.4'
+    compile 'com.hendraanggrian:errorview:0.5.0'
 }
 ```
 

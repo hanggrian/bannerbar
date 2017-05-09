@@ -2,6 +2,7 @@ package com.hendraanggrian.widget;
 
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -22,7 +23,6 @@ import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.hendraanggrian.commons.content.Drawables;
 import com.hendraanggrian.commons.content.Themes;
+import com.hendraanggrian.commons.view.ViewGroups;
 import com.hendraanggrian.commons.view.Views;
 import com.hendraanggrian.errorview.HttpErrorCode;
 import com.hendraanggrian.errorview.R;
@@ -66,6 +67,15 @@ public final class ErrorView extends FrameLayout {
     public @interface Duration {
     }
 
+    public static final int DISMISS_EVENT_ACTION = 1;
+    public static final int DISMISS_EVENT_TIMEOUT = 2;
+    public static final int DISMISS_EVENT_MANUAL = 3;
+
+    @IntDef({DISMISS_EVENT_ACTION, DISMISS_EVENT_TIMEOUT, DISMISS_EVENT_MANUAL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DismissEvent {
+    }
+
     private final LayoutParams containerLayoutParams;
     private final ImageView imageViewBackdrop;
     private final ImageView imageViewLogo;
@@ -93,14 +103,14 @@ public final class ErrorView extends FrameLayout {
         super(context, attrs);
         // setup views
         LayoutInflater.from(context).inflate(R.layout.errorview, this, true);
-        setBackgroundColor(Themes.getColor(getContext(), android.R.attr.windowBackground, ContextCompat.getColor(getContext(), android.R.color.transparent)));
+        setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground, ContextCompat.getColor(context, android.R.color.transparent)));
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = Views.findViewById(this, R.id.imageview_errorview_backdrop);
         imageViewLogo = Views.findViewById(this, R.id.imageview_errorview_logo);
         textView = Views.findViewById(this, R.id.textview_errorview);
         button = Views.findViewById(this, R.id.button_errorview);
         // apply styling
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
             // content
             setBackdropDrawable(a.getResourceId(R.styleable.ErrorView_errorBackdrop, R.drawable.bg_errorview));
@@ -219,7 +229,7 @@ public final class ErrorView extends FrameLayout {
     @SuppressWarnings("ConstantConditions")
     public ErrorView setTextHttpCode(@Nullable HttpErrorCode code) {
         if (setVisible(textView, code != null))
-            textView.setText(code.desc);
+            textView.setText(code.toString());
         return this;
     }
 
@@ -258,7 +268,7 @@ public final class ErrorView extends FrameLayout {
                 public void onClick(View v) {
                     if (listener != null)
                         listener.onClick(ErrorView.this);
-                    dismiss();
+                    dismiss(DISMISS_EVENT_ACTION);
                 }
             });
         }
@@ -293,9 +303,7 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setActionColorAttr(@AttrRes int colorAttr) {
-        TypedValue v = new TypedValue();
-        getContext().getTheme().resolveAttribute(colorAttr, v, true);
-        return setActionColor(v.data);
+        return setActionColor(Themes.getColor(getContext(), colorAttr, button.getCurrentTextColor()));
     }
 
     @NonNull
@@ -329,43 +337,51 @@ public final class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setOnShowListener(@NonNull OnShowListener listener) {
+    public ErrorView setOnShowListener(@Nullable OnShowListener listener) {
         showListener = listener;
         return this;
     }
 
     @NonNull
-    public ErrorView setOnDismissListener(@NonNull OnDismissListener listener) {
+    public ErrorView setOnDismissListener(@Nullable OnDismissListener listener) {
         dismissListener = listener;
         return this;
     }
 
     @NonNull
     public ErrorView show() {
-        if (parent != null) {
-            dismissAll(parent);
-            parent.addView(this);
-            if (showListener != null)
-                showListener.onShown(this);
-            if (delay > 0) {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (parent != null)
-                            dismiss();
-                    }
-                }, delay);
-            }
-        }
+        if (parent == null)
+            throw new IllegalStateException("ErrorView is not created using make()!");
+        dismissAll(parent);
+        parent.addView(this);
+        if (showListener != null)
+            showListener.onShown(this);
+        if (delay > 0)
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (getContext() instanceof Activity)
+                        if (((Activity) getContext()).isFinishing())
+                            return;
+                        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((Activity) getContext()).isDestroyed())
+                            return;
+                    if (ViewGroups.containsView(parent, ErrorView.this))
+                        dismiss(DISMISS_EVENT_TIMEOUT);
+                }
+            }, delay);
         return this;
     }
 
     public void dismiss() {
-        if (parent != null) {
-            parent.removeView(this);
-            if (dismissListener != null)
-                dismissListener.onDismissed(this);
-        }
+        dismiss(DISMISS_EVENT_MANUAL);
+    }
+
+    private void dismiss(int dismissEvent) {
+        if (parent == null)
+            throw new IllegalStateException("ErrorView is not created using make()!");
+        parent.removeView(this);
+        if (dismissListener != null)
+            dismissListener.onDismissed(this, dismissEvent);
     }
 
     public static void dismissAll(@NonNull ViewGroup parent) {
@@ -383,13 +399,13 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public static ErrorView make(@NonNull RelativeLayout parent, @NonNull HttpErrorCode code, @Duration int duration) {
-        return make(parent, code.desc, duration);
+        return make(parent, code.toString(), duration);
     }
 
     @NonNull
     public static ErrorView make(@NonNull RelativeLayout parent, @NonNull CharSequence text, @Duration int duration) {
         ErrorView errorView = make((ViewGroup) parent, text, duration);
-        errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroups.MATCH_PARENT, ViewGroups.MATCH_PARENT));
         return errorView;
     }
 
@@ -400,13 +416,13 @@ public final class ErrorView extends FrameLayout {
 
     @NonNull
     public static ErrorView make(@NonNull FrameLayout parent, @NonNull HttpErrorCode code, @Duration int duration) {
-        return make(parent, code.desc, duration);
+        return make(parent, code.toString(), duration);
     }
 
     @NonNull
     public static ErrorView make(@NonNull FrameLayout parent, @NonNull CharSequence text, @Duration int duration) {
         ErrorView errorView = make((ViewGroup) parent, text, duration);
-        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroups.MATCH_PARENT, ViewGroups.MATCH_PARENT));
         return errorView;
     }
 
@@ -435,6 +451,6 @@ public final class ErrorView extends FrameLayout {
     }
 
     public interface OnDismissListener {
-        void onDismissed(@NonNull ErrorView view);
+        void onDismissed(@NonNull ErrorView view, @DismissEvent int event);
     }
 }
