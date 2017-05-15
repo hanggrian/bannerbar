@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ErrorViewStyle">
+        <item name="errorBackdrop">@drawable/bg_errorview</item>
+        <item name="errorLogo">@drawable/ic_errorview</item>
+    </style>
+</resources>

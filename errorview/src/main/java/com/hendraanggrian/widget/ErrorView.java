@@ -32,17 +32,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hendraanggrian.commons.content.Drawables;
-import com.hendraanggrian.commons.content.Themes;
-import com.hendraanggrian.commons.view.ViewGroups;
-import com.hendraanggrian.commons.view.Views;
+import com.hendraanggrian.compat.content.Drawables;
+import com.hendraanggrian.compat.content.Themes;
+import com.hendraanggrian.compat.view.ViewGroups;
+import com.hendraanggrian.compat.view.Views;
 import com.hendraanggrian.errorview.HttpErrorCode;
 import com.hendraanggrian.errorview.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static com.hendraanggrian.commons.view.Views.setVisible;
+import static com.hendraanggrian.compat.view.Views.setVisible;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -76,11 +76,11 @@ public final class ErrorView extends FrameLayout {
     public @interface DismissEvent {
     }
 
-    private final LayoutParams containerLayoutParams;
-    private final ImageView imageViewBackdrop;
-    private final ImageView imageViewLogo;
-    private final TextView textView;
-    private final Button button;
+    @NonNull private final LayoutParams containerLayoutParams;
+    @NonNull private final ImageView imageViewBackdrop;
+    @NonNull private final ImageView imageViewLogo;
+    @NonNull private final TextView textView;
+    @NonNull private final Button button;
 
     @Nullable private ViewGroup parent;
     @Delay private int delay;
@@ -96,7 +96,7 @@ public final class ErrorView extends FrameLayout {
     }
 
     public ErrorView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        this(context, attrs, defStyleAttr, R.style.ErrorViewStyle);
     }
 
     public ErrorView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
@@ -113,8 +113,8 @@ public final class ErrorView extends FrameLayout {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
             // content
-            setBackdropDrawable(a.getResourceId(R.styleable.ErrorView_errorBackdrop, R.drawable.bg_errorview));
-            setLogoDrawable(a.getResourceId(R.styleable.ErrorView_errorLogo, R.drawable.ic_errorview));
+            setBackdropDrawable(a.getDrawable(R.styleable.ErrorView_errorBackdrop));
+            setLogoDrawable(a.getDrawable(R.styleable.ErrorView_errorLogo));
             setText(a.getText(R.styleable.ErrorView_errorText));
             setTextAppearance(a.getResourceId(R.styleable.ErrorView_errorTextAppearance, R.style.TextAppearance_AppCompat_Medium));
             // positioning
