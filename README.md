@@ -32,7 +32,7 @@ It can also be inflated in xml, if that's your thing.
 #### Attributes
 | Attribute                                                                                  | Description                                          | Default value/behavior            |
 |--------------------------------------------------------------------------------------------|------------------------------------------------------|-----------------------------------|
-| `errorBackdrop`                                                                            | center-cropping image that behaves like background   | disabled                          |
+| `errorBackdrop`                                                                            | center-cropping image that behaves like background   | Clouds background                 |
 | `errorLogo`                                                                                | smaller image above the message, set null to disable | Sad cloud logo                    |
 | `errorText`                                                                                | error message                                        | disabled                          |
 | `errorTextAppearance`                                                                      | message text style                                   | `TextAppearance_AppCompat_Medium` |
@@ -42,7 +42,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.5.0'
+    compile 'com.hendraanggrian:errorview:0.5.1'
 }
 ```
 
