@@ -32,22 +32,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hendraanggrian.compat.content.Drawables;
-import com.hendraanggrian.compat.content.Themes;
-import com.hendraanggrian.compat.view.ViewGroups;
-import com.hendraanggrian.compat.view.Views;
 import com.hendraanggrian.errorview.HttpErrorCode;
 import com.hendraanggrian.errorview.R;
+import com.hendraanggrian.support.utils.content.Themes;
+import com.hendraanggrian.support.utils.graphics.Drawables;
+import com.hendraanggrian.support.utils.view.ViewGroups;
+import com.hendraanggrian.support.utils.view.Views;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static com.hendraanggrian.compat.view.Views.setVisible;
+import static com.hendraanggrian.support.utils.view.Views.setVisible;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public final class ErrorView extends FrameLayout {
+public class ErrorView extends FrameLayout {
 
     private static final CharSequence TAG = ErrorView.class.getCanonicalName();
     private static final int DELAY_LONG = 3500;

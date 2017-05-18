@@ -42,7 +42,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.5.1'
+    compile 'com.hendraanggrian:errorview:0.5.2'
 }
 ```
 
@@ -62,6 +62,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-    
- [demo1]: /art/ss1.jpg
- [demo2]: /art/ss2.jpg
+[demo1]: /art/ss1.jpg
+[demo2]: /art/ss2.jpg
