@@ -42,7 +42,7 @@ Download
 --------
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.5.2'
+    compile 'com.hendraanggrian:errorview:0.5.3'
 }
 ```
 

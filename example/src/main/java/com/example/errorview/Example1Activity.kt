@@ -24,6 +24,7 @@ class Example1Activity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
+        findViewById(R.id.test).setOnClickListener { Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -35,10 +36,10 @@ class Example1Activity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.item_example1_make -> ErrorView.make(frameLayout!!, "No internet connection", length)
+            R.id.item_example1_make -> ErrorView.make(frameLayout, "No internet connection", length)
                     .setAction("Retry", null)
                     .setOnDismissListener { _, event ->
-                        Toast.makeText(this@Example1Activity, ("dismiss event: " + event).toString(), Toast.LENGTH_SHORT)
+                        Toast.makeText(this, ("dismiss event: " + event), Toast.LENGTH_SHORT)
                                 .show()
                     }
                     .show()

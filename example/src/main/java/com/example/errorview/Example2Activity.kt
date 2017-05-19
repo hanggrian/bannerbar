@@ -21,7 +21,7 @@ class Example2Activity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
-        ErrorView.make(frameLayout!!, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
+        ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
                 .setBackdropDrawable(R.drawable.bg_empty)
                 .setLogoDrawable(null)
                 .setContentMarginBottom(resources.getDimension(R.dimen.example2_content_margin).toInt())

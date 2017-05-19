@@ -10,6 +10,17 @@ buildscript {
             ],
             novoda : 'com.novoda.bintray-release'
     ]
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-3'
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+allprojects {
     ext.config = [
             sdk       : [
                     'min'   : 9,
@@ -35,25 +46,6 @@ buildscript {
             ],
             kotlin     : 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-3'
     ]
-    ext.bintray = [
-            user    : 'hendraanggrian',
-            group   : 'com.hendraanggrian',
-            artifact: 'errorview',
-            version : '0.5.2',
-            desc    : 'Informative UI to display as error and empty state.',
-            website : 'https://github.com/HendraAnggrian/errorview'
-    ]
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-3'
-        classpath 'com.novoda:bintray-release:0.3.4'
-    }
-}
-
-allprojects {
     repositories {
         jcenter()
     }
@@ -62,5 +54,14 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext.bintray = [
+        user    : 'hendraanggrian',
+        group   : 'com.hendraanggrian',
+        artifact: 'errorview',
+        version : '0.5.3',
+        desc    : 'Informative UI to display as error and empty state.',
+        website : 'https://github.com/HendraAnggrian/errorview'
+]
 
 //$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

@@ -2,6 +2,7 @@ package com.hendraanggrian.widget;
 
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,6 +19,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
@@ -104,6 +106,7 @@ public class ErrorView extends FrameLayout {
         // setup views
         LayoutInflater.from(context).inflate(R.layout.errorview, this, true);
         setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground, ContextCompat.getColor(context, android.R.color.transparent)));
+        setClickable(true);
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
         imageViewBackdrop = Views.findViewById(this, R.id.imageview_errorview_backdrop);
         imageViewLogo = Views.findViewById(this, R.id.imageview_errorview_logo);
@@ -353,6 +356,11 @@ public class ErrorView extends FrameLayout {
         if (parent == null)
             throw new IllegalStateException("ErrorView is not created using make()!");
         dismissAll(parent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            float elevation = getHighestElevation(parent);
+            if (elevation > 0)
+                setElevation(elevation);
+        }
         parent.addView(this);
         if (showListener != null)
             showListener.onShown(this);
@@ -390,6 +398,18 @@ public class ErrorView extends FrameLayout {
             ((ErrorView) child).dismiss();
             child = parent.findViewWithTag(TAG);
         }
+    }
+
+    @RequiresApi(21)
+    @TargetApi(21)
+    private static float getHighestElevation(@NonNull ViewGroup parent) {
+        float elevation = 0.0f;
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            float childElevation = parent.getChildAt(i).getElevation();
+            if (elevation < childElevation)
+                elevation = childElevation;
+        }
+        return elevation;
     }
 
     @NonNull
