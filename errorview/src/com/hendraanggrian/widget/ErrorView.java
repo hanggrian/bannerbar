@@ -39,7 +39,6 @@ import com.hendraanggrian.errorview.R;
 import com.hendraanggrian.support.utils.content.Themes;
 import com.hendraanggrian.support.utils.graphics.Drawables;
 import com.hendraanggrian.support.utils.view.ViewGroups;
-import com.hendraanggrian.support.utils.view.Views;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -108,10 +107,10 @@ public class ErrorView extends FrameLayout {
         setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground, ContextCompat.getColor(context, android.R.color.transparent)));
         setClickable(true);
         containerLayoutParams = (LayoutParams) findViewById(R.id.viewgroup_errorview).getLayoutParams();
-        imageViewBackdrop = Views.findViewById(this, R.id.imageview_errorview_backdrop);
-        imageViewLogo = Views.findViewById(this, R.id.imageview_errorview_logo);
-        textView = Views.findViewById(this, R.id.textview_errorview);
-        button = Views.findViewById(this, R.id.button_errorview);
+        imageViewBackdrop = (ImageView) findViewById(R.id.imageview_errorview_backdrop);
+        imageViewLogo = (ImageView) findViewById(R.id.imageview_errorview_logo);
+        textView = (TextView) findViewById(R.id.textview_errorview);
+        button = (Button) findViewById(R.id.button_errorview);
         // apply styling
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
         try {
@@ -259,7 +258,10 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
-        return setTextColor(Themes.getColor(getContext(), colorAttr, textView.getCurrentTextColor()));
+        int color = Themes.getColor(getContext(), colorAttr, 0);
+        if (color == 0)
+            throw new RuntimeException("color attribute not found!");
+        return setTextColor(color);
     }
 
     @NonNull
@@ -306,7 +308,10 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setActionColorAttr(@AttrRes int colorAttr) {
-        return setActionColor(Themes.getColor(getContext(), colorAttr, button.getCurrentTextColor()));
+        int color = Themes.getColor(getContext(), colorAttr, 0);
+        if (color == 0)
+            throw new RuntimeException("color attribute not found!");
+        return setActionColor(color);
     }
 
     @NonNull
@@ -400,8 +405,8 @@ public class ErrorView extends FrameLayout {
         }
     }
 
-    @RequiresApi(21)
     @TargetApi(21)
+    @RequiresApi(21)
     private static float getHighestElevation(@NonNull ViewGroup parent) {
         float elevation = 0.0f;
         for (int i = 0; i < parent.getChildCount(); i++) {
@@ -425,7 +430,7 @@ public class ErrorView extends FrameLayout {
     @NonNull
     public static ErrorView make(@NonNull RelativeLayout parent, @NonNull CharSequence text, @Duration int duration) {
         ErrorView errorView = make((ViewGroup) parent, text, duration);
-        errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroups.MATCH_PARENT, ViewGroups.MATCH_PARENT));
+        errorView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return errorView;
     }
 
@@ -442,7 +447,7 @@ public class ErrorView extends FrameLayout {
     @NonNull
     public static ErrorView make(@NonNull FrameLayout parent, @NonNull CharSequence text, @Duration int duration) {
         ErrorView errorView = make((ViewGroup) parent, text, duration);
-        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroups.MATCH_PARENT, ViewGroups.MATCH_PARENT));
+        errorView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return errorView;
     }
 

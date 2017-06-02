@@ -1,50 +1,27 @@
 buildscript {
-    ext.plugin = [
-            android: [
-                    app: 'com.android.application',
-                    lib: 'com.android.library'
-            ],
-            kotlin : [
-                    android: 'kotlin-android',
-                    kapt   : 'kotlin-kapt'
-            ],
-            novoda : 'com.novoda.bintray-release'
-    ]
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-3'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
 allprojects {
-    ext.config = [
-            sdk       : [
+    ext.versions = [
+            // android
+            sdk           : [
                     'min'   : 9,
                     'target': 25
             ],
-            buildTools: '25.0.2',
-            testRunner: 'android.support.test.runner.AndroidJUnitRunner'
-    ]
-    ext.deps = [
-            junit      : 'junit:junit:4.12',
-            support    : [
-                    appcompat: 'com.android.support:appcompat-v7:25.3.1',
-                    design   : 'com.android.support:design:25.3.1',
-                    test     : [
-                            runner  : 'com.android.support.test:runner:0.5',
-                            espresso: 'com.android.support.test.espresso:espresso-core:2.2.2'
-                    ]
-            ],
-            utils      : 'com.hendraanggrian:support-utils:0.1',
-            butterknife: [
-                    main     : 'com.jakewharton:butterknife:8.5.1',
-                    processor: 'com.jakewharton:butterknife-compiler:8.5.1'
-            ],
-            kotlin     : 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-3'
+            buildTools    : '25.0.3',
+
+            // main
+            support       : '25.3.1',
+            utils         : '0.10',
+
+            release       : '0.6.0'
     ]
     repositories {
         jcenter()
@@ -54,14 +31,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-ext.bintray = [
-        user    : 'hendraanggrian',
-        group   : 'com.hendraanggrian',
-        artifact: 'errorview',
-        version : '0.5.3',
-        desc    : 'Informative UI to display as error and empty state.',
-        website : 'https://github.com/HendraAnggrian/errorview'
-]
 
 //$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
