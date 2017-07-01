@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="errorview_backdrop_description">Error backdrop</string>
-    <string name="errorview_logo_description">Error logo</string>
+    <string name="errorview_backdrop_desc">Error backdrop</string>
+    <string name="errorview_logo_desc">Error logo</string>
 </resources>

@@ -1,30 +1,24 @@
 package com.example.errorview
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
 import android.widget.Toast
-import butterknife.BindView
 import com.hendraanggrian.widget.ErrorView
+import kotlinx.android.synthetic.main.activity_example.*
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class Example1Activity : BaseActivity() {
+class Example1Activity : AppCompatActivity() {
 
-    override val contentView: Int
-        get() = R.layout.activity_example
-
-    @BindView(R.id.toolbar_example) lateinit var toolbar: Toolbar
-    @BindView(R.id.framelayout_example) lateinit var frameLayout: FrameLayout
     private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
-        findViewById(R.id.test).setOnClickListener { Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -37,6 +31,8 @@ class Example1Activity : BaseActivity() {
         when (item.itemId) {
             android.R.id.home -> finish()
             R.id.item_example1_make -> ErrorView.make(frameLayout, "No internet connection", length)
+                    .setBackdropDrawable(R.drawable.errorview_bg_cloud)
+                    .setLogoDrawable(R.drawable.errorview_ic_cloud)
                     .setAction("Retry", null)
                     .setOnDismissListener { _, event ->
                         Toast.makeText(this, ("dismiss event: " + event), Toast.LENGTH_SHORT)
@@ -45,8 +41,9 @@ class Example1Activity : BaseActivity() {
                     .show()
             else -> item.isChecked = true
         }
-        if (item.itemId == android.R.id.home)
+        if (item.itemId == android.R.id.home) {
             finish()
+        }
         return super.onOptionsItemSelected(item)
     }
 

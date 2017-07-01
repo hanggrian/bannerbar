@@ -1,30 +1,25 @@
 package com.example.errorview
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.FrameLayout
-import butterknife.BindView
+import com.hendraanggrian.support.utils.content.Resources2
 import com.hendraanggrian.widget.ErrorView
+import kotlinx.android.synthetic.main.activity_example.*
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class Example2Activity : BaseActivity() {
-
-    override val contentView: Int
-        get() = R.layout.activity_example
-
-    @BindView(R.id.toolbar_example) lateinit var toolbar: Toolbar
-    @BindView(R.id.framelayout_example) lateinit var frameLayout: FrameLayout
+class Example2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
         ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
                 .setBackdropDrawable(R.drawable.bg_empty)
                 .setLogoDrawable(null)
-                .setContentMarginBottom(resources.getDimension(R.dimen.example2_content_margin).toInt())
+                .setContentMarginBottom(Resources2.toPx(64))
                 .show()
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bg_errorview" type="drawable"/>
-    <public name="ic_errorview" type="drawable"/>
-    <public name="ic_errorview_small" type="drawable"/>
+    <public name="errorview_bg_cloud" type="drawable"/>
+    <public name="errorview_ic_cloud" type="drawable"/>
+    <public name="errorview_ic_cloud_small" type="drawable"/>
 </resources>

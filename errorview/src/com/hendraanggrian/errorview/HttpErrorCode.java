@@ -66,9 +66,11 @@ public enum HttpErrorCode {
 
     @NonNull
     public static HttpErrorCode valueOf(@IntRange(from = 400, to = 511) int code) {
-        for (HttpErrorCode errorCode : values())
-            if (errorCode.code == code)
+        for (HttpErrorCode errorCode : values()) {
+            if (errorCode.code == code) {
                 return errorCode;
+            }
+        }
         throw new IllegalArgumentException("Unable to determine error code: " + code);
     }
 }

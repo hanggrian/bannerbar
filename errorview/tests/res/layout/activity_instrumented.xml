@@ -12,9 +12,15 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:navigationIcon="?homeAsUpIndicator"
-            app:title="Example"/>
+            android:layout_height="?actionBarSize"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:max="100"
+            android:visibility="gone"/>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout

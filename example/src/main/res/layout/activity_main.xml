@@ -5,17 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.errorview.MainActivity">
+    tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            app:title="ErrorView Example"/>
+            app:title="@string/app_name"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -35,7 +34,7 @@
                 android:text="Simple ErrorView."/>
 
             <Button
-                android:id="@+id/button_main_example1"
+                android:id="@+id/buttonExample1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -48,7 +47,7 @@
                 android:text="ErrorView with a background."/>
 
             <Button
-                android:id="@+id/button_main_example2"
+                android:id="@+id/buttonExample2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
