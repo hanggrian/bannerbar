@@ -38,11 +38,12 @@ import android.widget.TextView;
 import com.hendraanggrian.errorview.HttpErrorCode;
 import com.hendraanggrian.errorview.R;
 import com.hendraanggrian.support.utils.content.Themes;
-import com.hendraanggrian.support.utils.view.ViewGroups;
+import com.hendraanggrian.support.utils.view.Views;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import static com.hendraanggrian.support.utils.view.ViewGroups.hasView;
 import static com.hendraanggrian.support.utils.view.Views.setVisible;
 
 /**
@@ -53,6 +54,11 @@ public class ErrorView extends FrameLayout {
     private static final CharSequence TAG = "com.hendraanggrian.widget.ErrorView";
     private static final int DELAY_LONG = 3500;
     private static final int DELAY_SHORT = 2000;
+    private static final Handler handler;
+
+    static {
+        handler = new Handler(Looper.getMainLooper());
+    }
 
     @IntDef({DELAY_LONG, DELAY_SHORT})
     @Retention(RetentionPolicy.SOURCE)
@@ -108,10 +114,7 @@ public class ErrorView extends FrameLayout {
         imageViewLogo = (ImageView) findViewById(R.id.errorview_logo);
         textViewText = (TextView) findViewById(R.id.errorview_text);
         buttonAction = (Button) findViewById(R.id.errorview_action);
-        int backgroundColor = Themes.getColor(context, android.R.attr.windowBackground, -1);
-        if (backgroundColor == -1) {
-            setBackgroundColor(backgroundColor);
-        }
+        // setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground));
         setClickable(true);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);
@@ -133,32 +136,32 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropBitmap(@Nullable Bitmap backdrop) {
-        if (setVisible(this.imageViewBackdrop, backdrop != null)) {
-            this.imageViewBackdrop.setImageBitmap(backdrop);
+        if (setVisible(imageViewBackdrop, backdrop != null)) {
+            imageViewBackdrop.setImageBitmap(backdrop);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setBackdropUri(@Nullable Uri backdrop) {
-        if (setVisible(this.imageViewBackdrop, backdrop != null)) {
-            this.imageViewBackdrop.setImageURI(backdrop);
+        if (setVisible(imageViewBackdrop, backdrop != null)) {
+            imageViewBackdrop.setImageURI(backdrop);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setBackdropDrawable(@Nullable Drawable backdrop) {
-        if (setVisible(this.imageViewBackdrop, backdrop != null)) {
-            this.imageViewBackdrop.setImageDrawable(backdrop);
+        if (setVisible(imageViewBackdrop, backdrop != null)) {
+            imageViewBackdrop.setImageDrawable(backdrop);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setBackdropDrawable(@DrawableRes int backdrop) {
-        if (setVisible(this.imageViewBackdrop, backdrop > 0)) {
-            this.imageViewBackdrop.setImageResource(backdrop);
+        if (setVisible(imageViewBackdrop, backdrop > 0)) {
+            imageViewBackdrop.setImageResource(backdrop);
         }
         return this;
     }
@@ -175,49 +178,45 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setBackdropColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(getContext(), colorAttr, -1);
-        if (color == -1) {
-            throw new IllegalArgumentException("color attr not found in current theme.");
-        }
-        return setBackdropColor(color);
+        return setBackdropColor(Themes.getColor(getContext(), colorAttr));
     }
 
     @NonNull
     public ErrorView setLogoBitmap(@Nullable Bitmap logo) {
-        if (setVisible(this.imageViewLogo, logo != null)) {
-            this.imageViewLogo.setImageBitmap(logo);
+        if (setVisible(imageViewLogo, logo != null)) {
+            imageViewLogo.setImageBitmap(logo);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setLogoUri(@Nullable Uri logo) {
-        if (setVisible(this.imageViewLogo, logo != null)) {
-            this.imageViewLogo.setImageURI(logo);
+        if (setVisible(imageViewLogo, logo != null)) {
+            imageViewLogo.setImageURI(logo);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setLogoDrawable(@Nullable Drawable logo) {
-        if (setVisible(this.imageViewLogo, logo != null)) {
-            this.imageViewLogo.setImageDrawable(logo);
+        if (setVisible(imageViewLogo, logo != null)) {
+            imageViewLogo.setImageDrawable(logo);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setLogoDrawable(@DrawableRes int logo) {
-        if (setVisible(this.imageViewLogo, logo > 0)) {
-            this.imageViewLogo.setImageResource(logo);
+        if (setVisible(imageViewLogo, logo > 0)) {
+            imageViewLogo.setImageResource(logo);
         }
         return this;
     }
 
     @NonNull
     public ErrorView setText(@Nullable CharSequence text) {
-        if (setVisible(this.textViewText, !TextUtils.isEmpty(text))) {
-            this.textViewText.setText(text);
+        if (setVisible(textViewText, !TextUtils.isEmpty(text))) {
+            textViewText.setText(text);
         }
         return this;
     }
@@ -274,11 +273,7 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setTextColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(getContext(), colorAttr, 0);
-        if (color == 0) {
-            throw new IllegalArgumentException("color attr not found in current theme.");
-        }
-        return setTextColor(color);
+        return setTextColor(Themes.getColor(getContext(), colorAttr));
     }
 
     @NonNull
@@ -327,11 +322,7 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setActionColorAttr(@AttrRes int colorAttr) {
-        int color = Themes.getColor(getContext(), colorAttr, 0);
-        if (color == 0) {
-            throw new RuntimeException("color attribute not found!");
-        }
-        return setActionColor(color);
+        return setActionColor(Themes.getColor(getContext(), colorAttr));
     }
 
     @NonNull
@@ -393,7 +384,7 @@ public class ErrorView extends FrameLayout {
             showListener.onShown(this);
         }
         if (delay > 0) {
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if (getContext() instanceof Activity) {
@@ -403,7 +394,7 @@ public class ErrorView extends FrameLayout {
                             return;
                         }
                     }
-                    if (ViewGroups.containsView(targetParent, ErrorView.this)) {
+                    if (hasView(targetParent, ErrorView.this)) {
                         dismiss(DISMISS_EVENT_TIMEOUT);
                     }
                 }
@@ -483,30 +474,35 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     @SuppressLint("SwitchIntDef")
-    private static ErrorView make(@NonNull ViewGroup parent, @NonNull CharSequence text, @Duration int duration) {
+    private static ErrorView make(@NonNull final ViewGroup parent, @NonNull final CharSequence text, @Duration final int duration) {
         if (Build.VERSION.SDK_INT >= 11 && parent.getLayoutTransition() == null) {
             parent.setLayoutTransition(new LayoutTransition());
         }
-        ErrorView errorView = new ErrorView(parent.getContext());
-        errorView.targetParent = parent;
-        errorView.setText(text);
-        switch (duration) {
-            case LENGTH_SHORT:
-                errorView.delay = DELAY_SHORT;
-                break;
-            case LENGTH_LONG:
-                errorView.delay = DELAY_LONG;
-                break;
-        }
-        errorView.setTag(TAG);
-        return errorView;
+        return Views.newInstance(ErrorView.class, parent.getContext(), new Views.OnCreatedListener<ErrorView>() {
+            @Override
+            public void onCreated(@NonNull ErrorView v) {
+                v.targetParent = parent;
+                v.setText(text);
+                switch (duration) {
+                    case LENGTH_SHORT:
+                        v.delay = DELAY_SHORT;
+                        break;
+                    case LENGTH_LONG:
+                        v.delay = DELAY_LONG;
+                        break;
+                }
+                v.setTag(TAG);
+            }
+        });
     }
 
     public interface OnShowListener {
+
         void onShown(@NonNull ErrorView view);
     }
 
     public interface OnDismissListener {
+
         void onDismissed(@NonNull ErrorView view, @DismissEvent int event);
     }
 }

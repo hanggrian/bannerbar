@@ -41,8 +41,13 @@ It can also be inflated in xml, if that's your thing.
 Download
 --------
 ```gradle
+repositories {
+    maven { url "https://maven.google.com" }
+    jcenter()
+}
+
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.7.0'
+    compile 'com.hendraanggrian:errorview:0.7.1'
 }
 ```
 
