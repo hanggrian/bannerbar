@@ -114,7 +114,7 @@ public class ErrorView extends FrameLayout {
         imageViewLogo = (ImageView) findViewById(R.id.errorview_logo);
         textViewText = (TextView) findViewById(R.id.errorview_text);
         buttonAction = (Button) findViewById(R.id.errorview_action);
-        // setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground));
+        setBackgroundColor(Themes.getColor(context, android.R.attr.windowBackground));
         setClickable(true);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes);

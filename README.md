@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.7.1'
+    compile 'com.hendraanggrian:errorview:0.7.2'
 }
 ```
 
