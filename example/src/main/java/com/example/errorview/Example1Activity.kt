@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import com.hendraanggrian.support.utils.widget.Toasts
 import com.hendraanggrian.widget.ErrorView
 import kotlinx.android.synthetic.main.activity_example.*
 
@@ -33,11 +33,11 @@ class Example1Activity : AppCompatActivity() {
             R.id.item_example1_make -> ErrorView.make(frameLayout, "No internet connection", length)
                     .setBackdropDrawable(R.drawable.errorview_bg_cloud)
                     .setLogoDrawable(R.drawable.errorview_ic_cloud)
-                    .setAction("Retry", null)
-                    .setOnDismissListener { _, event ->
-                        Toast.makeText(this, ("dismiss event: " + event), Toast.LENGTH_SHORT)
-                                .show()
-                    }
+                    .setAction("Retry", {
+                        Toasts.showShort(this@Example1Activity, "Clicked.")
+                        true
+                    })
+                    .setOnDismissListener { _, event -> Toasts.showShort(this@Example1Activity, "dismiss event: " + event) }
                     .show()
             else -> item.isChecked = true
         }

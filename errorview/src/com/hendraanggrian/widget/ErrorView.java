@@ -52,13 +52,14 @@ import static com.hendraanggrian.support.utils.view.Views.setVisible;
 public class ErrorView extends FrameLayout {
 
     private static final CharSequence TAG = "com.hendraanggrian.widget.ErrorView";
-    private static final int DELAY_LONG = 3500;
-    private static final int DELAY_SHORT = 2000;
     private static final Handler handler;
 
     static {
         handler = new Handler(Looper.getMainLooper());
     }
+
+    private static final int DELAY_LONG = 3500;
+    private static final int DELAY_SHORT = 2000;
 
     @IntDef({DELAY_LONG, DELAY_SHORT})
     @Retention(RetentionPolicy.SOURCE)
@@ -278,13 +279,12 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
-        buttonAction.setOnClickListener(new OnClickListener() {
+        buttonAction.setOnClickListener(listener == null ? null : new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onClick(ErrorView.this);
+                if (listener.onClick(ErrorView.this)) {
+                    dismiss(DISMISS_EVENT_ACTION);
                 }
-                dismiss(DISMISS_EVENT_ACTION);
             }
         });
         return setActionText(text);
@@ -514,5 +514,17 @@ public class ErrorView extends FrameLayout {
     public interface OnDismissListener {
 
         void onDismissed(@NonNull ErrorView view, @DismissEvent int event);
+    }
+
+    /**
+     * Mimics {@link android.view.View.OnClickListener} with boolean return value to decide whether or not to dismiss the ErrorView.
+     */
+    public interface OnClickListener {
+
+        /**
+         * @param v clicked ErrorView.
+         * @return true to dismiss ErrorView.
+         */
+        boolean onClick(@NonNull ErrorView v);
     }
 }
