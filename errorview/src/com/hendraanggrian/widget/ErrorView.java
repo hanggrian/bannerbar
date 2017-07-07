@@ -278,19 +278,16 @@ public class ErrorView extends FrameLayout {
 
     @NonNull
     public ErrorView setAction(@Nullable CharSequence text, @Nullable final OnClickListener listener) {
-        if (setVisible(buttonAction, !TextUtils.isEmpty(text))) {
-            buttonAction.setText(text);
-            buttonAction.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onClick(ErrorView.this);
-                    }
-                    dismiss(DISMISS_EVENT_ACTION);
+        buttonAction.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onClick(ErrorView.this);
                 }
-            });
-        }
-        return this;
+                dismiss(DISMISS_EVENT_ACTION);
+            }
+        });
+        return setActionText(text);
     }
 
     @NonNull
@@ -299,8 +296,21 @@ public class ErrorView extends FrameLayout {
     }
 
     @NonNull
+    public ErrorView setActionText(@Nullable CharSequence text) {
+        if (setVisible(buttonAction, !TextUtils.isEmpty(text))) {
+            buttonAction.setText(text);
+        }
+        return this;
+    }
+
+    @NonNull
+    public ErrorView setActionText(@StringRes int text) {
+        return setActionText(getResources().getText(text));
+    }
+
+    @NonNull
     @SuppressWarnings("deprecation")
-    public ErrorView setActionAppearance(@StyleRes int res) {
+    public ErrorView setActionTextAppearance(@StyleRes int res) {
         if (Build.VERSION.SDK_INT >= 23) {
             buttonAction.setTextAppearance(res);
         } else {
@@ -310,19 +320,19 @@ public class ErrorView extends FrameLayout {
     }
 
     @NonNull
-    public ErrorView setActionColor(@ColorInt int color) {
+    public ErrorView setActionTextColor(@ColorInt int color) {
         buttonAction.setTextColor(color);
         return this;
     }
 
     @NonNull
-    public ErrorView setActionColorRes(@ColorRes int colorRes) {
-        return setActionColor(ContextCompat.getColor(getContext(), colorRes));
+    public ErrorView setActionTextColorRes(@ColorRes int colorRes) {
+        return setActionTextColor(ContextCompat.getColor(getContext(), colorRes));
     }
 
     @NonNull
-    public ErrorView setActionColorAttr(@AttrRes int colorAttr) {
-        return setActionColor(Themes.getColor(getContext(), colorAttr));
+    public ErrorView setActionTextColorAttr(@AttrRes int colorAttr) {
+        return setActionTextColor(Themes.getColor(getContext(), colorAttr));
     }
 
     @NonNull
