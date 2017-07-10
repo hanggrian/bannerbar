@@ -3,8 +3,9 @@ package com.example.errorview
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.hendraanggrian.support.utils.content.Resources2
+import com.hendraanggrian.support.utils.content.toPx
 import com.hendraanggrian.widget.ErrorView
+import com.hendraanggrian.widget.errorView
 import kotlinx.android.synthetic.main.activity_example.*
 
 /**
@@ -16,16 +17,22 @@ class Example2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
+        frameLayout.errorView("You have no new emails", ErrorView.LENGTH_INDEFINITE)
+                .setBackdropDrawable(R.drawable.bg_empty)
+                .setLogoDrawable(null)
+                .setContentMarginBottom(64.toPx())
+                .show()
         ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
                 .setBackdropDrawable(R.drawable.bg_empty)
                 .setLogoDrawable(null)
-                .setContentMarginBottom(Resources2.toPx(64))
+                .setContentMarginBottom(64.toPx())
                 .show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home)
+        if (item.itemId == android.R.id.home) {
             finish()
+        }
         return super.onOptionsItemSelected(item)
     }
 }

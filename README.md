@@ -8,16 +8,21 @@ Usage
 -----
 #### Programatically
 Create `ErrorView` like a `Toast` or `Snackbar`.
-```java
+```kotlin
 ErrorView.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
-    .setLogo(R.drawable.ic_launcher)
-    .setAction("Retry", new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            // do something
-        }
+    .setLogoDrawable(R.drawable.errorview_ic_cloud)
+    .setAction("Retry", { v -> 
+        // do something
+        // return true to dismiss, false otherwise
+        true
     })
-    .show();
+    .show()
+```
+
+It can also be created using Kotlin extension function.
+```java
+frameLayout.errorView("No internet connection", ErrorView.LENGTH_INDEFINITE)
+    .show()
 ```
 
 #### XML
@@ -47,7 +52,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.7.4'
+    compile 'com.hendraanggrian:errorview:0.8.0'
 }
 ```
 

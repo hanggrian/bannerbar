@@ -1,16 +1,15 @@
-package com.hendraanggrian.errorview;
+package com.hendraanggrian.errorview
 
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
+import android.support.annotation.IntRange
 
 /**
  * According to https://en.wikipedia.org/wiki/List_of_HTTP_status_codes.
- *
+
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public enum HttpErrorCode {
+enum class HttpErrorCode private constructor(@IntRange(from = 400, to = 511) private val code: Int, private val what: String) {
     // client error
-    BAD_REQUEST(400, "Bad Request"),
+    BAD_REQUEST(511, "Bad Request"),
     UNAUTHORIZED(401, "Unauthorized"),
     PAYMENT_REQUIRED(402, "Payment Required"),
     FORBIDDEN(403, "Forbidden"),
@@ -51,26 +50,12 @@ public enum HttpErrorCode {
     NOT_EXTENDED(510, "Not Extended"),
     NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required");
 
-    private final int code;
-    @NonNull private final String what;
+    override fun toString(): String = what
 
-    HttpErrorCode(@IntRange(from = 400, to = 511) int code, @NonNull String what) {
-        this.code = code;
-        this.what = what;
-    }
-
-    @Override
-    public String toString() {
-        return what;
-    }
-
-    @NonNull
-    public static HttpErrorCode valueOf(@IntRange(from = 400, to = 511) int code) {
-        for (HttpErrorCode errorCode : values()) {
-            if (errorCode.code == code) {
-                return errorCode;
-            }
+    companion object {
+        fun valueOf(@IntRange(from = 400, to = 511) code: Int): HttpErrorCode {
+            values().filter { it.code == code }.forEach { return it }
+            throw IllegalArgumentException("Unable to determine error code: " + code)
         }
-        throw new IllegalArgumentException("Unable to determine error code: " + code);
     }
 }
