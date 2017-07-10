@@ -37,14 +37,14 @@ class Example1Activity : AppCompatActivity() {
                         toast("Clicked.")
                         true
                     })
-                    .setOnDismissListener { _, event -> toast("dismiss event: " + event) }
+                    .setOnDismissListener { _, event -> toast("internalDismiss event: " + event) }
                     .show()
             else -> item.isChecked = true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private val length: Int @ErrorView.Duration get() {
+    private val length: Int @ErrorView.Companion.Duration get() {
         if (menu!!.findItem(R.id.item_example1_length_short).isChecked)
             return ErrorView.LENGTH_SHORT
         else if (menu!!.findItem(R.id.item_example1_length_long).isChecked)

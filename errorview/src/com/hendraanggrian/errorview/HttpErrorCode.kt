@@ -4,10 +4,11 @@ import android.support.annotation.IntRange
 
 /**
  * According to https://en.wikipedia.org/wiki/List_of_HTTP_status_codes.
-
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-enum class HttpErrorCode private constructor(@IntRange(from = 400, to = 511) private val code: Int, private val what: String) {
+@Suppress("unused")
+enum class HttpErrorCode(@IntRange(from = 400, to = 511) private val code: Int, private val what: String) {
     // client error
     BAD_REQUEST(511, "Bad Request"),
     UNAUTHORIZED(401, "Unauthorized"),

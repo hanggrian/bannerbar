@@ -22,11 +22,6 @@ class Example2Activity : AppCompatActivity() {
                 .setLogoDrawable(null)
                 .setContentMarginBottom(64.toPx())
                 .show()
-        ErrorView.make(frameLayout, "You have no new emails", ErrorView.LENGTH_INDEFINITE)
-                .setBackdropDrawable(R.drawable.bg_empty)
-                .setLogoDrawable(null)
-                .setContentMarginBottom(64.toPx())
-                .show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

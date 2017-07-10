@@ -23,7 +23,7 @@ import android.widget.RelativeLayout
 import com.hendraanggrian.errorview.HttpErrorCode
 import com.hendraanggrian.errorview.R
 import com.hendraanggrian.support.utils.content.color
-import com.hendraanggrian.support.utils.content.colorVal
+import com.hendraanggrian.support.utils.content.colorAttr
 import com.hendraanggrian.support.utils.view.containsView
 import com.hendraanggrian.support.utils.view.setVisibleBy
 import kotlinx.android.synthetic.main.errorview_layout.view.*
@@ -31,28 +31,12 @@ import kotlinx.android.synthetic.main.errorview_layout.view.*
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
+@Suppress("unused")
 class ErrorView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = R.attr.errorViewStyle,
         @StyleRes defStyleRes: Int = 0) : FrameLayout(context, attrs) {
-
-    @IntDef(DELAY_LONG.toLong(),
-            DELAY_SHORT.toLong())
-    @Retention(AnnotationRetention.SOURCE)
-    private annotation class Delay
-
-    @IntDef(LENGTH_INDEFINITE.toLong(),
-            LENGTH_LONG.toLong(),
-            LENGTH_SHORT.toLong())
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class Duration
-
-    @IntDef(DISMISS_EVENT_ACTION.toLong(),
-            DISMISS_EVENT_TIMEOUT.toLong(),
-            DISMISS_EVENT_MANUAL.toLong())
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class DismissEvent
 
     private var targetParent: ViewGroup? = null
     @Delay private var delay: Int = 0
@@ -61,7 +45,7 @@ class ErrorView @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.errorview_layout, this, true)
-        setBackgroundColor(android.R.attr.windowBackground.colorVal(context))
+        setBackgroundColor(android.R.attr.windowBackground.colorAttr(context))
         isClickable = true
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes)
@@ -111,7 +95,7 @@ class ErrorView @JvmOverloads constructor(
 
     fun setBackdropColor(@ColorInt color: Int): ErrorView = setBackdropDrawable(ColorDrawable(color))
     fun setBackdropColorRes(@ColorRes colorRes: Int): ErrorView = setBackdropColor(colorRes.color(context))
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): ErrorView = setBackdropColor(colorAttr.colorVal(context))
+    fun setBackdropColorAttr(@AttrRes colorAttr: Int): ErrorView = setBackdropColor(colorAttr.colorAttr(context))
 
     fun setLogoBitmap(logo: Bitmap?): ErrorView {
         if (imageViewLogo.setVisibleBy(logo != null)) {
@@ -175,7 +159,7 @@ class ErrorView @JvmOverloads constructor(
     }
 
     fun setTextColorRes(@ColorRes colorRes: Int): ErrorView = setTextColor(colorRes.color(context))
-    fun setTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setTextColor(colorAttr.colorVal(context))
+    fun setTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setTextColor(colorAttr.colorAttr(context))
     fun setTextColor(@ColorInt color: Int): ErrorView {
         textViewText.setTextColor(color)
         return this
@@ -185,9 +169,9 @@ class ErrorView @JvmOverloads constructor(
     fun setAction(text: CharSequence?, action: ((ErrorView) -> Boolean)?): ErrorView {
         buttonAction.setOnClickListener(if (action == null) null else View.OnClickListener {
             val shouldDismiss: Boolean? = action.invoke(this@ErrorView)
-            checkNotNull(shouldDismiss, { "Set true to dismiss on click, false otherwise. Shouldn't be null." })
+            checkNotNull(shouldDismiss, { "Set true to internalDismiss on click, false otherwise. Shouldn't be null." })
             if (shouldDismiss!!) {
-                dismiss(DISMISS_EVENT_ACTION)
+                internalDismiss(DISMISS_EVENT_ACTION)
             }
         })
         return setActionText(text)
@@ -212,7 +196,7 @@ class ErrorView @JvmOverloads constructor(
     }
 
     fun setActionTextColorRes(@ColorRes colorRes: Int): ErrorView = setActionTextColor(ContextCompat.getColor(context, colorRes))
-    fun setActionTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setActionTextColor(colorAttr.colorVal(context))
+    fun setActionTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setActionTextColor(colorAttr.colorAttr(context))
     fun setActionTextColor(@ColorInt color: Int): ErrorView {
         buttonAction.setTextColor(color)
         return this
@@ -274,15 +258,15 @@ class ErrorView @JvmOverloads constructor(
                     }
                 }
                 if (targetParent!!.containsView(this@ErrorView)) {
-                    dismiss(DISMISS_EVENT_TIMEOUT)
+                    internalDismiss(DISMISS_EVENT_TIMEOUT)
                 }
             }, delay.toLong())
         }
         return this
     }
 
-    fun dismiss() = dismiss(DISMISS_EVENT_MANUAL)
-    private fun dismiss(dismissEvent: Int) {
+    fun dismiss() = internalDismiss(DISMISS_EVENT_MANUAL)
+    private fun internalDismiss(dismissEvent: Int) {
         checkNotNull(targetParent, { "ErrorView is not created using make()!" })
         targetParent!!.removeView(this)
         dismissAction?.invoke(this, dismissEvent)
@@ -295,18 +279,37 @@ class ErrorView @JvmOverloads constructor(
         const private val DELAY_LONG = 3500
         const private val DELAY_SHORT = 2000
 
-        const val LENGTH_INDEFINITE = -1
-        const val LENGTH_LONG = -2
-        const val LENGTH_SHORT = -3
+        @IntDef(DELAY_LONG.toLong(),
+                DELAY_SHORT.toLong())
+        @Retention(AnnotationRetention.SOURCE)
+        private annotation class Delay
 
-        const val DISMISS_EVENT_ACTION = 1
-        const val DISMISS_EVENT_TIMEOUT = 2
-        const val DISMISS_EVENT_MANUAL = 3
+        const val LENGTH_INDEFINITE = -1 // persistent
+        const val LENGTH_LONG = -2       // 3.5 seconds
+        const val LENGTH_SHORT = -3      // 2.0 seconds
+
+        @IntDef(LENGTH_INDEFINITE.toLong(),
+                LENGTH_LONG.toLong(),
+                LENGTH_SHORT.toLong())
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class Duration
+
+        const val DISMISS_EVENT_ACTION = 1  // dismissed due to action button click
+        const val DISMISS_EVENT_TIMEOUT = 2 // dismissed due to timeout
+        const val DISMISS_EVENT_MANUAL = 3  // dismissed due to programmatically calling dismiss()
+        const val DISMISS_EVENT_FORCED = 4  // dismissed due to programmatically calling dismissAll()
+
+        @IntDef(DISMISS_EVENT_ACTION.toLong(),
+                DISMISS_EVENT_TIMEOUT.toLong(),
+                DISMISS_EVENT_MANUAL.toLong(),
+                DISMISS_EVENT_FORCED.toLong())
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class DismissEvent
 
         fun dismissAll(parent: ViewGroup) {
             var child: View? = parent.findViewWithTag(TAG)
             while (child != null && child is ErrorView) {
-                child.dismiss()
+                child.internalDismiss(DISMISS_EVENT_FORCED)
                 child = parent.findViewWithTag(TAG)
             }
         }
@@ -347,10 +350,10 @@ class ErrorView @JvmOverloads constructor(
     }
 }
 
-fun RelativeLayout.errorView(@StringRes text: Int, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
-fun RelativeLayout.errorView(code: HttpErrorCode, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
-fun RelativeLayout.errorView(text: CharSequence, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun RelativeLayout.errorView(@StringRes text: Int, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun RelativeLayout.errorView(code: HttpErrorCode, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
+fun RelativeLayout.errorView(text: CharSequence, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
 
-fun FrameLayout.errorView(@StringRes text: Int, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
-fun FrameLayout.errorView(code: HttpErrorCode, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
-fun FrameLayout.errorView(text: CharSequence, @ErrorView.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun FrameLayout.errorView(@StringRes text: Int, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun FrameLayout.errorView(code: HttpErrorCode, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
+fun FrameLayout.errorView(text: CharSequence, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
