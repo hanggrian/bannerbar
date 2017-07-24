@@ -1,4 +1,4 @@
-package com.example.errorview
+package com.example.errorbar
 
 import android.os.Bundle
 import android.support.design.widget.Errorbar
@@ -47,7 +47,7 @@ class Example1Activity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val length: Int = if (menu.findItem(R.id.item_example1_length_short).isChecked) {
+    private val length get() = if (menu.findItem(R.id.item_example1_length_short).isChecked) {
         Errorbar.LENGTH_SHORT
     } else if (menu.findItem(R.id.item_example1_length_long).isChecked) {
         Errorbar.LENGTH_LONG

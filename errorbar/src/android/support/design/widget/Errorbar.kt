@@ -20,7 +20,8 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
         BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback), BaseErrorbar<Errorbar> {
 
     override val instance = this
-    override val backdropView = (mView.getChildAt(0) as ErrorbarLayout).backdropView
+    override val rootView = mView as ViewGroup
+
     override val viewContainer = (mView.getChildAt(0) as ErrorbarLayout).viewContainer
     override val logoView = (mView.getChildAt(0) as ErrorbarLayout).logoView
     override val messageView = (mView.getChildAt(0) as ErrorbarLayout).messageView
@@ -78,7 +79,7 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     private var mCallback: BaseCallback<Errorbar>? = null
 
     override fun setAction(text: CharSequence?, listener: View.OnClickListener?): Errorbar {
-        if (actionView.setVisibleBy(!TextUtils.isEmpty(text) && listener == null)) {
+        if (actionView.setVisibleBy(!TextUtils.isEmpty(text) && listener != null)) {
             actionView.text = text
             actionView.setOnClickListener {
                 listener!!.onClick(actionView)

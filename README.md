@@ -1,58 +1,50 @@
-ErrorView
-=========
-Informative UI to display as error and empty state.
+Errorbar
+========
+Larger Snackbar to display error and empty state.
+Using [Android support design's][design] internal components, Errorbar should be as fluid and stable as Snackbar.
 
-![demo1][demo1] ![demo2][demo2]
+![demo][demo]
 
 Usage
 -----
 #### Programatically
-Create `ErrorView` like a `Toast` or `Snackbar`.
+Create `Errorbar` just like a `Snackbar`.
 ```kotlin
-ErrorView.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
-    .setLogoDrawable(R.drawable.errorview_ic_cloud)
-    .setAction("Retry", { v -> 
+Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
+    .setLogoDrawable(R.drawable.errorbar_ic_cloud)
+    .setAction("Retry", View.OnClickListener { v -> 
         // do something
-        // return true to dismiss, false otherwise
-        true
     })
-    .show()
-```
-
-It can also be created using Kotlin extension function.
-```java
-frameLayout.errorView("No internet connection", ErrorView.LENGTH_INDEFINITE)
     .show()
 ```
 
 #### XML
 It can also be inflated in xml, if that's your thing.
+At this point duration property is ignored since `show()` is not called.
 ```xml
-<com.hendraanggrian.widget.ErrorView
+<android.support.design.ErrorbarLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:errorText="No internet connection"/>
 ```
 
-#### Attributes
-| Attribute                                                                                  | Description                                          | Default value/behavior            |
-|--------------------------------------------------------------------------------------------|------------------------------------------------------|-----------------------------------|
-| `errorBackdrop`                                                                            | center-cropping image that behaves like background   | Clouds background                 |
-| `errorLogo`                                                                                | smaller image above the message, set null to disable | Sad cloud logo                    |
-| `errorText`                                                                                | error message                                        | disabled                          |
-| `errorTextAppearance`                                                                      | message text style                                   | `TextAppearance_AppCompat_Medium` |
-| `contentMarginLeft`<br>`contentMarginTop`<br>`contentMarginRight`<br>`contentMarginBottom` | positioning of logo and message                      | center                            |
+See [attrs.xml][attrs] for full list of available attributes.
+
+#### Limitation
+Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
+It would mean that a View cannot have more than one Snackbar or Errorbar at the same time.
+When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
 
 Download
 --------
 ```gradle
 repositories {
-    maven { url "https://maven.google.com" }
+    maven { url 'https://maven.google.com' }
     jcenter()
 }
 
 dependencies {
-    compile 'com.hendraanggrian:errorview:0.8.1'
+    compile 'com.hendraanggrian:errorbar:0.1.0'
 }
 ```
 
@@ -71,6 +63,7 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-    
-[demo1]: /art/ss1.jpg
-[demo2]: /art/ss2.jpg
+ 
+[design]: https://github.com/android/platform_frameworks_support/tree/master/design
+[attrs]: https://github.com/HendraAnggrian/errorbar/blob/master/errorbar/res/values/attrs.xml
+[demo]: /art/demo.gif

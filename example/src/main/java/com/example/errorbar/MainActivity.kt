@@ -1,4 +1,4 @@
-package com.example.errorview
+package com.example.errorbar
 
 import android.content.Intent
 import android.os.Bundle

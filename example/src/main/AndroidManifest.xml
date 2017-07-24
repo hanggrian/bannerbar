@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.example.errorview"
+    package="com.example.errorbar"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
@@ -10,13 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.errorbar.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Example1Activity"/>
-        <activity android:name=".Example2Activity"/>
+        <activity android:name="com.example.errorbar.Example1Activity"/>
+        <activity android:name="com.example.errorbar.Example2Activity"/>
     </application>
 </manifest>

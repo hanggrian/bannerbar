@@ -6,9 +6,9 @@ android {
     compileSdkVersion versions.sdk.target
     buildToolsVersion versions.buildTools
     defaultConfig {
-        applicationId 'com.example.errorview'
+        applicationId 'com.example.errorbar'
         versionCode 1
-        versionName '1.0'
+        versionName versions.release
         minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
     }

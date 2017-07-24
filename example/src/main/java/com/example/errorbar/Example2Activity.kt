@@ -1,4 +1,4 @@
-package com.example.errorview
+package com.example.errorbar
 
 import android.os.Bundle
 import android.support.design.widget.Errorbar
@@ -18,7 +18,6 @@ class Example2Activity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         Errorbar.make(frameLayout, "You have no new emails", Errorbar.LENGTH_INDEFINITE)
                 .setBackdropDrawable(R.drawable.bg_empty)
-                .setLogoDrawable(null)
                 .setContentMarginBottom(64.toPx())
                 .show()
     }

@@ -1,7 +1,7 @@
 package com.hendraanggrian.errorbar
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.*
@@ -9,11 +9,11 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.hendraanggrian.kota.content.getColor
 import com.hendraanggrian.kota.content.getColor2
+import com.hendraanggrian.kota.view.setBackgroundBy
 import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
@@ -22,66 +22,84 @@ import com.hendraanggrian.kota.view.setVisibleBy
 internal interface BaseErrorbar<out E> {
 
     val instance: E
-    val backdropView: ImageView
+    val rootView: ViewGroup
+
     val viewContainer: ViewGroup
     val logoView: ImageView
     val messageView: TextView
     val actionView: Button
 
     fun setBackdropBitmap(backdrop: Bitmap?): E {
-        if (backdropView.setVisibleBy(backdrop != null)) {
-            backdropView.setImageBitmap(backdrop)
+        if (backdrop != null) {
+            rootView.setBackgroundBy(CenterCropDrawable(backdrop))
+        } else {
+            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
         }
         return instance
     }
 
     fun setBackdropUri(backdrop: Uri?): E {
-        if (backdropView.setVisibleBy(backdrop != null)) {
-            backdropView.setImageURI(backdrop)
+        if (backdrop != null) {
+            rootView.setBackgroundBy(CenterCropDrawable(rootView.context, backdrop))
+        } else {
+            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
         }
         return instance
     }
 
     fun setBackdropDrawable(backdrop: Drawable?): E {
-        if (backdropView.setVisibleBy(backdrop != null)) {
-            backdropView.setImageDrawable(backdrop)
+        if (backdrop != null) {
+            rootView.setBackgroundBy(CenterCropDrawable(backdrop))
+        } else {
+            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
         }
         return instance
     }
 
     fun setBackdropDrawable(@DrawableRes backdrop: Int): E {
-        if (backdropView.setVisibleBy(backdrop > 0)) {
-            backdropView.setImageResource(backdrop)
+        if (backdrop > 0) {
+            rootView.setBackgroundBy(CenterCropDrawable(rootView.resources, backdrop))
+        } else {
+            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
         }
         return instance
     }
 
-    fun setBackdropColor(@ColorInt color: Int): E = setBackdropDrawable(ColorDrawable(color))
-    fun setBackdropColorRes(@ColorRes colorRes: Int): E = setBackdropColor(backdropView.context.getColor2(colorRes))
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): E = setBackdropColor(backdropView.context.theme.getColor(colorAttr))
+    fun setBackdropColor(backdrop: ColorStateList?): E {
+        if (backdrop != null) {
+            rootView.setBackgroundColor(backdrop.defaultColor)
+        } else {
+            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+        }
+        return instance
+    }
+
+    fun setBackdropColor(@ColorInt color: Int): E = setBackdropColor(ColorStateList.valueOf(color))
+    fun setBackdropColorRes(@ColorRes colorRes: Int): E = setBackdropColor(rootView.context.getColor2(colorRes))
+    fun setBackdropColorAttr(@AttrRes colorAttr: Int): E = setBackdropColor(rootView.context.theme.getColor(colorAttr))
 
     fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): E {
-        (viewContainer.layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, bottom)
+        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).setMargins(left, top, right, bottom)
         return instance
     }
 
     fun setContentMarginLeft(left: Int): E {
-        (viewContainer.layoutParams as FrameLayout.LayoutParams).leftMargin = left
+        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = left
         return instance
     }
 
     fun setContentMarginTop(top: Int): E {
-        (viewContainer.layoutParams as FrameLayout.LayoutParams).topMargin = top
+        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).topMargin = top
         return instance
     }
 
     fun setContentMarginRight(right: Int): E {
-        (viewContainer.layoutParams as FrameLayout.LayoutParams).rightMargin = right
+        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = right
         return instance
     }
 
     fun setContentMarginBottom(bottom: Int): E {
-        (viewContainer.layoutParams as FrameLayout.LayoutParams).bottomMargin = bottom
+        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
         return instance
     }
 
