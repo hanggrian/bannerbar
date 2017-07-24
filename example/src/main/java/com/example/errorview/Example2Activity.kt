@@ -1,11 +1,10 @@
 package com.example.errorview
 
 import android.os.Bundle
+import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.hendraanggrian.kota.content.toPx
-import com.hendraanggrian.widget.ErrorView2
-import com.hendraanggrian.widget.errorView
 import kotlinx.android.synthetic.main.activity_example.*
 
 /**
@@ -17,7 +16,7 @@ class Example2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
-        frameLayout.errorView("You have no new emails", ErrorView2.LENGTH_INDEFINITE)
+        Errorbar.make(frameLayout, "You have no new emails", Errorbar.LENGTH_INDEFINITE)
                 .setBackdropDrawable(R.drawable.bg_empty)
                 .setLogoDrawable(null)
                 .setContentMarginBottom(64.toPx())

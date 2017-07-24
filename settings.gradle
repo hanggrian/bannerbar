@@ -1,2 +1,2 @@
-include ':errorview'
+include ':errorbar'
 include ':example'

@@ -2,7 +2,6 @@ package com.example.errorview
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,7 +15,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         buttonExample1.setOnClickListener { startActivity(Intent(this, Example1Activity::class.java)) }
         buttonExample2.setOnClickListener { startActivity(Intent(this, Example2Activity::class.java)) }
-        Errorbar.make(frameLayout, "YOOO", Errorbar.LENGTH_INDEFINITE)
-                .show()
     }
 }

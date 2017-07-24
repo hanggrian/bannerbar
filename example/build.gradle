@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile project(':errorview')
+    compile project(':errorbar')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
     compile "com.android.support:design:$versions.support"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="errorbarStyle" type="attr"/>
+
+    <public name="errorBackdrop" type="attr"/>
+    <public name="errorLogo" type="attr"/>
+    <public name="errorText" type="attr"/>
+    <public name="errorTextAppearance" type="attr"/>
+    <public name="contentMarginLeft" type="attr"/>
+    <public name="contentMarginTop" type="attr"/>
+    <public name="contentMarginRight" type="attr"/>
+    <public name="contentMarginBottom" type="attr"/>
+</resources>
