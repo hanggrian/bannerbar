@@ -13,7 +13,7 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support   : '25.4.0',
-            utils     : '0.19',
+            kota      : '0.1.4',
 
             // test
             rules     : '0.5',

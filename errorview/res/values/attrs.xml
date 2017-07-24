@@ -4,12 +4,19 @@
         <attr name="errorViewStyle" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="ErrorView">
-        <!-- content -->
+    <declare-styleable name="Errorbar">
         <attr name="errorBackdrop" format="reference"/>
         <attr name="errorLogo" format="reference"/>
         <attr name="errorText" format="string"/>
         <attr name="errorTextAppearance" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ErrorView">
+        <!-- content -->
+        <attr name="errorBackdrop"/>
+        <attr name="errorLogo"/>
+        <attr name="errorText"/>
+        <attr name="errorTextAppearance"/>
         <!-- positioning -->
         <attr name="contentMarginLeft" format="dimension"/>
         <attr name="contentMarginTop" format="dimension"/>

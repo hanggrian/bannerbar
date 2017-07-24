@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.support.annotation.*
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -22,17 +21,17 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.hendraanggrian.errorview.HttpErrorCode
 import com.hendraanggrian.errorview.R
-import com.hendraanggrian.support.utils.content.color
-import com.hendraanggrian.support.utils.content.colorAttr
-import com.hendraanggrian.support.utils.view.containsView
-import com.hendraanggrian.support.utils.view.setVisibleBy
+import com.hendraanggrian.kota.content.getColor
+import com.hendraanggrian.kota.content.getColor2
+import com.hendraanggrian.kota.view.containsView
+import com.hendraanggrian.kota.view.setVisibleBy
 import kotlinx.android.synthetic.main.errorview_layout.view.*
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 @Suppress("unused")
-class ErrorView @JvmOverloads constructor(
+class ErrorView2 @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = R.attr.errorViewStyle,
@@ -40,12 +39,12 @@ class ErrorView @JvmOverloads constructor(
 
     private var targetParent: ViewGroup? = null
     @Delay private var delay: Int = 0
-    private var showAction: ((ErrorView) -> Unit)? = null
-    private var dismissAction: ((ErrorView, Int) -> Unit)? = null
+    private var showAction: ((ErrorView2) -> Unit)? = null
+    private var dismissAction: ((ErrorView2, Int) -> Unit)? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.errorview_layout, this, true)
-        setBackgroundColor(android.R.attr.windowBackground.colorAttr(context))
+        setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground, true))
         isClickable = true
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorView, defStyleAttr, defStyleRes)
@@ -65,83 +64,83 @@ class ErrorView @JvmOverloads constructor(
         a.recycle()
     }
 
-    fun setBackdropBitmap(backdrop: Bitmap?): ErrorView {
+    fun setBackdropBitmap(backdrop: Bitmap?): ErrorView2 {
         if (imageViewBackdrop.setVisibleBy(backdrop != null)) {
             imageViewBackdrop.setImageBitmap(backdrop)
         }
         return this
     }
 
-    fun setBackdropUri(backdrop: Uri?): ErrorView {
+    fun setBackdropUri(backdrop: Uri?): ErrorView2 {
         if (imageViewBackdrop.setVisibleBy(backdrop != null)) {
             imageViewBackdrop.setImageURI(backdrop)
         }
         return this
     }
 
-    fun setBackdropDrawable(backdrop: Drawable?): ErrorView {
+    fun setBackdropDrawable(backdrop: Drawable?): ErrorView2 {
         if (imageViewBackdrop.setVisibleBy(backdrop != null)) {
             imageViewBackdrop.setImageDrawable(backdrop)
         }
         return this
     }
 
-    fun setBackdropDrawable(@DrawableRes backdrop: Int): ErrorView {
+    fun setBackdropDrawable(@DrawableRes backdrop: Int): ErrorView2 {
         if (imageViewBackdrop.setVisibleBy(backdrop > 0)) {
             imageViewBackdrop.setImageResource(backdrop)
         }
         return this
     }
 
-    fun setBackdropColor(@ColorInt color: Int): ErrorView = setBackdropDrawable(ColorDrawable(color))
-    fun setBackdropColorRes(@ColorRes colorRes: Int): ErrorView = setBackdropColor(colorRes.color(context))
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): ErrorView = setBackdropColor(colorAttr.colorAttr(context))
+    fun setBackdropColor(@ColorInt color: Int): ErrorView2 = setBackdropDrawable(ColorDrawable(color))
+    fun setBackdropColorRes(@ColorRes colorRes: Int): ErrorView2 = setBackdropColor(context.getColor2(colorRes))
+    fun setBackdropColorAttr(@AttrRes colorAttr: Int): ErrorView2 = setBackdropColor(context.theme.getColor(colorAttr))
 
-    fun setLogoBitmap(logo: Bitmap?): ErrorView {
+    fun setLogoBitmap(logo: Bitmap?): ErrorView2 {
         if (imageViewLogo.setVisibleBy(logo != null)) {
             imageViewLogo.setImageBitmap(logo)
         }
         return this
     }
 
-    fun setLogoUri(logo: Uri?): ErrorView {
+    fun setLogoUri(logo: Uri?): ErrorView2 {
         if (imageViewLogo.setVisibleBy(logo != null)) {
             imageViewLogo.setImageURI(logo)
         }
         return this
     }
 
-    fun setLogoDrawable(logo: Drawable?): ErrorView {
+    fun setLogoDrawable(logo: Drawable?): ErrorView2 {
         if (imageViewLogo.setVisibleBy(logo != null)) {
             imageViewLogo.setImageDrawable(logo)
         }
         return this
     }
 
-    fun setLogoDrawable(@DrawableRes logo: Int): ErrorView {
+    fun setLogoDrawable(@DrawableRes logo: Int): ErrorView2 {
         if (imageViewLogo.setVisibleBy(logo > 0)) {
             imageViewLogo.setImageResource(logo)
         }
         return this
     }
 
-    fun setText(@StringRes text: Int): ErrorView = setText(resources.getText(text))
-    fun setText(text: CharSequence?): ErrorView {
+    fun setText(@StringRes text: Int): ErrorView2 = setText(resources.getText(text))
+    fun setText(text: CharSequence?): ErrorView2 {
         if (textViewText.setVisibleBy(!TextUtils.isEmpty(text))) {
             textViewText.text = text
         }
         return this
     }
 
-    fun <E : Exception> setText(e: E?): ErrorView {
+    fun <E : Exception> setText(e: E?): ErrorView2 {
         if (textViewText.setVisibleBy(e != null)) {
             setText(e!!.message)
         }
         return this
     }
 
-    fun setTextHttpCode(httpCode: Int): ErrorView = setTextHttpCode(HttpErrorCode.valueOf(httpCode))
-    fun setTextHttpCode(code: HttpErrorCode?): ErrorView {
+    fun setTextHttpCode(httpCode: Int): ErrorView2 = setTextHttpCode(HttpErrorCode.valueOf(httpCode))
+    fun setTextHttpCode(code: HttpErrorCode?): ErrorView2 {
         if (textViewText.setVisibleBy(code != null)) {
             textViewText.text = code!!.toString()
         }
@@ -149,7 +148,7 @@ class ErrorView @JvmOverloads constructor(
     }
 
     @Suppress("deprecation")
-    fun setTextAppearance(@StyleRes res: Int): ErrorView {
+    fun setTextAppearance(@StyleRes res: Int): ErrorView2 {
         if (Build.VERSION.SDK_INT >= 23) {
             textViewText.setTextAppearance(res)
         } else {
@@ -158,17 +157,17 @@ class ErrorView @JvmOverloads constructor(
         return this
     }
 
-    fun setTextColorRes(@ColorRes colorRes: Int): ErrorView = setTextColor(colorRes.color(context))
-    fun setTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setTextColor(colorAttr.colorAttr(context))
-    fun setTextColor(@ColorInt color: Int): ErrorView {
+    fun setTextColorRes(@ColorRes colorRes: Int): ErrorView2 = setTextColor(context.getColor2(colorRes))
+    fun setTextColorAttr(@AttrRes colorAttr: Int): ErrorView2 = setTextColor(context.theme.getColor(colorAttr))
+    fun setTextColor(@ColorInt color: Int): ErrorView2 {
         textViewText.setTextColor(color)
         return this
     }
 
-    fun setAction(@StringRes text: Int, action: ((ErrorView) -> Boolean)?): ErrorView = setAction(resources.getText(text), action)
-    fun setAction(text: CharSequence?, action: ((ErrorView) -> Boolean)?): ErrorView {
+    fun setAction(@StringRes text: Int, action: ((ErrorView2) -> Boolean)?): ErrorView2 = setAction(resources.getText(text), action)
+    fun setAction(text: CharSequence?, action: ((ErrorView2) -> Boolean)?): ErrorView2 {
         buttonAction.setOnClickListener(if (action == null) null else View.OnClickListener {
-            val shouldDismiss: Boolean? = action.invoke(this@ErrorView)
+            val shouldDismiss: Boolean? = action.invoke(this@ErrorView2)
             checkNotNull(shouldDismiss, { "Set true to internalDismiss on click, false otherwise. Shouldn't be null." })
             if (shouldDismiss!!) {
                 internalDismiss(DISMISS_EVENT_ACTION)
@@ -177,8 +176,8 @@ class ErrorView @JvmOverloads constructor(
         return setActionText(text)
     }
 
-    fun setActionText(@StringRes text: Int): ErrorView = setActionText(resources.getText(text))
-    fun setActionText(text: CharSequence?): ErrorView {
+    fun setActionText(@StringRes text: Int): ErrorView2 = setActionText(resources.getText(text))
+    fun setActionText(text: CharSequence?): ErrorView2 {
         if (buttonAction.setVisibleBy(!TextUtils.isEmpty(text))) {
             buttonAction.text = text
         }
@@ -186,7 +185,7 @@ class ErrorView @JvmOverloads constructor(
     }
 
     @Suppress("deprecation")
-    fun setActionTextAppearance(@StyleRes res: Int): ErrorView {
+    fun setActionTextAppearance(@StyleRes res: Int): ErrorView2 {
         if (Build.VERSION.SDK_INT >= 23) {
             buttonAction.setTextAppearance(res)
         } else {
@@ -195,49 +194,49 @@ class ErrorView @JvmOverloads constructor(
         return this
     }
 
-    fun setActionTextColorRes(@ColorRes colorRes: Int): ErrorView = setActionTextColor(ContextCompat.getColor(context, colorRes))
-    fun setActionTextColorAttr(@AttrRes colorAttr: Int): ErrorView = setActionTextColor(colorAttr.colorAttr(context))
-    fun setActionTextColor(@ColorInt color: Int): ErrorView {
+    fun setActionTextColorRes(@ColorRes colorRes: Int): ErrorView2 = setActionTextColor(context.getColor2(colorRes))
+    fun setActionTextColorAttr(@AttrRes colorAttr: Int): ErrorView2 = setActionTextColor(context.theme.getColor(colorAttr))
+    fun setActionTextColor(@ColorInt color: Int): ErrorView2 {
         buttonAction.setTextColor(color)
         return this
     }
 
-    fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): ErrorView {
+    fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): ErrorView2 {
         (viewGroupContainer.layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, bottom)
         return this
     }
 
-    fun setContentMarginLeft(left: Int): ErrorView {
+    fun setContentMarginLeft(left: Int): ErrorView2 {
         (viewGroupContainer.layoutParams as FrameLayout.LayoutParams).leftMargin = left
         return this
     }
 
-    fun setContentMarginTop(top: Int): ErrorView {
+    fun setContentMarginTop(top: Int): ErrorView2 {
         (viewGroupContainer.layoutParams as FrameLayout.LayoutParams).topMargin = top
         return this
     }
 
-    fun setContentMarginRight(right: Int): ErrorView {
+    fun setContentMarginRight(right: Int): ErrorView2 {
         (viewGroupContainer.layoutParams as FrameLayout.LayoutParams).rightMargin = right
         return this
     }
 
-    fun setContentMarginBottom(bottom: Int): ErrorView {
+    fun setContentMarginBottom(bottom: Int): ErrorView2 {
         (viewGroupContainer.layoutParams as FrameLayout.LayoutParams).bottomMargin = bottom
         return this
     }
 
-    fun setOnShowListener(action: (ErrorView) -> Unit): ErrorView {
+    fun setOnShowListener(action: (ErrorView2) -> Unit): ErrorView2 {
         showAction = action
         return this
     }
 
-    fun setOnDismissListener(action: ((ErrorView, Int) -> Unit)?): ErrorView {
+    fun setOnDismissListener(action: ((ErrorView2, Int) -> Unit)?): ErrorView2 {
         dismissAction = action
         return this
     }
 
-    fun show(): ErrorView {
+    fun show(): ErrorView2 {
         checkNotNull(targetParent, { "ErrorView is not created using make()!" })
         dismissAll(targetParent!!)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -257,7 +256,7 @@ class ErrorView @JvmOverloads constructor(
                         return@Runnable
                     }
                 }
-                if (targetParent!!.containsView(this@ErrorView)) {
+                if (targetParent!!.containsView(this@ErrorView2)) {
                     internalDismiss(DISMISS_EVENT_TIMEOUT)
                 }
             }, delay.toLong())
@@ -273,7 +272,7 @@ class ErrorView @JvmOverloads constructor(
     }
 
     companion object {
-        private val TAG = "com.hendraanggrian.widget.ErrorView"
+        private val TAG = "android.support.design.widget.ErrorView"
         private val HANDLER: Handler = Handler(Looper.getMainLooper())
 
         const private val DELAY_LONG = 3500
@@ -308,7 +307,7 @@ class ErrorView @JvmOverloads constructor(
 
         fun dismissAll(parent: ViewGroup) {
             var child: View? = parent.findViewWithTag(TAG)
-            while (child != null && child is ErrorView) {
+            while (child != null && child is ErrorView2) {
                 child.internalDismiss(DISMISS_EVENT_FORCED)
                 child = parent.findViewWithTag(TAG)
             }
@@ -321,23 +320,23 @@ class ErrorView @JvmOverloads constructor(
                 .max()
                 ?: 0.0f
 
-        fun make(parent: RelativeLayout, @StringRes text: Int, @Duration duration: Int): ErrorView = make(parent, parent.resources.getString(text), duration)
-        fun make(parent: RelativeLayout, code: HttpErrorCode, @Duration duration: Int): ErrorView = make(parent, code.toString(), duration)
-        fun make(parent: RelativeLayout, text: CharSequence, @Duration duration: Int): ErrorView = makeInternal(parent, text, duration).apply {
+        fun make(parent: RelativeLayout, @StringRes text: Int, @Duration duration: Int): ErrorView2 = make(parent, parent.resources.getString(text), duration)
+        fun make(parent: RelativeLayout, code: HttpErrorCode, @Duration duration: Int): ErrorView2 = make(parent, code.toString(), duration)
+        fun make(parent: RelativeLayout, text: CharSequence, @Duration duration: Int): ErrorView2 = makeInternal(parent, text, duration).apply {
             layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
-        fun make(parent: FrameLayout, @StringRes text: Int, @Duration duration: Int): ErrorView = make(parent, parent.resources.getString(text), duration)
-        fun make(parent: FrameLayout, code: HttpErrorCode, @Duration duration: Int): ErrorView = make(parent, code.toString(), duration)
-        fun make(parent: FrameLayout, text: CharSequence, @Duration duration: Int): ErrorView = makeInternal(parent, text, duration).apply {
+        fun make(parent: FrameLayout, @StringRes text: Int, @Duration duration: Int): ErrorView2 = make(parent, parent.resources.getString(text), duration)
+        fun make(parent: FrameLayout, code: HttpErrorCode, @Duration duration: Int): ErrorView2 = make(parent, code.toString(), duration)
+        fun make(parent: FrameLayout, text: CharSequence, @Duration duration: Int): ErrorView2 = makeInternal(parent, text, duration).apply {
             layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
-        private fun makeInternal(parent: ViewGroup, text: CharSequence, @Duration duration: Int): ErrorView {
+        private fun makeInternal(parent: ViewGroup, text: CharSequence, @Duration duration: Int): ErrorView2 {
             if (Build.VERSION.SDK_INT >= 11 && parent.layoutTransition == null) {
                 parent.layoutTransition = LayoutTransition()
             }
-            return ErrorView(parent.context).apply {
+            return ErrorView2(parent.context).apply {
                 targetParent = parent
                 setText(text)
                 when (duration) {
@@ -350,10 +349,10 @@ class ErrorView @JvmOverloads constructor(
     }
 }
 
-fun RelativeLayout.errorView(@StringRes text: Int, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
-fun RelativeLayout.errorView(code: HttpErrorCode, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
-fun RelativeLayout.errorView(text: CharSequence, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun RelativeLayout.errorView(@StringRes text: Int, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, text, duration)
+fun RelativeLayout.errorView(code: HttpErrorCode, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, code, duration)
+fun RelativeLayout.errorView(text: CharSequence, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, text, duration)
 
-fun FrameLayout.errorView(@StringRes text: Int, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
-fun FrameLayout.errorView(code: HttpErrorCode, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, code, duration)
-fun FrameLayout.errorView(text: CharSequence, @ErrorView.Companion.Duration duration: Int): ErrorView = ErrorView.make(this, text, duration)
+fun FrameLayout.errorView(@StringRes text: Int, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, text, duration)
+fun FrameLayout.errorView(code: HttpErrorCode, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, code, duration)
+fun FrameLayout.errorView(text: CharSequence, @ErrorView2.Companion.Duration duration: Int): ErrorView2 = ErrorView2.make(this, text, duration)

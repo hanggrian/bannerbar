@@ -12,7 +12,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.FrameLayout
-import com.hendraanggrian.widget.ErrorView
+import com.hendraanggrian.widget.ErrorView2
 import org.hamcrest.Matcher
 import org.jetbrains.anko.toast
 import org.junit.FixMethodOrder
@@ -47,7 +47,7 @@ class InstrumentedTest {
                     }
 
                     override fun perform(uiController: UiController, view: View) {
-                        ErrorView.make(view as FrameLayout, "No internet connection.", ErrorView.LENGTH_LONG)
+                        ErrorView2.make(view as FrameLayout, "No internet connection.", ErrorView2.LENGTH_LONG)
                                 .setBackdropDrawable(R.drawable.errorview_bg_cloud)
                                 .setLogoDrawable(R.drawable.errorview_ic_cloud)
                                 .setAction("Retry", { v ->
@@ -74,7 +74,7 @@ class InstrumentedTest {
                     }
 
                     override fun perform(uiController: UiController, view: View) {
-                        ErrorView.make(view as FrameLayout, "No internet connection.", ErrorView.LENGTH_INDEFINITE)
+                        ErrorView2.make(view as FrameLayout, "No internet connection.", ErrorView2.LENGTH_INDEFINITE)
                                 .setBackdropDrawable(R.drawable.bg_empty)
                                 .setLogoBitmap(null)
                                 .setAction(null, {
