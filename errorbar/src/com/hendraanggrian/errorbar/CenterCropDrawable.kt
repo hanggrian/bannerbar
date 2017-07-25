@@ -39,22 +39,24 @@ internal class CenterCropDrawable(val bitmap: Bitmap) : Drawable() {
     override fun getOpacity() = 100
 
     override fun setColorFilter(colorFilter: ColorFilter?) {}
-}
 
-internal fun Drawable.toBitmap(): Bitmap {
-    var bitmap: Bitmap? = null
-    if (this is BitmapDrawable) {
-        if (bitmap != null) {
+    companion object {
+        private fun Drawable.toBitmap(): Bitmap {
+            var bitmap: Bitmap? = null
+            if (this is BitmapDrawable) {
+                if (bitmap != null) {
+                    return bitmap
+                }
+            }
+            if (intrinsicWidth <= 0 || intrinsicHeight <= 0) {
+                bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) // Single color bitmap will be created of 1x1 pixel
+            } else {
+                bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            }
+            val canvas = Canvas(bitmap)
+            setBounds(0, 0, canvas.width, canvas.height)
+            draw(canvas)
             return bitmap
         }
     }
-    if (intrinsicWidth <= 0 || intrinsicHeight <= 0) {
-        bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) // Single color bitmap will be created of 1x1 pixel
-    } else {
-        bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
-    }
-    val canvas = Canvas(bitmap)
-    setBounds(0, 0, canvas.width, canvas.height)
-    draw(canvas)
-    return bitmap
 }

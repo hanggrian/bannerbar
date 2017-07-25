@@ -34,8 +34,8 @@ class InstrumentedTest {
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
                 Errorbar.make(view as FrameLayout, "No internet connection.", Errorbar.LENGTH_INDEFINITE)
-                        .setBackdropDrawable(R.drawable.errorbar_bg_cloud)
-                        .setLogoDrawable(R.drawable.errorbar_ic_cloud)
+                        .setBackdropResource(R.drawable.errorbar_bg_cloud)
+                        .setLogoResource(R.drawable.errorbar_ic_cloud)
                         .setAction("Retry", View.OnClickListener { v ->
                             v.context.toast("Clicked!")
                         })
@@ -48,7 +48,7 @@ class InstrumentedTest {
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
                 Errorbar.make(view as FrameLayout, "You have no new emails", Errorbar.LENGTH_LONG)
-                        .setBackdropDrawable(R.drawable.bg_empty)
+                        .setBackdropResource(R.drawable.bg_empty)
                         .setContentMarginBottom(64.toPx())
                         .show()
             }

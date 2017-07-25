@@ -1,5 +1,7 @@
 package android.support.design.widget
 
+import android.annotation.TargetApi
+import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
@@ -20,9 +22,8 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
         BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback), BaseErrorbar<Errorbar> {
 
     override val instance = this
-    override val rootView = mView as ViewGroup
-
-    override val viewContainer = (mView.getChildAt(0) as ErrorbarLayout).viewContainer
+    override var backdropView = (mView.getChildAt(0) as ErrorbarLayout).backdropView
+    override val containerView = (mView.getChildAt(0) as ErrorbarLayout).containerView
     override val logoView = (mView.getChildAt(0) as ErrorbarLayout).logoView
     override val messageView = (mView.getChildAt(0) as ErrorbarLayout).messageView
     override val actionView = (mView.getChildAt(0) as ErrorbarLayout).actionView
@@ -40,6 +41,7 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
             errorbar.setText(text)
             errorbar.duration = duration
             // hack Snackbar's view container
+            errorbar.mView.setPadding(0, 0, 0, 0)
             errorbar.mView.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground, true))
             errorbar.mView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             return errorbar
@@ -61,6 +63,13 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
             } while (view != null)
             return null
         }
+
+        @TargetApi(21)
+        @RequiresApi(21)
+        private fun getHighestElevation(parent: ViewGroup): Float = (0..parent.childCount - 1)
+                .map { parent.getChildAt(it).elevation }
+                .max()
+                ?: 0.0f
     }
 
     open class Callback : BaseCallback<Errorbar>() {

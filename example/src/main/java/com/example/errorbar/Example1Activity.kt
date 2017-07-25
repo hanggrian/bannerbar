@@ -32,8 +32,8 @@ class Example1Activity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> finish()
             R.id.item_example1_make -> Errorbar.make(frameLayout, "No internet connection", length)
-                    .setBackdropDrawable(R.drawable.errorbar_bg_cloud)
-                    .setLogoDrawable(R.drawable.errorbar_ic_cloud)
+                    .setBackdropResource(R.drawable.errorbar_bg_cloud)
+                    .setLogoResource(R.drawable.errorbar_ic_cloud)
                     .setAction("Retry", View.OnClickListener {
                         toast("Clicked.")
                     })

@@ -1,12 +1,17 @@
 Errorbar
 ========
-Larger Snackbar to display error and empty state.
-Using [Android support design's][design] internal components, Errorbar should be as fluid and stable as Snackbar.
+Errorbar is an extended version of Snackbar with logo and maximum height.
+It is useful to display an error or empty state that requires full attention in a sense that the app workflow should not continue without them being resolved.
 
 ![demo][demo]
 
 Usage
 -----
+Errorbar is everything a Snackbar is, with some modifications:
+ * Errorbar stretch its height to match its parent size, unlike Snackbar's wrapping height.
+ * Errorbar has default current app theme's background color, unlike Snackbar's dark background.
+ * In addition to Snackbar's properties, Errorbar has backdrop as background replacement and logo.
+ 
 #### Programatically
 Create `Errorbar` just like a `Snackbar`.
 ```kotlin
@@ -23,12 +28,10 @@ It can also be inflated in xml, if that's your thing.
 At this point duration property is ignored since `show()` is not called.
 ```xml
 <android.support.design.ErrorbarLayout
+    android:id="@+id/errorbar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:errorText="No internet connection"/>
+    android:layout_height="match_parent"/>
 ```
-
-See [attrs.xml][attrs] for full list of available attributes.
 
 #### Limitation
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
@@ -37,6 +40,8 @@ When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
 
 Download
 --------
+This library relies heavily on private resources and internal classes from [Android's support design library][design_repo].
+It is only tested with support design library version as listed below with no intention of supporting older versions.
 ```gradle
 repositories {
     maven { url 'https://maven.google.com' }
@@ -44,6 +49,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.android.support:design:26.0.0'
     compile 'com.hendraanggrian:errorbar:0.1.0'
 }
 ```
@@ -64,6 +70,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
  
-[design]: https://github.com/android/platform_frameworks_support/tree/master/design
-[attrs]: https://github.com/HendraAnggrian/errorbar/blob/master/errorbar/res/values/attrs.xml
 [demo]: /art/demo.gif
+[design_intro]: https://developer.android.com/training/material/design-library.html
+[design_repo]: https://github.com/android/platform_frameworks_support/tree/master/design

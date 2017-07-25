@@ -2,6 +2,7 @@ package com.hendraanggrian.errorbar
 
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.*
@@ -13,93 +14,84 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.hendraanggrian.kota.content.getColor
 import com.hendraanggrian.kota.content.getColor2
-import com.hendraanggrian.kota.view.setBackgroundBy
 import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
+ * Base interface of Errorbar and its content layout.
+ * Essential for Snackbar's like builder pattern.
+ *
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 internal interface BaseErrorbar<out E> {
 
     val instance: E
-    val rootView: ViewGroup
-
-    val viewContainer: ViewGroup
+    val backdropView: ImageView
+    val containerView: ViewGroup
     val logoView: ImageView
     val messageView: TextView
     val actionView: Button
 
     fun setBackdropBitmap(backdrop: Bitmap?): E {
-        if (backdrop != null) {
-            rootView.setBackgroundBy(CenterCropDrawable(backdrop))
-        } else {
-            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+        if (backdropView.setVisibleBy(backdrop != null)) {
+            backdropView.setImageBitmap(backdrop)
         }
         return instance
     }
 
     fun setBackdropUri(backdrop: Uri?): E {
-        if (backdrop != null) {
-            rootView.setBackgroundBy(CenterCropDrawable(rootView.context, backdrop))
-        } else {
-            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+        if (backdropView.setVisibleBy(backdrop != null)) {
+            backdropView.setImageURI(backdrop)
         }
         return instance
     }
 
     fun setBackdropDrawable(backdrop: Drawable?): E {
-        if (backdrop != null) {
-            rootView.setBackgroundBy(CenterCropDrawable(backdrop))
-        } else {
-            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+        if (backdropView.setVisibleBy(backdrop != null)) {
+            backdropView.setImageDrawable(backdrop)
         }
         return instance
     }
 
-    fun setBackdropDrawable(@DrawableRes backdrop: Int): E {
-        if (backdrop > 0) {
-            rootView.setBackgroundBy(CenterCropDrawable(rootView.resources, backdrop))
-        } else {
-            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+    fun setBackdropResource(@DrawableRes backdrop: Int): E {
+        if (backdropView.setVisibleBy(backdrop > 0)) {
+            backdropView.setImageResource(backdrop)
         }
         return instance
     }
 
     fun setBackdropColor(backdrop: ColorStateList?): E {
-        if (backdrop != null) {
-            rootView.setBackgroundColor(backdrop.defaultColor)
-        } else {
-            rootView.setBackgroundColor(rootView.context.theme.getColor(android.R.attr.windowBackground, true))
+        if (backdropView.setVisibleBy(backdrop != null)) {
+            backdropView.setImageDrawable(ColorDrawable(backdrop!!.defaultColor))
         }
         return instance
     }
 
     fun setBackdropColor(@ColorInt color: Int): E = setBackdropColor(ColorStateList.valueOf(color))
-    fun setBackdropColorRes(@ColorRes colorRes: Int): E = setBackdropColor(rootView.context.getColor2(colorRes))
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): E = setBackdropColor(rootView.context.theme.getColor(colorAttr))
+    fun setBackdropColorRes(@ColorRes colorRes: Int): E = setBackdropColor(backdropView.context.getColor2(colorRes))
+    fun setBackdropColorAttr(@AttrRes colorAttr: Int): E = setBackdropColor(backdropView.context.theme.getColor(colorAttr))
 
     fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): E {
-        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).setMargins(left, top, right, bottom)
+        (containerView.layoutParams as ViewGroup.MarginLayoutParams).setMargins(left, top, right, bottom)
         return instance
     }
 
     fun setContentMarginLeft(left: Int): E {
-        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = left
+        (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = left
         return instance
     }
 
     fun setContentMarginTop(top: Int): E {
-        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).topMargin = top
+        (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin = top
         return instance
     }
 
     fun setContentMarginRight(right: Int): E {
-        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = right
+        (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = right
         return instance
     }
 
     fun setContentMarginBottom(bottom: Int): E {
-        (viewContainer.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
+        (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
         return instance
     }
 
@@ -124,7 +116,7 @@ internal interface BaseErrorbar<out E> {
         return instance
     }
 
-    fun setLogoDrawable(@DrawableRes logo: Int): E {
+    fun setLogoResource(@DrawableRes logo: Int): E {
         if (logoView.setVisibleBy(logo > 0)) {
             logoView.setImageResource(logo)
         }
