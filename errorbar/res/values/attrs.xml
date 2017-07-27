@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ErrorbarStyle">
+        <attr name="errorbarStyle" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="ErrorbarLayout">
-        <!-- inherited from Snackbar -->
+        <!-- content -->
+        <attr name="android:textAppearance"/>
+        <attr name="actionTextAppearance" format="reference"/>
+
+        <!-- positioning -->
+        <attr name="contentMarginLeft" format="dimension"/>
+        <attr name="contentMarginTop" format="dimension"/>
+        <attr name="contentMarginRight" format="dimension"/>
+        <attr name="contentMarginBottom" format="dimension"/>
+
+        <!-- inherited from SnackbarLayout -->
         <attr name="android:maxWidth"/>
         <attr name="elevation"/>
         <attr name="maxActionInlineWidth"/>

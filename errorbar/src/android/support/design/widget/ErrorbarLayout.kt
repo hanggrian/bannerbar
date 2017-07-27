@@ -1,6 +1,9 @@
 package android.support.design.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.support.annotation.AttrRes
+import android.support.annotation.StyleRes
 import android.support.design.internal.SnackbarContentLayout
 import android.support.v4.view.ViewCompat
 import android.text.TextUtils
@@ -14,13 +17,18 @@ import android.widget.TextView
 import com.hendraanggrian.errorbar.BaseErrorbar
 import com.hendraanggrian.errorbar.R
 import com.hendraanggrian.kota.view.setVisibleBy
+import com.hendraanggrian.kota.widget.setTextAppearanceBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  * @see SnackbarContentLayout
  */
-class ErrorbarLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
-        FrameLayout(context, attrs), BaseTransientBottomBar.ContentViewCallback, BaseErrorbar<ErrorbarLayout> {
+class ErrorbarLayout @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        @AttrRes defStyleAttr: Int = R.attr.errorbarStyle,
+        @StyleRes defStyleRes: Int = R.style.Widget_Design_Errorbar) :
+        FrameLayout(context, attrs, defStyleAttr, defStyleRes), BaseTransientBottomBar.ContentViewCallback, BaseErrorbar<ErrorbarLayout> {
 
     override val instance = this
     override lateinit var backdropView: ImageView
@@ -29,24 +37,26 @@ class ErrorbarLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     override lateinit var messageView: TextView
     override lateinit var actionView: Button
 
-    private val mMaxWidth: Int
-    private val mMaxInlineActionWidth: Int
-
-    init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout)
-        mMaxWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_android_maxWidth, -1)
-        mMaxInlineActionWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
-        a.recycle()
-    }
+    // keep TypedArray a little bit longer because views are binded in onFinishInflate()
+    @SuppressLint("Recycle")
+    private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout, defStyleAttr, defStyleRes)
+    private val mMaxWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_android_maxWidth, -1)
+    private val mMaxInlineActionWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        // bind views
         backdropView = findViewById(R.id.errorbar_backdrop)
         containerView = findViewById(R.id.errorbar_container)
         logoView = findViewById(R.id.errorbar_logo)
         messageView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
+        if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
+            messageView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
+            actionView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
+        }
+        a.recycle()
     }
 
     override fun setAction(text: CharSequence?, listener: OnClickListener?): ErrorbarLayout {
@@ -54,7 +64,7 @@ class ErrorbarLayout @JvmOverloads constructor(context: Context, attrs: Attribut
             actionView.text = text
             actionView.setOnClickListener {
                 listener!!.onClick(actionView)
-                // Errorbar created with xml will not dismiss on click
+                // ErrorbarLayout without Errorbar will not dismiss on click
             }
         } else {
             actionView.setOnClickListener(null)
@@ -63,11 +73,11 @@ class ErrorbarLayout @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var widthMeasureSpec = widthMeasureSpec
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        var _widthMeasureSpec = widthMeasureSpec
+        super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
         if (mMaxWidth in 1..(measuredWidth - 1)) {
-            widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(mMaxWidth, View.MeasureSpec.EXACTLY)
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            _widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(mMaxWidth, View.MeasureSpec.EXACTLY)
+            super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
         }
         val multiLineVPadding = resources.getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical_2lines)
         val singleLineVPadding = resources.getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical)
@@ -84,7 +94,7 @@ class ErrorbarLayout @JvmOverloads constructor(context: Context, attrs: Attribut
             }
         }
         if (remeasure) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
         }
     }
 

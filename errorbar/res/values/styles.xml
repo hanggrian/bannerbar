@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+
+        <!-- inherited from Snackbar -->
+        <item name="elevation">@dimen/design_snackbar_elevation</item>
+        <item name="maxActionInlineWidth">@dimen/design_snackbar_action_inline_max_width</item>
+    </style>
+</resources>

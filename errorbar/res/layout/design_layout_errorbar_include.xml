@@ -27,14 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:contentDescription="@string/errorbar_logo_desc"/>
+            android:contentDescription="@string/errorbar_logo_desc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/errorbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            android:gravity="center_horizontal"/>
 
         <!-- action view is deliberately gone, setting action text and listener will automatically display it -->
         <Button
