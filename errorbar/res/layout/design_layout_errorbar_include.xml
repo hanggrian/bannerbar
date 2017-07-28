@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view
-    class="android.support.design.widget.ErrorbarLayout"
+    class="android.support.design.internal.ErrorbarContentLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

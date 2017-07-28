@@ -1,17 +1,18 @@
-package com.hendraanggrian.errorbar.test
+package com.hendraanggrian.errorbar.test.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import com.hendraanggrian.errorbar.test.R
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-class InstrumentedActivity : AppCompatActivity() {
+open class InstrumentedActivity : AppCompatActivity() {
 
-    var progressBar: ProgressBar? = null
-    var frameLayout: FrameLayout? = null
+    lateinit var progressBar: ProgressBar
+    lateinit var frameLayout: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

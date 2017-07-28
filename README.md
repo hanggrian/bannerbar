@@ -13,7 +13,7 @@ Errorbar is everything a Snackbar is, with some modifications:
  * In addition to Snackbar's properties, Errorbar has backdrop as background replacement and logo.
  
 #### Programatically
-Create `Errorbar` just like a `Snackbar`.
+Create Errorbar just like a Snackbar.
 ```kotlin
 Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
     .setLogoDrawable(R.drawable.errorbar_ic_cloud)
@@ -23,15 +23,23 @@ Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
     .show()
 ```
 
-#### XML
-It can also be inflated in xml, if that's your thing.
-At this point duration property is ignored since `show()` is not called.
+#### Styling
+Customize Errorbar default text appearance, logo and backdrop with styling.
 ```xml
-<android.support.design.ErrorbarLayout
-    android:id="@+id/errorbar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+<resources>
+    <style name="MyAppTheme" parent="Theme.Appcompat.Light.NoActionBar">
+        <item name="errorbarStyle">@style/MyErrorbarStyle</item>
+    </style>
+    
+    <style name="MyErrorbarStyle" parent="Widget.Design.Errorbar">
+        <item name="logo">@drawable/ic_error</item>
+        <item name="android:textSize">24sp</item>
+        <item name="actionTextColor">@color/blue</item>
+    </style>
+</resources>
 ```
+
+See [attrs.xml][attrs] for complete list of attributes.
 
 #### Limitation
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
@@ -40,7 +48,7 @@ When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
 
 Download
 --------
-This library relies heavily on private resources and internal classes from [Android's support design library][design_repo].
+This library relies heavily on private resources and internal classes from [Android's support design library][design].
 It is only tested with support design library version as listed below with no intention of supporting older versions.
 ```gradle
 repositories {
@@ -50,7 +58,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:design:26.0.0'
-    compile 'com.hendraanggrian:errorbar:0.1.0'
+    compile 'com.hendraanggrian:errorbar:0.2.0'
 }
 ```
 
@@ -71,5 +79,5 @@ License
     limitations under the License.
  
 [demo]: /art/demo.gif
-[design_intro]: https://developer.android.com/training/material/design-library.html
-[design_repo]: https://github.com/android/platform_frameworks_support/tree/master/design
+[attrs]: /errorbar/res/values/attrs.xml
+[design]: https://github.com/android/platform_frameworks_support/tree/master/design

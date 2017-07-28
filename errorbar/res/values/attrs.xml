@@ -5,15 +5,16 @@
     </declare-styleable>
 
     <declare-styleable name="ErrorbarLayout">
-        <!-- content -->
-        <attr name="android:textAppearance"/>
-        <attr name="actionTextAppearance" format="reference"/>
+        <attr name="logo"/>
+        <attr name="backdrop" format="reference"/>
 
-        <!-- positioning -->
-        <attr name="contentMarginLeft" format="dimension"/>
-        <attr name="contentMarginTop" format="dimension"/>
-        <attr name="contentMarginRight" format="dimension"/>
-        <attr name="contentMarginBottom" format="dimension"/>
+        <attr name="android:textAppearance"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+
+        <attr name="actionTextAppearance" format="reference"/>
+        <attr name="actionTextColor" format="color"/>
+        <attr name="actionTextSize" format="dimension"/>
 
         <!-- inherited from SnackbarLayout -->
         <attr name="android:maxWidth"/>

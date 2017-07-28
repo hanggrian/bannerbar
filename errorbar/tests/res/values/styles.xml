@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="errorbarStyle">@style/CustomErrorbar</item>
+    </style>
+
+    <style name="CustomErrorbar" parent="Widget.Design.Errorbar">
+        <item name="backdrop">@android:color/holo_green_light</item>
+        <item name="logo">@android:drawable/stat_sys_download_done</item>
+
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
+        <item name="actionTextColor">@android:color/holo_red_light</item>
+    </style>
+</resources>

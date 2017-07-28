@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.hendraanggrian.kota.content.toPx
+import com.hendraanggrian.kota.content.res.toPx
 import kotlinx.android.synthetic.main.activity_example.*
 
 /**

@@ -12,6 +12,9 @@
     <application
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <uses-library android:name="android.test.runner"/>
-        <activity android:name=".InstrumentedActivity"/>
+        <activity android:name=".activity.InstrumentedActivity"/>
+        <activity
+            android:name=".activity.CustomThemeActivity"
+            android:theme="@style/CustomTheme"/>
     </application>
 </manifest>

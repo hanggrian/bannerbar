@@ -1,12 +1,12 @@
-package android.support.design.widget
+package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.annotation.AttrRes
+import android.support.annotation.Px
 import android.support.annotation.StyleRes
-import android.support.design.internal.SnackbarContentLayout
+import android.support.design.widget.BaseTransientBottomBar
 import android.support.v4.view.ViewCompat
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -14,62 +14,68 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.hendraanggrian.errorbar.BaseErrorbar
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.view.setVisibleBy
 import com.hendraanggrian.kota.widget.setTextAppearanceBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  * @see SnackbarContentLayout
  */
-class ErrorbarLayout @JvmOverloads constructor(
+class ErrorbarContentLayout @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = R.attr.errorbarStyle,
         @StyleRes defStyleRes: Int = R.style.Widget_Design_Errorbar) :
-        FrameLayout(context, attrs, defStyleAttr, defStyleRes), BaseTransientBottomBar.ContentViewCallback, BaseErrorbar<ErrorbarLayout> {
+        FrameLayout(context, attrs, defStyleAttr, defStyleRes), BaseTransientBottomBar.ContentViewCallback {
 
-    override val instance = this
-    override lateinit var backdropView: ImageView
-    override lateinit var containerView: ViewGroup
-    override lateinit var logoView: ImageView
-    override lateinit var messageView: TextView
-    override lateinit var actionView: Button
+    lateinit var backdropView: ImageView
+    lateinit var containerView: ViewGroup
+    lateinit var logoView: ImageView
+    lateinit var messageView: TextView
+    lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
-    @SuppressLint("Recycle")
+    @SuppressLint("Recycle", "CustomViewStyleable")
     private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout, defStyleAttr, defStyleRes)
-    private val mMaxWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_android_maxWidth, -1)
-    private val mMaxInlineActionWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
+    @Px private val mMaxWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_android_maxWidth, -1)
+    @Px private val mMaxInlineActionWidth = a.getDimensionPixelSize(R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        // bind views
         backdropView = findViewById(R.id.errorbar_backdrop)
         containerView = findViewById(R.id.errorbar_container)
         logoView = findViewById(R.id.errorbar_logo)
         messageView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
+        // apply attr and finally recycle
+        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
+            backdropView.visibility = View.VISIBLE
+            backdropView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_logo)) {
+            logoView.visibility = View.VISIBLE
+            logoView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
+        }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             messageView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
         }
+        if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
+            messageView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor))
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
+            messageView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
+        }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            actionView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
+            actionView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
+            actionView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor))
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
+            actionView.textSize = a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f)
         }
         a.recycle()
-    }
-
-    override fun setAction(text: CharSequence?, listener: OnClickListener?): ErrorbarLayout {
-        if (actionView.setVisibleBy(!TextUtils.isEmpty(text) && listener != null)) {
-            actionView.text = text
-            actionView.setOnClickListener {
-                listener!!.onClick(actionView)
-                // ErrorbarLayout without Errorbar will not dismiss on click
-            }
-        } else {
-            actionView.setOnClickListener(null)
-        }
-        return instance
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
