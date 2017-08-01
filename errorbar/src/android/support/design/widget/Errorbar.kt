@@ -14,8 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.content.res.getColor
-import com.hendraanggrian.kota.content.res.getColor2
+import com.hendraanggrian.kota.content.getColor
+import com.hendraanggrian.kota.content.getColor2
 import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
