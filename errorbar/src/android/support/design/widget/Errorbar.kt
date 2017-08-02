@@ -1,3 +1,5 @@
+@file:JvmName("Errorbar")
+
 package android.support.design.widget
 
 import android.content.res.ColorStateList
@@ -8,7 +10,6 @@ import android.net.Uri
 import android.support.annotation.*
 import android.support.design.internal.ErrorbarContentLayout
 import android.support.v4.widget.NestedScrollView
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -166,7 +167,7 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     fun setText(@StringRes text: Int): Errorbar = setText(errorbarLayout.messageView.resources.getText(text))
 
     fun setText(text: CharSequence?): Errorbar {
-        if (errorbarLayout.messageView.setVisibleBy(!TextUtils.isEmpty(text))) {
+        if (errorbarLayout.messageView.setVisibleBy(!text.isNullOrEmpty())) {
             errorbarLayout.messageView.text = text
         }
         return this
@@ -179,13 +180,13 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
         return this
     }
 
-    fun setAction(@StringRes resId: Int, listener: View.OnClickListener?): Errorbar = setAction(errorbarLayout.actionView.context.getText(resId), listener)
+    fun setAction(@StringRes resId: Int, action: ((View) -> Unit)?): Errorbar = setAction(errorbarLayout.actionView.context.getText(resId), action)
 
-    fun setAction(text: CharSequence?, listener: View.OnClickListener?): Errorbar {
-        if (errorbarLayout.actionView.setVisibleBy(!TextUtils.isEmpty(text) && listener != null)) {
+    fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar {
+        if (errorbarLayout.actionView.setVisibleBy(!text.isNullOrEmpty() && action != null)) {
             errorbarLayout.actionView.text = text
             errorbarLayout.actionView.setOnClickListener {
-                listener!!.onClick(errorbarLayout.actionView)
+                action!!.invoke(errorbarLayout.actionView)
                 dispatchDismiss(BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
             }
         } else {

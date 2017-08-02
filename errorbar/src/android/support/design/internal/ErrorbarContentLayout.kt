@@ -1,3 +1,5 @@
+@file:JvmName("ErrorbarContentLayout")
+
 package android.support.design.internal
 
 import android.annotation.SuppressLint

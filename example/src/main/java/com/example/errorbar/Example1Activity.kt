@@ -5,7 +5,6 @@ import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import kotlinx.android.synthetic.main.activity_example.*
 import org.jetbrains.anko.toast
 
@@ -34,7 +33,7 @@ class Example1Activity : AppCompatActivity() {
             R.id.item_example1_make -> Errorbar.make(frameLayout, "No internet connection", length)
                     .setBackdropResource(R.drawable.errorbar_bg_cloud)
                     .setLogoResource(R.drawable.errorbar_ic_cloud)
-                    .setAction("Retry", View.OnClickListener {
+                    .setAction("Retry", {
                         toast("Clicked.")
                     })
                     .addCallback(object : Errorbar.Callback() {

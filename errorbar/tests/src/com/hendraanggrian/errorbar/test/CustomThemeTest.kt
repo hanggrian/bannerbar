@@ -1,6 +1,6 @@
 package com.hendraanggrian.errorbar.test
 
-import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -11,7 +11,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.test.activity.CustomThemeActivity
-import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,11 +30,7 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view as FrameLayout, "No internet connection.", Errorbar.LENGTH_INDEFINITE)
-                        .setAction("Retry", View.OnClickListener { v ->
-                            v.context.toast("Clicked!")
-                        })
-                        .show()
+                errorbar(view as FrameLayout, "No internet connection.")
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))

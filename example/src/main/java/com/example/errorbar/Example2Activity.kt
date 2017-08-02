@@ -1,7 +1,7 @@
 package com.example.errorbar
 
 import android.os.Bundle
-import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.hendraanggrian.kota.content.toPx
@@ -16,10 +16,9 @@ class Example2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
-        Errorbar.make(frameLayout, "You have no new emails", Errorbar.LENGTH_INDEFINITE)
+        errorbar(frameLayout, "You have no new emails")
                 .setBackdropResource(R.drawable.bg_empty)
                 .setContentMarginBottom(64.toPx())
-                .show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

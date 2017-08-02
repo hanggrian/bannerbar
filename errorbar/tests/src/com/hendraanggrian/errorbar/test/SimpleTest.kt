@@ -1,6 +1,6 @@
 package com.hendraanggrian.errorbar.test
 
-import android.support.design.widget.Errorbar
+import android.support.design.widget.longErrorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -11,7 +11,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.test.activity.InstrumentedActivity
-import com.hendraanggrian.kota.content.res.toPx
+import com.hendraanggrian.kota.content.toPx
 import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
@@ -32,13 +32,9 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view as FrameLayout, "No internet connection.", Errorbar.LENGTH_LONG)
+                longErrorbar(view as FrameLayout, "No internet connection.", "Retry", { v -> v.context.toast("Clicked!") })
                         .setBackdropResource(R.drawable.errorbar_bg_cloud)
                         .setLogoResource(R.drawable.errorbar_ic_cloud)
-                        .setAction("Retry", View.OnClickListener { v ->
-                            v.context.toast("Clicked!")
-                        })
-                        .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
@@ -47,10 +43,9 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view as FrameLayout, "You have no new emails", Errorbar.LENGTH_LONG)
+                longErrorbar(view as FrameLayout, "You have no new emails")
                         .setBackdropResource(R.drawable.bg_empty)
                         .setContentMarginBottom(64.toPx())
-                        .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
