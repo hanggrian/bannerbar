@@ -17,7 +17,7 @@ Create Errorbar just like a Snackbar.
 ```kotlin
 Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
     .setLogoDrawable(R.drawable.errorbar_ic_cloud)
-    .setAction("Retry", View.OnClickListener { v -> 
+    .setAction("Retry", { v -> 
         // do something
     })
     .show()
@@ -58,7 +58,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:design:26.0.0'
-    compile 'com.hendraanggrian:errorbar:0.3.0'
+    compile 'com.hendraanggrian:errorbar:0.3.1'
 }
 ```
 
