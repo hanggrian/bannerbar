@@ -14,7 +14,7 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support   : '26.0.0',
-            kota      : '0.4.0',
+            kota      : '0.6.0',
 
             // test
             rules     : '0.5',
@@ -22,7 +22,7 @@ buildscript {
             espresso  : '2.2.2',
             junit     : '4.12',
 
-            release   : '0.3.0'
+            release   : '0.3.1'
     ]
     repositories {
         jcenter()
@@ -48,4 +48,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
+/** QUICK LINT CHECK BEFORE UPLOAD
+ ./gradlew errorbar:clean errorbar:build
+ ./gradlew errorbar:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ */

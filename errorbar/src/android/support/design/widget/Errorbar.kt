@@ -15,16 +15,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.content.getColor
 import com.hendraanggrian.kota.content.getColor2
+import com.hendraanggrian.kota.text.isNotNullOrEmpty
 import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  * @see Snackbar
  */
-class Errorbar private constructor(parent: ViewGroup, content: View, contentViewCallback: ContentViewCallback) :
-        BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
+class Errorbar private constructor(
+        parent: ViewGroup,
+        content: View,
+        contentViewCallback: ContentViewCallback
+) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
 
     companion object {
         const val LENGTH_INDEFINITE = BaseTransientBottomBar.LENGTH_INDEFINITE
@@ -35,14 +38,14 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
             val parent = findSuitableParent(view) ?: throw IllegalStateException("Unable to find suitable parent!")
             val context = parent.context
             val content = LayoutInflater.from(context).inflate(R.layout.design_layout_errorbar_include, parent, false) as ErrorbarContentLayout
-            val errorbar = Errorbar(parent, content, content)
-            errorbar.setText(text)
-            errorbar.duration = duration
-            // hack Snackbar's view container
-            errorbar.mView.setPadding(0, 0, 0, 0)
-            errorbar.mView.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground, true))
-            errorbar.mView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            return errorbar
+            return Errorbar(parent, content, content).apply {
+                setText(text)
+                this.duration = duration
+                // hack Snackbar's view container
+                mView.setPadding(0, 0, 0, 0)
+                mView.setBackgroundColor(context.theme.getColor2(android.R.attr.windowBackground))
+                mView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            }
         }
 
         fun make(view: View, @StringRes resId: Int, @Duration duration: Int): Errorbar = make(view, view.resources.getText(resId), duration)
@@ -73,43 +76,43 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     private val errorbarLayout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
     fun setBackdropBitmap(backdrop: Bitmap?): Errorbar {
-        if (errorbarLayout.backdropView.setVisibleBy(backdrop != null)) {
-            errorbarLayout.backdropView.setImageBitmap(backdrop)
+        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+            setImageBitmap(backdrop)
         }
         return this
     }
 
     fun setBackdropUri(backdrop: Uri?): Errorbar {
-        if (errorbarLayout.backdropView.setVisibleBy(backdrop != null)) {
-            errorbarLayout.backdropView.setImageURI(backdrop)
+        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+            setImageURI(backdrop)
         }
         return this
     }
 
     fun setBackdropDrawable(backdrop: Drawable?): Errorbar {
-        if (errorbarLayout.backdropView.setVisibleBy(backdrop != null)) {
-            errorbarLayout.backdropView.setImageDrawable(backdrop)
+        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+            setImageDrawable(backdrop)
         }
         return this
     }
 
     fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar {
-        if (errorbarLayout.backdropView.setVisibleBy(backdrop > 0)) {
-            errorbarLayout.backdropView.setImageResource(backdrop)
+        errorbarLayout.backdropView.setVisibleBy(backdrop > 0) {
+            setImageResource(backdrop)
         }
         return this
     }
 
     fun setBackdropColor(backdrop: ColorStateList?): Errorbar {
-        if (errorbarLayout.backdropView.setVisibleBy(backdrop != null)) {
-            errorbarLayout.backdropView.setImageDrawable(ColorDrawable(backdrop!!.defaultColor))
+        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+            setImageDrawable(ColorDrawable(backdrop!!.defaultColor))
         }
         return this
     }
 
     fun setBackdropColor(@ColorInt color: Int): Errorbar = setBackdropColor(ColorStateList.valueOf(color))
     fun setBackdropColorRes(@ColorRes colorRes: Int): Errorbar = setBackdropColor(errorbarLayout.backdropView.context.getColor2(colorRes))
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): Errorbar = setBackdropColor(errorbarLayout.backdropView.context.theme.getColor(colorAttr))
+    fun setBackdropColorAttr(@AttrRes colorAttr: Int): Errorbar = setBackdropColor(errorbarLayout.backdropView.context.theme.getColor2(colorAttr))
 
     fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): Errorbar {
         (errorbarLayout.containerView.layoutParams as ViewGroup.MarginLayoutParams).setMargins(left, top, right, bottom)
@@ -137,29 +140,29 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     }
 
     fun setLogoBitmap(logo: Bitmap?): Errorbar {
-        if (errorbarLayout.logoView.setVisibleBy(logo != null)) {
-            errorbarLayout.logoView.setImageBitmap(logo)
+        errorbarLayout.logoView.setVisibleBy(logo != null) {
+            setImageBitmap(logo)
         }
         return this
     }
 
     fun setLogoUri(logo: Uri?): Errorbar {
-        if (errorbarLayout.logoView.setVisibleBy(logo != null)) {
-            errorbarLayout.logoView.setImageURI(logo)
+        errorbarLayout.logoView.setVisibleBy(logo != null) {
+            setImageURI(logo)
         }
         return this
     }
 
     fun setLogoDrawable(logo: Drawable?): Errorbar {
-        if (errorbarLayout.logoView.setVisibleBy(logo != null)) {
-            errorbarLayout.logoView.setImageDrawable(logo)
+        errorbarLayout.logoView.setVisibleBy(logo != null) {
+            setImageDrawable(logo)
         }
         return this
     }
 
     fun setLogoResource(@DrawableRes logo: Int): Errorbar {
-        if (errorbarLayout.logoView.setVisibleBy(logo > 0)) {
-            errorbarLayout.logoView.setImageResource(logo)
+        errorbarLayout.logoView.setVisibleBy(logo > 0) {
+            setImageResource(logo)
         }
         return this
     }
@@ -167,15 +170,8 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     fun setText(@StringRes text: Int): Errorbar = setText(errorbarLayout.messageView.resources.getText(text))
 
     fun setText(text: CharSequence?): Errorbar {
-        if (errorbarLayout.messageView.setVisibleBy(!text.isNullOrEmpty())) {
-            errorbarLayout.messageView.text = text
-        }
-        return this
-    }
-
-    fun setText(e: Exception?): Errorbar {
-        if (errorbarLayout.messageView.setVisibleBy(e != null)) {
-            setText(e!!.message)
+        errorbarLayout.messageView.setVisibleBy(text.isNotNullOrEmpty()) {
+            setText(text)
         }
         return this
     }
@@ -183,15 +179,15 @@ class Errorbar private constructor(parent: ViewGroup, content: View, contentView
     fun setAction(@StringRes resId: Int, action: ((View) -> Unit)?): Errorbar = setAction(errorbarLayout.actionView.context.getText(resId), action)
 
     fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar {
-        if (errorbarLayout.actionView.setVisibleBy(!text.isNullOrEmpty() && action != null)) {
-            errorbarLayout.actionView.text = text
-            errorbarLayout.actionView.setOnClickListener {
-                action!!.invoke(errorbarLayout.actionView)
+        errorbarLayout.actionView.setVisibleBy(text.isNotNullOrEmpty() && action != null, {
+            setText(text)
+            setOnClickListener {
+                action!!.invoke(this)
                 dispatchDismiss(BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
             }
-        } else {
-            errorbarLayout.actionView.setOnClickListener(null)
-        }
+        }, {
+            setOnClickListener(null)
+        })
         return this
     }
 

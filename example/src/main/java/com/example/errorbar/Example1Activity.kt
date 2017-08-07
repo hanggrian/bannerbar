@@ -5,6 +5,7 @@ import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.hendraanggrian.kota.view.inflateMenu
 import kotlinx.android.synthetic.main.activity_example.*
 import org.jetbrains.anko.toast
 
@@ -22,8 +23,7 @@ class Example1Activity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.example1, menu)
-        this.menu = menu
+        this.menu = inflateMenu(R.menu.example1, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

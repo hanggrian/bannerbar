@@ -4,6 +4,7 @@ package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.Px
 import android.support.annotation.StyleRes
@@ -17,7 +18,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.widget.setTextAppearanceBy
+import com.hendraanggrian.kota.content.getColorStateListNotNull
+import com.hendraanggrian.kota.content.getDimensionNotNull
+import com.hendraanggrian.kota.content.getDrawableNotNull
+import com.hendraanggrian.kota.content.getResourceIdNotNull
+import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -27,8 +32,8 @@ class ErrorbarContentLayout @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = R.attr.errorbarStyle,
-        @StyleRes defStyleRes: Int = R.style.Widget_Design_Errorbar) :
-        FrameLayout(context, attrs, defStyleAttr, defStyleRes), BaseTransientBottomBar.ContentViewCallback {
+        @StyleRes defStyleRes: Int = R.style.Widget_Design_Errorbar
+) : FrameLayout(context, attrs, defStyleAttr, defStyleRes), BaseTransientBottomBar.ContentViewCallback {
 
     lateinit var backdropView: ImageView
     lateinit var containerView: ViewGroup
@@ -52,30 +57,40 @@ class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
-            backdropView.visibility = View.VISIBLE
-            backdropView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+            backdropView.setVisibleBy(true) {
+                setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_backdrop))
+            }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_logo)) {
-            logoView.visibility = View.VISIBLE
-            logoView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
+            logoView.setVisibleBy(true) {
+                setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_logo))
+            }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            messageView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
+            @Suppress("DEPRECATION")
+            when (Build.VERSION.SDK_INT) {
+                23 -> messageView.setTextAppearance(a.getResourceIdNotNull(R.styleable.ErrorbarLayout_android_textAppearance))
+                else -> messageView.setTextAppearance(context, a.getResourceIdNotNull(R.styleable.ErrorbarLayout_android_textAppearance))
+            }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
-            messageView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor))
+            messageView.setTextColor(a.getColorStateListNotNull(R.styleable.ErrorbarLayout_android_textColor))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
-            messageView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
+            messageView.textSize = a.getDimensionNotNull(R.styleable.ErrorbarLayout_android_textSize)
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            actionView.setTextAppearanceBy(context, a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
+            @Suppress("DEPRECATION")
+            when (Build.VERSION.SDK_INT) {
+                23 -> actionView.setTextAppearance(a.getResourceIdNotNull(R.styleable.ErrorbarLayout_actionTextAppearance))
+                else -> actionView.setTextAppearance(context, a.getResourceIdNotNull(R.styleable.ErrorbarLayout_actionTextAppearance))
+            }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
-            actionView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor))
+            actionView.setTextColor(a.getColorStateListNotNull(R.styleable.ErrorbarLayout_actionTextColor))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
-            actionView.textSize = a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f)
+            actionView.textSize = a.getDimensionNotNull(R.styleable.ErrorbarLayout_actionTextSize)
         }
         a.recycle()
     }
@@ -115,7 +130,11 @@ class ErrorbarContentLayout @JvmOverloads constructor(
         return changed
     }
 
-    private fun updateTopBottomPadding(view: View, topPadding: Int, bottomPadding: Int) = if (ViewCompat.isPaddingRelative(view)) {
+    private fun updateTopBottomPadding(
+            view: View,
+            topPadding: Int,
+            bottomPadding: Int
+    ): Unit = if (ViewCompat.isPaddingRelative(view)) {
         ViewCompat.setPaddingRelative(view, ViewCompat.getPaddingStart(view), topPadding, ViewCompat.getPaddingEnd(view), bottomPadding)
     } else {
         view.setPadding(view.paddingLeft, topPadding, view.paddingRight, bottomPadding)
@@ -137,7 +156,12 @@ class ErrorbarContentLayout @JvmOverloads constructor(
         actionView.animateBy(delay, duration, false)
     }
 
-    private fun View.animateBy(delay: Int, duration: Int, animateIn: Boolean, condition: Boolean = visibility == View.VISIBLE) {
+    private fun View.animateBy(
+            delay: Int,
+            duration: Int,
+            animateIn: Boolean,
+            condition: Boolean = visibility == View.VISIBLE
+    ): Unit {
         if (condition) {
             alpha = if (animateIn) 0.0f else 1.0f
             animate().alpha(if (animateIn) 1.0f else 0.0f).setDuration(duration.toLong()).setStartDelay(delay.toLong()).start()
