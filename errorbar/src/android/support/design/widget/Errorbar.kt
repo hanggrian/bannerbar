@@ -1,5 +1,3 @@
-@file:JvmName("Errorbar")
-
 package android.support.design.widget
 
 import android.content.res.ColorStateList
@@ -14,10 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
+import com.hendraanggrian.common.content.getColor2
+import com.hendraanggrian.common.text.isNotNullOrEmpty
+import com.hendraanggrian.common.view.setVisibleThen
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.content.getColor2
-import com.hendraanggrian.kota.text.isNotNullOrEmpty
-import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -76,35 +74,35 @@ class Errorbar private constructor(
     private val errorbarLayout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
     fun setBackdropBitmap(backdrop: Bitmap?): Errorbar {
-        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+        errorbarLayout.backdropView.setVisibleThen(backdrop != null) {
             setImageBitmap(backdrop)
         }
         return this
     }
 
     fun setBackdropUri(backdrop: Uri?): Errorbar {
-        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+        errorbarLayout.backdropView.setVisibleThen(backdrop != null) {
             setImageURI(backdrop)
         }
         return this
     }
 
     fun setBackdropDrawable(backdrop: Drawable?): Errorbar {
-        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+        errorbarLayout.backdropView.setVisibleThen(backdrop != null) {
             setImageDrawable(backdrop)
         }
         return this
     }
 
     fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar {
-        errorbarLayout.backdropView.setVisibleBy(backdrop > 0) {
+        errorbarLayout.backdropView.setVisibleThen(backdrop > 0) {
             setImageResource(backdrop)
         }
         return this
     }
 
     fun setBackdropColor(backdrop: ColorStateList?): Errorbar {
-        errorbarLayout.backdropView.setVisibleBy(backdrop != null) {
+        errorbarLayout.backdropView.setVisibleThen(backdrop != null) {
             setImageDrawable(ColorDrawable(backdrop!!.defaultColor))
         }
         return this
@@ -140,28 +138,28 @@ class Errorbar private constructor(
     }
 
     fun setLogoBitmap(logo: Bitmap?): Errorbar {
-        errorbarLayout.logoView.setVisibleBy(logo != null) {
+        errorbarLayout.logoView.setVisibleThen(logo != null) {
             setImageBitmap(logo)
         }
         return this
     }
 
     fun setLogoUri(logo: Uri?): Errorbar {
-        errorbarLayout.logoView.setVisibleBy(logo != null) {
+        errorbarLayout.logoView.setVisibleThen(logo != null) {
             setImageURI(logo)
         }
         return this
     }
 
     fun setLogoDrawable(logo: Drawable?): Errorbar {
-        errorbarLayout.logoView.setVisibleBy(logo != null) {
+        errorbarLayout.logoView.setVisibleThen(logo != null) {
             setImageDrawable(logo)
         }
         return this
     }
 
     fun setLogoResource(@DrawableRes logo: Int): Errorbar {
-        errorbarLayout.logoView.setVisibleBy(logo > 0) {
+        errorbarLayout.logoView.setVisibleThen(logo > 0) {
             setImageResource(logo)
         }
         return this
@@ -170,7 +168,7 @@ class Errorbar private constructor(
     fun setText(@StringRes text: Int): Errorbar = setText(errorbarLayout.messageView.resources.getText(text))
 
     fun setText(text: CharSequence?): Errorbar {
-        errorbarLayout.messageView.setVisibleBy(text.isNotNullOrEmpty()) {
+        errorbarLayout.messageView.setVisibleThen(text.isNotNullOrEmpty()) {
             setText(text)
         }
         return this
@@ -179,7 +177,7 @@ class Errorbar private constructor(
     fun setAction(@StringRes resId: Int, action: ((View) -> Unit)?): Errorbar = setAction(errorbarLayout.actionView.context.getText(resId), action)
 
     fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar {
-        errorbarLayout.actionView.setVisibleBy(text.isNotNullOrEmpty() && action != null, {
+        errorbarLayout.actionView.setVisibleThen(text.isNotNullOrEmpty() && action != null, {
             setText(text)
             setOnClickListener {
                 action!!.invoke(this)

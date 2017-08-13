@@ -14,7 +14,7 @@ buildscript {
                     anko  : '0.10.1'
             ],
             support   : '26.0.0',
-            kota      : '0.6.0',
+            kota      : '0.7.0',
 
             // test
             rules     : '0.5',
@@ -22,7 +22,7 @@ buildscript {
             espresso  : '2.2.2',
             junit     : '4.12',
 
-            release   : '0.3.1'
+            release   : '0.3.2'
     ]
     repositories {
         jcenter()

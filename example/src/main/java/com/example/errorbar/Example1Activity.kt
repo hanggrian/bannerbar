@@ -5,7 +5,7 @@ import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.hendraanggrian.kota.view.inflateMenu
+import com.hendraanggrian.common.view.inflateMenu
 import kotlinx.android.synthetic.main.activity_example.*
 import org.jetbrains.anko.toast
 

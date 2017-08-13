@@ -10,8 +10,8 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
+import com.hendraanggrian.common.content.toPx
 import com.hendraanggrian.errorbar.test.activity.InstrumentedActivity
-import com.hendraanggrian.kota.content.toPx
 import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test

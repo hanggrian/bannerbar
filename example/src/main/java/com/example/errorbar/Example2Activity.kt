@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.hendraanggrian.kota.content.toPx
+import com.hendraanggrian.common.content.toPx
 import kotlinx.android.synthetic.main.activity_example.*
 
 /**
@@ -22,8 +22,8 @@ class Example2Activity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
+        when (item.itemId) {
+            android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }

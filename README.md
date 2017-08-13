@@ -58,7 +58,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:design:26.0.0'
-    compile 'com.hendraanggrian:errorbar:0.3.1'
+    compile 'com.hendraanggrian:errorbar:0.3.2'
 }
 ```
 

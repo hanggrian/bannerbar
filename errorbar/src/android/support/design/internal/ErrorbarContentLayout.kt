@@ -1,5 +1,3 @@
-@file:JvmName("ErrorbarContentLayout")
-
 package android.support.design.internal
 
 import android.annotation.SuppressLint
@@ -17,12 +15,12 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import com.hendraanggrian.common.content.getColorStateListNotNull
+import com.hendraanggrian.common.content.getDimensionNotNull
+import com.hendraanggrian.common.content.getDrawableNotNull
+import com.hendraanggrian.common.content.getResourceIdNotNull
+import com.hendraanggrian.common.view.setVisibleThen
 import com.hendraanggrian.errorbar.R
-import com.hendraanggrian.kota.content.getColorStateListNotNull
-import com.hendraanggrian.kota.content.getDimensionNotNull
-import com.hendraanggrian.kota.content.getDrawableNotNull
-import com.hendraanggrian.kota.content.getResourceIdNotNull
-import com.hendraanggrian.kota.view.setVisibleBy
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
@@ -57,12 +55,12 @@ class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
-            backdropView.setVisibleBy(true) {
+            backdropView.setVisibleThen(true) {
                 setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_backdrop))
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_logo)) {
-            logoView.setVisibleBy(true) {
+            logoView.setVisibleThen(true) {
                 setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_logo))
             }
         }
