@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar.test
+package com.hendraanggrian.errorbar
 
 import android.os.Build
 import android.os.CountDownTimer
@@ -9,9 +9,6 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ProgressBar
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 abstract class BaseTest {
 
     internal fun setTitle(title: String) = object : ViewAction {

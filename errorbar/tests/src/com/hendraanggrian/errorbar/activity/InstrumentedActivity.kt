@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar.test.activity
+package com.hendraanggrian.errorbar.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,9 +6,6 @@ import android.widget.FrameLayout
 import android.widget.ProgressBar
 import com.hendraanggrian.errorbar.test.R
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 open class InstrumentedActivity : AppCompatActivity() {
 
     lateinit var progressBar: ProgressBar

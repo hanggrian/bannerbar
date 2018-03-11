@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar.test
+package com.hendraanggrian.errorbar
 
 import android.support.design.widget.errorbar
 import android.support.test.espresso.Espresso.onView
@@ -10,14 +10,12 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
-import com.hendraanggrian.errorbar.test.activity.CustomThemeActivity
+import com.hendraanggrian.errorbar.activity.CustomThemeActivity
+import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 @RunWith(AndroidJUnit4::class)
 class CustomThemeTest : BaseTest() {
 

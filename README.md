@@ -5,6 +5,22 @@ It is useful to display an error or empty state that requires full attention in 
 
 ![demo][demo]
 
+Download
+--------
+This library relies heavily on private resources and internal classes from [Android's support design library][design].
+It is only tested with support design library version as listed below with no intention of supporting older versions.
+
+```gradle
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    compile 'com.hendraanggrian:errorbar:0.4'
+}
+```
+
 Usage
 -----
 Errorbar is everything a Snackbar is, with some modifications:
@@ -14,6 +30,7 @@ Errorbar is everything a Snackbar is, with some modifications:
  
 #### Programatically
 Create Errorbar just like a Snackbar.
+
 ```kotlin
 Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
     .setLogoDrawable(R.drawable.errorbar_ic_cloud)
@@ -25,6 +42,7 @@ Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
 
 #### Styling
 Customize Errorbar default text appearance, logo and backdrop with styling.
+
 ```xml
 <resources>
     <style name="MyAppTheme" parent="Theme.Appcompat.Light.NoActionBar">
@@ -45,22 +63,6 @@ See [attrs.xml][attrs] for complete list of attributes.
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
 It would mean that a View cannot have more than one Snackbar or Errorbar at the same time.
 When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
-
-Download
---------
-This library relies heavily on private resources and internal classes from [Android's support design library][design].
-It is only tested with support design library version as listed below with no intention of supporting older versions.
-```gradle
-repositories {
-    maven { url 'https://maven.google.com' }
-    jcenter()
-}
-
-dependencies {
-    compile 'com.android.support:design:26.0.0'
-    compile 'com.hendraanggrian:errorbar:0.3.2'
-}
-```
 
 License
 -------

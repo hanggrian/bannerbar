@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.hendraanggrian.common.content.toPx
 import kotlinx.android.synthetic.main.activity_example.*
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class Example2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +13,8 @@ class Example2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
         errorbar(frameLayout, "You have no new emails")
-                .setBackdropResource(R.drawable.bg_empty)
-                .setContentMarginBottom(64.toPx())
+            .setBackdropResource(R.drawable.bg_empty)
+            .setContentMarginBottom(resources.getDimension(R.dimen.margin_bottom).toInt())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

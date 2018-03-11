@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<view
-    class="android.support.design.internal.ErrorbarContentLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidUnknownAttribute -->
+<view xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    class="android.support.design.internal.ErrorbarContentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,7 +11,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/errorbar_backdrop_desc"
         android:scaleType="centerCrop"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/errorbar_container"
@@ -28,13 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:contentDescription="@string/errorbar_logo_desc"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/errorbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
 
         <!-- action view is deliberately gone, setting action text and listener will automatically display it -->
         <Button
@@ -44,6 +43,6 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/abc_text_size_subhead_material"
             android:visibility="gone"
-            tools:ignore="PrivateResource"/>
+            tools:ignore="PrivateResource" />
     </LinearLayout>
 </view>

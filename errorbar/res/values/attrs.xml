@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ErrorbarStyle">
-        <attr name="errorbarStyle" format="reference"/>
+        <attr name="errorbarStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ErrorbarLayout">
-        <attr name="logo"/>
-        <attr name="backdrop" format="reference"/>
+        <attr name="logo" />
+        <attr name="backdrop" format="reference" />
 
-        <attr name="android:textAppearance"/>
-        <attr name="android:textColor"/>
-        <attr name="android:textSize"/>
+        <attr name="android:textAppearance" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
 
-        <attr name="actionTextAppearance" format="reference"/>
-        <attr name="actionTextColor" format="color"/>
-        <attr name="actionTextSize" format="dimension"/>
+        <attr name="actionTextAppearance" format="reference" />
+        <attr name="actionTextColor" format="color" />
+        <attr name="actionTextSize" format="dimension" />
 
         <!-- inherited from SnackbarLayout -->
-        <attr name="android:maxWidth"/>
-        <attr name="elevation"/>
-        <attr name="maxActionInlineWidth"/>
+        <attr name="android:maxWidth" />
+        <attr name="elevation" />
+        <attr name="maxActionInlineWidth" />
     </declare-styleable>
 </resources>
