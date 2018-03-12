@@ -43,5 +43,5 @@ android {
 dependencies {
     implementation(project(":errorbar"))
     implementation(kotlin("stdlib", kotlinVersion))
-    implementation("org.jetbrains.anko:anko-commons:0.10.4")
+    implementation(anko("commons"))
 }

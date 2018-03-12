@@ -45,7 +45,7 @@ dependencies {
     compile(support("design", supportVersion))
 
     testImplementation(junit())
-    androidTestImplementation("org.jetbrains.anko:anko-commons:0.10.4")
+    androidTestImplementation(anko("commons"))
     androidTestImplementation(support("runner", runnerVersion, "test"))
     androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))
 

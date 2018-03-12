@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="errorbarStyle" type="attr"/>
+    <public name="errorbarStyle" type="attr" />
 
-    <public name="logo" type="attr"/>
-    <public name="backdrop" type="attr"/>
+    <public name="logo" type="attr" />
+    <public name="backdrop" type="attr" />
 
-    <public name="actionTextAppearance" type="attr"/>
-    <public name="actionTextColor" type="attr"/>
-    <public name="actionTextSize" type="attr"/>
+    <public name="actionTextAppearance" type="attr" />
+    <public name="actionTextColor" type="attr" />
+    <public name="actionTextSize" type="attr" />
 </resources>

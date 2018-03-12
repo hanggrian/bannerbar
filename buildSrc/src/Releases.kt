@@ -1,0 +1,6 @@
+const val releaseUser = "hendraanggrian"
+const val releaseGroup = "com.$releaseUser"
+const val releaseArtifact = "errorbar"
+const val releaseVersion = "0.4"
+const val releaseDesc = "Larger Snackbar to display error and empty state"
+const val releaseWeb = "https://github.com/$releaseUser/$releaseArtifact"
