@@ -78,12 +78,12 @@ tasks {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }
-
     gitPublish {
         repoUri = releaseWeb
         branch = "gh-pages"
         contents.from(dokka.outputDirectory)
     }
+    get("gitPublishCopy").dependsOn(dokka)
 }
 
 publish {
