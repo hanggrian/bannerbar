@@ -8,7 +8,6 @@ It is useful to display an error or empty state that requires full attention in 
 Download
 --------
 This library relies heavily on private resources and internal classes from [Android's support design library][design].
-It is only tested with support design library version as listed below with no intention of supporting older versions.
 
 ```gradle
 repositories {
