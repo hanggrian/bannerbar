@@ -5,8 +5,8 @@ buildscript {
     }
     dependencies {
         classpath(android())
-        classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath(dokka())
+        classpath(kotlin("gradle-plugin", VERSION_KOTLIN))
+        classpath(dokkaAndroid())
         classpath(gitPublish())
         classpath(bintrayRelease())
     }
@@ -27,7 +27,7 @@ tasks {
         delete(buildDir)
     }
     "wrapper"(Wrapper::class) {
-        gradleVersion = "4.4.1"
+        gradleVersion = VERSION_GRADLE
     }
 }
 

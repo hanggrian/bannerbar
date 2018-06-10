@@ -5,18 +5,18 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     `android-library`
     kotlin("android")
-    dokka
+    `dokka-android`
     `git-publish`
     `bintray-release`
 }
 
 android {
-    compileSdkVersion(targetSdk)
-    buildToolsVersion(buildTools)
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
-        versionName = releaseVersion
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
+        versionName = RELEASE_VERSION
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -42,13 +42,14 @@ android {
 val ktlint by configurations.creating
 
 dependencies {
-    compile(kotlin("stdlib", kotlinVersion))
-    compile(support("design", supportVersion))
+    api(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(support("design", VERSION_SUPPORT))
 
     testImplementation(junit())
     androidTestImplementation(anko("commons"))
-    androidTestImplementation(support("runner", runnerVersion, "test"))
-    androidTestImplementation(support("espresso-core", espressoVersion, "test", "espresso"))
+    androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
+    androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
+    androidTestImplementation(support("rules", VERSION_RULES, "test"))
 
     ktlint(ktlint())
 }
@@ -79,7 +80,7 @@ tasks {
         doFirst { file(outputDirectory).deleteRecursively() }
     }
     gitPublish {
-        repoUri = releaseWeb
+        repoUri = RELEASE_WEBSITE
         branch = "gh-pages"
         contents.from(dokka.outputDirectory)
     }
@@ -87,10 +88,10 @@ tasks {
 }
 
 publish {
-    userOrg = releaseUser
-    groupId = releaseGroup
-    artifactId = releaseArtifact
-    publishVersion = releaseVersion
-    desc = releaseDesc
-    website = releaseWeb
+    userOrg = RELEASE_USER
+    groupId = RELEASE_GROUP
+    artifactId = RELEASE_ARTIFACT
+    publishVersion = RELEASE_VERSION
+    desc = RELEASE_DESC
+    website = RELEASE_WEBSITE
 }

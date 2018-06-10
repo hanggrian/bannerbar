@@ -1,9 +1,13 @@
 Errorbar
 ========
-Errorbar is an extended version of Snackbar with logo and maximum height.
-It is useful to display an error or empty state that requires full attention in a sense that the app workflow should not continue without them being resolved.
+[![Download](https://api.bintray.com/packages/hendraanggrian/maven/errorbar/images/download.svg) ](https://bintray.com/hendraanggrian/maven/errorbar/_latestVersion)
+[![Build Status](https://travis-ci.org/hendraanggrian/errorbar.svg)](https://travis-ci.org/hendraanggrian/errorbar)
+[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ![demo][demo]
+
+Errorbar is an extended version of Snackbar with logo and maximum height.
+It is useful to display an error or empty state that requires full attention in a sense that the app workflow should not continue without them being resolved.
 
 Download
 --------

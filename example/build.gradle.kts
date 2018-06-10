@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(targetSdk)
-    buildToolsVersion(buildTools)
+    compileSdkVersion(SDK_TARGET)
+    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
+        minSdkVersion(SDK_MIN)
+        targetSdkVersion(SDK_TARGET)
         applicationId = "com.example.collapsingtoolbarlayoutsubtitle"
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +42,6 @@ android {
 
 dependencies {
     implementation(project(":errorbar"))
-    implementation(kotlin("stdlib", kotlinVersion))
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(anko("commons"))
 }
