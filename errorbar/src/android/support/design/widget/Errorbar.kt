@@ -26,6 +26,8 @@ import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.support.annotation.IntDef
+import android.support.annotation.IntRange
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
 import android.support.v4.content.ContextCompat.getColor
@@ -50,6 +52,11 @@ class Errorbar private constructor(
     contentViewCallback: ContentViewCallback
 ) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
 
+    @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
+    @IntRange(from = 1)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class Duration
+
     companion object {
         const val LENGTH_INDEFINITE = BaseTransientBottomBar.LENGTH_INDEFINITE
         const val LENGTH_SHORT = BaseTransientBottomBar.LENGTH_SHORT
@@ -64,12 +71,11 @@ class Errorbar private constructor(
          * @see Snackbar.make
          */
         fun make(view: View, text: CharSequence, @Duration duration: Int): Errorbar {
-            val parent = findSuitableParent(view)
-                ?: throw IllegalStateException("Unable to find suitable parent!")
+            val parent = view.findSuitableParent()
+                ?: throw IllegalStateException("No suitable parent")
             val context = parent.context
-            val content = LayoutInflater.from(context)
-                .inflate(R.layout.design_layout_errorbar_include, parent, false)
-                as ErrorbarContentLayout
+            val content = LayoutInflater.from(context).inflate(
+                R.layout.design_layout_errorbar_include, parent, false) as ErrorbarContentLayout
             return Errorbar(parent, content, content).apply {
                 setText(text)
                 this.duration = duration
@@ -95,21 +101,21 @@ class Errorbar private constructor(
          * While [Snackbar] prioritizes [CollapsingToolbarLayout] to be its parent,
          * Errorbar accepts any parent capable of holding more than one child.
          */
-        private fun findSuitableParent(view: View?): ViewGroup? {
-            var _view = view
+        private fun View?.findSuitableParent(): ViewGroup? {
+            var view = this
             do {
-                if (_view is ViewGroup) {
+                if (view is ViewGroup) {
                     // ScrollView can only accept one child, therefore not qualified to be an errorbar's parent
-                    if (_view !is ScrollView && _view !is NestedScrollView) {
-                        return _view
+                    if (view !is ScrollView && view !is NestedScrollView) {
+                        return view
                     }
                 }
-                if (_view != null) {
+                if (view != null) {
                     // loop to get parents
-                    val parent = _view.parent
-                    _view = if (parent is View) parent else null
+                    val parent = view.parent
+                    view = if (parent is View) parent else null
                 }
-            } while (_view != null)
+            } while (view != null)
             return null
         }
 
