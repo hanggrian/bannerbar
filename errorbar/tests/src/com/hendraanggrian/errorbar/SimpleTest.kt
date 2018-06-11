@@ -31,12 +31,12 @@ class SimpleTest : BaseTest() {
             override fun perform(uiController: UiController, view: View) {
                 view as FrameLayout
                 view.longErrorbar {
-                    setText("No internet connection.")
+                    text = "No internet connection."
+                    backdropResource = R.drawable.errorbar_bg_cloud
+                    logoResource = R.drawable.errorbar_ic_cloud
                     setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }
-                    setBackdropResource(R.drawable.errorbar_bg_cloud)
-                    setLogoResource(R.drawable.errorbar_ic_cloud)
                 }
             }
         })
@@ -48,9 +48,9 @@ class SimpleTest : BaseTest() {
             override fun perform(uiController: UiController, view: View) {
                 view as FrameLayout
                 view.longErrorbar {
-                    setText("You have no new emails")
-                    setBackdropResource(R.drawable.bg_empty)
-                    setContentMarginBottom(150)
+                    text = "You have no new emails"
+                    backdropResource = R.drawable.bg_empty
+                    contentMarginBottom = 150
                 }
             }
         })

@@ -11,13 +11,13 @@ inline fun View.errorbar(builder: Errorbar.() -> Unit) =
     }
 
 inline fun View.longErrorbar(builder: Errorbar.() -> Unit) =
-    Errorbar.make(this, Errorbar.LENGTH_SHORT).apply {
+    Errorbar.make(this, Errorbar.LENGTH_LONG).apply {
         builder()
         show()
     }
 
 inline fun View.indefiniteErrorbar(builder: Errorbar.() -> Unit) =
-    Errorbar.make(this, Errorbar.LENGTH_SHORT).apply {
+    Errorbar.make(this, Errorbar.LENGTH_INDEFINITE).apply {
         builder()
         show()
     }

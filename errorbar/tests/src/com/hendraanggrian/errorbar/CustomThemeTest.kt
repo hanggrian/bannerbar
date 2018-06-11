@@ -30,7 +30,7 @@ class CustomThemeTest : BaseTest() {
             override fun perform(uiController: UiController, view: View) {
                 view as FrameLayout
                 view.errorbar {
-                    setText("No internet connection.")
+                    text = "No internet connection."
                 }
             }
         })

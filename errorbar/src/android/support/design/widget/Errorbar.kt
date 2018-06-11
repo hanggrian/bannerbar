@@ -19,7 +19,6 @@ package android.support.design.widget
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.AttrRes
@@ -30,7 +29,6 @@ import android.support.annotation.IntDef
 import android.support.annotation.IntRange
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
-import android.support.v4.content.ContextCompat.getColor
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +36,10 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.TextView
 import com.hendraanggrian.errorbar.R
 
 /**
@@ -50,7 +51,7 @@ class Errorbar private constructor(
     parent: ViewGroup,
     content: View,
     contentViewCallback: ContentViewCallback
-) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
+) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback), ErrorbarContent {
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
     @IntRange(from = 1)
@@ -117,59 +118,48 @@ class Errorbar private constructor(
         }
     }
 
-    private val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+    private inline val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+
+    override val backdropView: ImageView get() = layout.backdropView
+    override val containerView: ViewGroup get() = layout.containerView
+    override val logoView: ImageView get() = layout.logoView
+    override val textView: TextView get() = layout.textView
+    override val actionView: Button get() = layout.actionView
+
+    /** Set a backdrop from drawable. */
+    inline fun setBackdropDrawable(backdrop: Drawable?): Errorbar = also {
+        it.backdropDrawable = backdrop
+    }
 
     /** Set a backdrop from bitmap. */
-    fun setBackdropBitmap(backdrop: Bitmap?): Errorbar = apply {
-        layout.backdropView.run {
-            visibility = backdrop?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageBitmap(backdrop)
-        }
+    inline fun setBackdropBitmap(backdrop: Bitmap?): Errorbar = also {
+        it.backdropBitmap = backdrop
     }
 
     /** Set a backdrop from uri. */
-    fun setBackdropUri(backdrop: Uri?): Errorbar = apply {
-        layout.backdropView.run {
-            visibility = backdrop?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageURI(backdrop)
-        }
-    }
-
-    /** Set a backdrop from drawable. */
-    fun setBackdropDrawable(backdrop: Drawable?): Errorbar = apply {
-        layout.backdropView.run {
-            visibility = backdrop?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(backdrop)
-        }
+    inline fun setBackdropUri(backdrop: Uri?): Errorbar = also {
+        it.backdropUri = backdrop
     }
 
     /** Set a backdrop from drawable resource. */
-    fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar = apply {
-        layout.backdropView.run {
-            visibility = if (backdrop != -1) VISIBLE else GONE
-            if (visibility == VISIBLE) setImageResource(backdrop)
-        }
+    inline fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar = also {
+        it.backdropResource = backdrop
     }
 
     /** Set a backdrop from color state list. */
-    fun setBackdropColor(backdrop: ColorStateList?): Errorbar = apply {
-        layout.backdropView.run {
-            visibility = backdrop?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(ColorDrawable(backdrop!!.defaultColor))
-        }
+    inline fun setBackdropColor(backdrop: ColorStateList?): Errorbar = also {
+        it.backdropColorStateList = backdrop
     }
 
     /** Set a backdrop from color. */
-    fun setBackdropColor(@ColorInt color: Int): Errorbar =
-        setBackdropColor(ColorStateList.valueOf(color))
+    inline fun setBackdropColor(@ColorInt color: Int): Errorbar = also {
+        it.backdropColor = color
+    }
 
     /** Set a backdrop from color resource. */
-    fun setBackdropColorRes(@ColorRes colorRes: Int): Errorbar =
-        setBackdropColor(getColor(layout.backdropView.context, colorRes))
-
-    /** Set a backdrop from color attribute. */
-    fun setBackdropColorAttr(@AttrRes colorAttr: Int): Errorbar =
-        setBackdropColor(layout.backdropView.context.theme.getColor(colorAttr))
+    inline fun setBackdropColorResource(@ColorRes colorResource: Int): Errorbar = also {
+        it.backdropColorResource = colorResource
+    }
 
     /** Set content margin each side. */
     fun setContentMargin(left: Int, top: Int, right: Int, bottom: Int): Errorbar = apply {
@@ -178,67 +168,53 @@ class Errorbar private constructor(
     }
 
     /** Set content left margin. */
-    fun setContentMarginLeft(left: Int): Errorbar = apply {
-        (layout.containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = left
+    inline fun setContentMarginLeft(contentMarginLeft: Int): Errorbar = also {
+        it.contentMarginLeft = contentMarginLeft
     }
 
     /** Set content top margin. */
-    fun setContentMarginTop(top: Int): Errorbar = apply {
-        (layout.containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin = top
+    inline fun setContentMarginTop(contentMarginTop: Int): Errorbar = also {
+        it.contentMarginTop = contentMarginTop
     }
 
     /** Set content right margin. */
-    fun setContentMarginRight(right: Int): Errorbar = apply {
-        (layout.containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = right
+    inline fun setContentMarginRight(contentMarginRight: Int): Errorbar = also {
+        it.contentMarginRight = contentMarginRight
     }
 
     /** Set content bottom margin. */
-    fun setContentMarginBottom(bottom: Int): Errorbar = apply {
-        (layout.containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
-    }
-
-    /** Set logo from bitmap. */
-    fun setLogoBitmap(logo: Bitmap?): Errorbar = apply {
-        layout.logoView.run {
-            visibility = logo?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageBitmap(logo)
-        }
-    }
-
-    /** Set logo from uri. */
-    fun setLogoUri(logo: Uri?): Errorbar = apply {
-        layout.logoView.run {
-            visibility = logo?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageURI(logo)
-        }
+    inline fun setContentMarginBottom(contentMarginBottom: Int): Errorbar = also {
+        it.contentMarginBottom = contentMarginBottom
     }
 
     /** Set logo from drawable. */
-    fun setLogoDrawable(logo: Drawable?): Errorbar = apply {
-        layout.logoView.run {
-            visibility = logo?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(logo)
-        }
+    inline fun setLogoDrawable(logo: Drawable?): Errorbar = also {
+        it.logoDrawable = logo
+    }
+
+    /** Set logo from bitmap. */
+    inline fun setLogoBitmap(logo: Bitmap?): Errorbar = also {
+        it.logoBitmap = logo
+    }
+
+    /** Set logo from uri. */
+    inline fun setLogoUri(logo: Uri?): Errorbar = also {
+        it.logoUri = logo
     }
 
     /** Set logo from drawable resource. */
-    fun setLogoResource(@DrawableRes logo: Int): Errorbar = apply {
-        layout.logoView.run {
-            visibility = if (logo != -1) VISIBLE else GONE
-            if (visibility == VISIBLE) setImageResource(logo)
-        }
+    inline fun setLogoResource(@DrawableRes logo: Int): Errorbar = also {
+        it.logoResource = logo
+    }
+
+    /** Set text to this Errorbar. */
+    inline fun setText(text: CharSequence?): Errorbar = also {
+        it.text = text
     }
 
     /** Set text from string resource. */
-    fun setText(@StringRes text: Int): Errorbar =
-        setText(layout.messageView.resources.getText(text))
-
-    /** Set text to this Errorbar. */
-    fun setText(text: CharSequence?): Errorbar = apply {
-        layout.messageView.run {
-            visibility = if (!text.isNullOrEmpty()) VISIBLE else GONE
-            if (visibility == VISIBLE) setText(text)
-        }
+    inline fun setText(@StringRes text: Int): Errorbar = also {
+        it.textResource = text
     }
 
     /** Set button text from string resource and its click listener. */

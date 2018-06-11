@@ -22,6 +22,7 @@ import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.Px
 import android.support.design.widget.BaseTransientBottomBar
+import android.support.design.widget.ErrorbarContent
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
@@ -41,13 +42,14 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
-) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
+) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback,
+    ErrorbarContent {
 
-    lateinit var backdropView: ImageView
-    lateinit var containerView: ViewGroup
-    lateinit var logoView: ImageView
-    lateinit var messageView: TextView
-    lateinit var actionView: Button
+    override lateinit var backdropView: ImageView
+    override lateinit var containerView: ViewGroup
+    override lateinit var logoView: ImageView
+    override lateinit var textView: TextView
+    override lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
     @SuppressLint("CustomViewStyleable")
@@ -65,7 +67,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         backdropView = findViewById(R.id.errorbar_backdrop)
         containerView = findViewById(R.id.errorbar_container)
         logoView = findViewById(R.id.errorbar_logo)
-        messageView = findViewById(R.id.errorbar_text)
+        textView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) backdropView.run {
@@ -78,18 +80,17 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
-                23 -> messageView.setTextAppearance(
+                23 -> textView.setTextAppearance(
                     a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
-                else -> messageView.setTextAppearance(context,
+                else -> textView.setTextAppearance(context,
                     a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
-            messageView.setTextColor(
-                a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor))
+            textView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
-            messageView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
+            textView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
             @Suppress("DEPRECATION")
@@ -121,7 +122,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
             R.dimen.design_snackbar_padding_vertical_2lines)
         val singleLineVPadding = resources.getDimensionPixelSize(
             R.dimen.design_snackbar_padding_vertical)
-        val isMultiLine = messageView.layout.lineCount > 1
+        val isMultiLine = textView.layout.lineCount > 1
         var remeasure = false
         when {
             isMultiLine && _maxInlineActionWidth > 0 &&
@@ -147,8 +148,8 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     private fun updateViewsWithinLayout(messagePadTop: Int, messagePadBottom: Int): Boolean {
         var changed = false
-        if (messageView.run { paddingTop != messagePadTop || paddingBottom != messagePadBottom }) {
-            updateTopBottomPadding(messageView, messagePadTop, messagePadBottom)
+        if (textView.run { paddingTop != messagePadTop || paddingBottom != messagePadBottom }) {
+            updateTopBottomPadding(textView, messagePadTop, messagePadBottom)
             changed = true
         }
         return changed
@@ -172,7 +173,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         backdropView.animateBy(delay, duration, true)
         logoView.animateBy(delay, duration, true)
         // inherited from Snackbar
-        messageView.animateBy(delay, duration, true, true)
+        textView.animateBy(delay, duration, true, true)
         actionView.animateBy(delay, duration, true)
     }
 
@@ -180,7 +181,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         backdropView.animateBy(delay, duration, false)
         logoView.animateBy(delay, duration, false)
         // inherited from Snackbar
-        messageView.animateBy(delay, duration, false, true)
+        textView.animateBy(delay, duration, false, true)
         actionView.animateBy(delay, duration, false)
     }
 
