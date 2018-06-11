@@ -35,12 +35,23 @@ Errorbar is everything a Snackbar is, with some modifications:
 Create Errorbar just like a Snackbar.
 
 ```kotlin
-Errorbar.make(parent, "No internet connection", ErrorView.LENGTH_INDEFINITE)
+Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
     .setLogoDrawable(R.drawable.errorbar_ic_cloud)
     .setAction("Retry", { v -> 
         // do something
     })
     .show()
+```
+
+Or with Kotlin DSL.
+
+```kotlin
+parent.errorbar {
+    logoDrawable = R.drawable.errorbar_ic_cloud
+    setAction("Retry", { v -> 
+        // do something
+    })
+}
 ```
 
 #### Styling

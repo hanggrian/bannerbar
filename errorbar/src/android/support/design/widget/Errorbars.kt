@@ -4,19 +4,22 @@ package android.support.design.widget
 
 import android.view.View
 
-inline fun View.errorbar(builder: Errorbar.() -> Unit) =
+/** Show a short [Errorbar] while also invoking its builder. */
+inline fun View.errorbar(builder: ErrorbarContent<Errorbar>.() -> Unit) =
     Errorbar.make(this, Errorbar.LENGTH_SHORT).apply {
         builder()
         show()
     }
 
-inline fun View.longErrorbar(builder: Errorbar.() -> Unit) =
+/** Show a long [Errorbar] while also invoking its builder. */
+inline fun View.longErrorbar(builder: ErrorbarContent<Errorbar>.() -> Unit) =
     Errorbar.make(this, Errorbar.LENGTH_LONG).apply {
         builder()
         show()
     }
 
-inline fun View.indefiniteErrorbar(builder: Errorbar.() -> Unit) =
+/** Show an indefinite [Errorbar] while also invoking its builder. */
+inline fun View.indefiniteErrorbar(builder: ErrorbarContent<Errorbar>.() -> Unit) =
     Errorbar.make(this, Errorbar.LENGTH_INDEFINITE).apply {
         builder()
         show()

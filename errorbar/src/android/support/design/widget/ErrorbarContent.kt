@@ -2,13 +2,16 @@ package android.support.design.widget
 
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color.WHITE
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.support.annotation.Px
 import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -17,7 +20,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlin.DeprecationLevel.ERROR
 
-interface ErrorbarContent {
+interface ErrorbarContent<T> {
+
+    companion object {
+        internal const val NO_GETTER = "Property does not have a getter"
+
+        internal fun noGetter(): Nothing = throw UnsupportedClassVersionError(NO_GETTER)
+    }
 
     val backdropView: ImageView
 
@@ -31,38 +40,23 @@ interface ErrorbarContent {
 
     var backdropDrawable: Drawable?
         get() = backdropView.drawable
-        set(value) = backdropView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(value)
-        }
+        set(value) = backdropView.setImageDrawable(value)
 
     var backdropBitmap: Bitmap?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageBitmap(value)
-        }
+        set(value) = backdropView.setImageBitmap(value)
 
     var backdropUri: Uri?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageURI(value)
-        }
+        set(value) = backdropView.setImageURI(value)
 
     var backdropResource: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) = backdropView.run {
-            visibility = if (value != -1) VISIBLE else GONE
-            if (visibility == VISIBLE) setImageResource(value)
-        }
+        set(@DrawableRes value) = backdropView.setImageResource(value)
 
     var backdropColorStateList: ColorStateList?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(ColorDrawable(value!!.defaultColor))
-        }
+        set(value) = backdropView.setImageDrawable(ColorDrawable(value?.defaultColor ?: WHITE))
 
     var backdropColor: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
@@ -78,25 +72,25 @@ interface ErrorbarContent {
 
     var contentMarginLeft: Int
         get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin
-        set(value) {
+        set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = value
         }
 
     var contentMarginTop: Int
         get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin
-        set(value) {
+        set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin = value
         }
 
     var contentMarginRight: Int
         get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin
-        set(value) {
+        set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = value
         }
 
     var contentMarginBottom: Int
         get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin
-        set(value) {
+        set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = value
         }
 
@@ -109,30 +103,20 @@ interface ErrorbarContent {
 
     var logoBitmap: Bitmap?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageBitmap(value)
-        }
+        set(value) = logoView.setImageBitmap(value)
 
     var logoUri: Uri?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.run {
-            visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageURI(value)
-        }
+        set(value) = logoView.setImageURI(value)
 
     var logoResource: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) = logoView.run {
-            visibility = if (value != -1) VISIBLE else GONE
-            if (visibility == VISIBLE) setImageResource(value)
-        }
+        set(@DrawableRes value) = logoView.setImageResource(value)
 
     var text: CharSequence?
         get() = textView.text
-        set(value) = textView.run {
-            visibility = if (!value.isNullOrEmpty()) VISIBLE else GONE
-            if (visibility == VISIBLE) text = value
+        set(value) {
+            textView.text = value
         }
 
     var textResource: Int
@@ -141,9 +125,10 @@ interface ErrorbarContent {
             text = textView.resources.getText(value)
         }
 
-    private companion object {
-        const val NO_GETTER = "Property does not have a getter"
+    /** Set button text and its click listener. */
+    fun setAction(text: CharSequence?, action: ((View) -> Unit)? = null): T
 
-        fun noGetter(): Nothing = throw UnsupportedClassVersionError(NO_GETTER)
-    }
+    /** Set button text from string resource and its click listener. */
+    fun setAction(@StringRes resId: Int, action: ((View) -> Unit)? = null): T =
+        setAction(actionView.context.getText(resId), action)
 }

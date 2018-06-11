@@ -43,6 +43,7 @@ class Example1Activity : AppCompatActivity() {
                         toast("onDismissed event: $event")
                     }
                 })
+                .show()
             else -> item.isChecked = true
         }
         return super.onOptionsItemSelected(item)

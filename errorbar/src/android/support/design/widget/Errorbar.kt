@@ -29,6 +29,8 @@ import android.support.annotation.IntDef
 import android.support.annotation.IntRange
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
+import android.support.design.widget.ErrorbarContent.Companion.NO_GETTER
+import android.support.design.widget.ErrorbarContent.Companion.noGetter
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
@@ -41,17 +43,20 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.hendraanggrian.errorbar.R
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A larger Snackbar to display error and empty state.
  *
  * @see Snackbar
  */
+@Suppress("NOTHING_TO_INLINE")
 class Errorbar private constructor(
     parent: ViewGroup,
     content: View,
     contentViewCallback: ContentViewCallback
-) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback), ErrorbarContent {
+) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback),
+    ErrorbarContent<Errorbar> {
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
     @IntRange(from = 1)
@@ -108,8 +113,7 @@ class Errorbar private constructor(
             return null
         }
 
-        @ColorInt
-        private fun Resources.Theme.getColor(@AttrRes attr: Int): Int {
+        @ColorInt private fun Resources.Theme.getColor(@AttrRes attr: Int): Int {
             val a = obtainStyledAttributes(null, intArrayOf(attr), 0, 0)
             if (!a.hasValue(0)) throw Resources.NotFoundException()
             val value = a.getColor(0, 0)
@@ -125,6 +129,41 @@ class Errorbar private constructor(
     override val logoView: ImageView get() = layout.logoView
     override val textView: TextView get() = layout.textView
     override val actionView: Button get() = layout.actionView
+
+    override var backdropDrawable: Drawable?
+        get() = super.backdropDrawable
+        set(value) {
+            super.backdropDrawable = value
+            backdropView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var backdropBitmap: Bitmap?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.backdropBitmap = value
+            backdropView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var backdropUri: Uri?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.backdropUri = value
+            backdropView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var backdropResource: Int
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.backdropResource = value
+            backdropView.visibility = if (value != -1) VISIBLE else GONE
+        }
+
+    override var backdropColorStateList: ColorStateList?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.backdropColorStateList = value
+            backdropView.visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     /** Set a backdrop from drawable. */
     inline fun setBackdropDrawable(backdrop: Drawable?): Errorbar = also {
@@ -187,6 +226,34 @@ class Errorbar private constructor(
         it.contentMarginBottom = contentMarginBottom
     }
 
+    override var logoDrawable: Drawable?
+        get() = super.logoDrawable
+        set(value) {
+            super.logoDrawable = value
+            logoView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var logoBitmap: Bitmap?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.logoBitmap = value
+            logoView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var logoUri: Uri?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) {
+            super.logoUri = value
+            logoView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
+    override var logoResource: Int
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(@DrawableRes value) {
+            super.logoResource = value
+            logoView.visibility = if (value != -1) VISIBLE else GONE
+        }
+
     /** Set logo from drawable. */
     inline fun setLogoDrawable(logo: Drawable?): Errorbar = also {
         it.logoDrawable = logo
@@ -207,6 +274,13 @@ class Errorbar private constructor(
         it.logoResource = logo
     }
 
+    override var text: CharSequence?
+        get() = super.text
+        set(value) {
+            super.text = value
+            textView.visibility = value?.let { VISIBLE } ?: GONE
+        }
+
     /** Set text to this Errorbar. */
     inline fun setText(text: CharSequence?): Errorbar = also {
         it.text = text
@@ -217,13 +291,8 @@ class Errorbar private constructor(
         it.textResource = text
     }
 
-    /** Set button text from string resource and its click listener. */
-    fun setAction(@StringRes resId: Int, action: ((View) -> Unit)?): Errorbar =
-        setAction(layout.actionView.context.getText(resId), action)
-
-    /** Set button text and its click listener. */
-    fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar = apply {
-        layout.actionView.run {
+    override fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar = apply {
+        actionView.run {
             visibility = if (!text.isNullOrEmpty() && action != null) VISIBLE else GONE
             when (visibility) {
                 VISIBLE -> {
@@ -240,9 +309,9 @@ class Errorbar private constructor(
 
     open class Callback : BaseCallback<Errorbar>() {
 
-        override fun onShown(v: Errorbar) {}
+        override fun onShown(v: Errorbar) { }
 
-        override fun onDismissed(v: Errorbar, @DismissEvent event: Int) {}
+        override fun onDismissed(v: Errorbar, @DismissEvent event: Int) { }
 
         companion object {
             const val DISMISS_EVENT_SWIPE = BaseCallback.DISMISS_EVENT_SWIPE

@@ -43,7 +43,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
 ) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback,
-    ErrorbarContent {
+    ErrorbarContent<Unit> {
 
     override lateinit var backdropView: ImageView
     override lateinit var containerView: ViewGroup
@@ -115,7 +115,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         var width = widthMeasureSpec
         super.onMeasure(width, heightMeasureSpec)
         if (_maxWidth in 1..(measuredWidth - 1)) {
-            width = View.MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
+            width = MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
             super.onMeasure(width, heightMeasureSpec)
         }
         val multiLineVPadding = resources.getDimensionPixelSize(
@@ -183,6 +183,19 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         // inherited from Snackbar
         textView.animateBy(delay, duration, false, true)
         actionView.animateBy(delay, duration, false)
+    }
+
+    override fun setAction(text: CharSequence?, action: ((View) -> Unit)?) {
+        actionView.run {
+            visibility = if (!text.isNullOrEmpty() && action != null) VISIBLE else GONE
+            when (visibility) {
+                VISIBLE -> {
+                    setText(text)
+                    setOnClickListener { action?.invoke(this) }
+                }
+                else -> setOnClickListener(null)
+            }
+        }
     }
 
     companion object {
