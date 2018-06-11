@@ -12,9 +12,11 @@ class Example2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
-        frameLayout.errorbar("You have no new emails")
-            .setBackdropResource(R.drawable.bg_empty)
-            .setContentMarginBottom(resources.getDimension(R.dimen.margin_bottom).toInt())
+        frameLayout.errorbar {
+            setText("You have no new emails")
+            setBackdropResource(R.drawable.bg_empty)
+            setContentMarginBottom(resources.getDimension(R.dimen.margin_bottom).toInt())
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

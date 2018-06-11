@@ -29,12 +29,15 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                (view as FrameLayout).longErrorbar("No internet connection.")
-                    .setAction("Retry", { v ->
+                view as FrameLayout
+                view.longErrorbar {
+                    setText("No internet connection.")
+                    setAction("Retry") { v ->
                         v.context.toast("Clicked!")
-                    })
-                    .setBackdropResource(R.drawable.errorbar_bg_cloud)
-                    .setLogoResource(R.drawable.errorbar_ic_cloud)
+                    }
+                    setBackdropResource(R.drawable.errorbar_bg_cloud)
+                    setLogoResource(R.drawable.errorbar_ic_cloud)
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
@@ -43,9 +46,12 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                (view as FrameLayout).longErrorbar("You have no new emails")
-                    .setBackdropResource(R.drawable.bg_empty)
-                    .setContentMarginBottom(100)
+                view as FrameLayout
+                view.longErrorbar {
+                    setText("You have no new emails")
+                    setBackdropResource(R.drawable.bg_empty)
+                    setContentMarginBottom(150)
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))

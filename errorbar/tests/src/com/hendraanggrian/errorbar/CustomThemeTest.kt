@@ -28,7 +28,10 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                (view as FrameLayout).errorbar("No internet connection.")
+                view as FrameLayout
+                view.errorbar {
+                    setText("No internet connection.")
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))

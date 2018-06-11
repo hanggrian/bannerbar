@@ -27,7 +27,8 @@ class Example1Activity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.make -> Errorbar.make(frameLayout, "No internet connection", length)
+            R.id.make -> Errorbar.make(frameLayout, length)
+                .setText("No internet connection")
                 .setBackdropResource(R.drawable.errorbar_bg_cloud)
                 .setLogoResource(R.drawable.errorbar_ic_cloud)
                 .setAction("Retry", {

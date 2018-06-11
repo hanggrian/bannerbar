@@ -43,11 +43,11 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
 ) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
 
-    internal lateinit var backdropView: ImageView
-    internal lateinit var containerView: ViewGroup
-    internal lateinit var logoView: ImageView
-    internal lateinit var messageView: TextView
-    internal lateinit var actionView: Button
+    lateinit var backdropView: ImageView
+    lateinit var containerView: ViewGroup
+    lateinit var logoView: ImageView
+    lateinit var messageView: TextView
+    lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
     @SuppressLint("CustomViewStyleable")

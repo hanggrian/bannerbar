@@ -70,14 +70,13 @@ class Errorbar private constructor(
          * @param duration how long to display the message.  Either [LENGTH_SHORT] or [LENGTH_LONG]
          * @see Snackbar.make
          */
-        fun make(view: View, text: CharSequence, @Duration duration: Int): Errorbar {
+        fun make(view: View?, @Duration duration: Int): Errorbar {
             val parent = view.findSuitableParent()
                 ?: throw IllegalStateException("No suitable parent")
             val context = parent.context
             val content = LayoutInflater.from(context).inflate(
                 R.layout.design_layout_errorbar_include, parent, false) as ErrorbarContentLayout
             return Errorbar(parent, content, content).apply {
-                setText(text)
                 this.duration = duration
                 // hack Snackbar's view container
                 mView.setPadding(0, 0, 0, 0)
@@ -85,17 +84,6 @@ class Errorbar private constructor(
                 mView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             }
         }
-
-        /**
-         * Make an Errorbar to display a message.
-         *
-         * @param view the view to find a parent from.
-         * @param resId the resource id of the string resource to use. Can be formatted text.
-         * @param duration how long to display the message.  Either [LENGTH_SHORT] or [LENGTH_LONG]
-         * @see Snackbar.make
-         */
-        fun make(view: View, @StringRes resId: Int, @Duration duration: Int): Errorbar =
-            make(view, view.resources.getText(resId), duration)
 
         /**
          * While [Snackbar] prioritizes [CollapsingToolbarLayout] to be its parent,
