@@ -1,4 +1,4 @@
-Errorbar
+errorbar
 ========
 [![Download](https://api.bintray.com/packages/hendraanggrian/maven/errorbar/images/download.svg) ](https://bintray.com/hendraanggrian/maven/errorbar/_latestVersion)
 [![Build Status](https://travis-ci.org/hendraanggrian/errorbar.svg)](https://travis-ci.org/hendraanggrian/errorbar)

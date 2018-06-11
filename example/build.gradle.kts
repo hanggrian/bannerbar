@@ -40,9 +40,17 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("com.android.support:appcompat-v7:27.1.1")
+    }
+}
+
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":errorbar"))
     implementation(support("design", VERSION_SUPPORT))
+    implementation(support("appcompat-v7", VERSION_SUPPORT))
+    implementation(support("support-v4", VERSION_SUPPORT))
     implementation(androidKTX())
 }

@@ -1,6 +1,7 @@
 package com.hendraanggrian.errorbar
 
-import android.support.design.widget.longErrorbar
+import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -12,8 +13,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.widget.toast
 import com.hendraanggrian.errorbar.activity.InstrumentedActivity
-import com.hendraanggrian.errorbar.test.R
-import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +29,7 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                longErrorbar(view as FrameLayout, "No internet connection.")
+                (view as FrameLayout).errorbar("No internet connection.", Errorbar.LENGTH_LONG)
                     .setAction("Retry", { v ->
                         v.context.toast("Clicked!")
                     })
@@ -44,7 +43,7 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                longErrorbar(view as FrameLayout, "You have no new emails")
+                (view as FrameLayout).errorbar("You have no new emails", Errorbar.LENGTH_LONG)
                     .setBackdropResource(R.drawable.bg_empty)
                     .setContentMarginBottom(100)
             }

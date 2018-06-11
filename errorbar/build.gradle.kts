@@ -44,6 +44,7 @@ val ktlint by configurations.creating
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(support("design", VERSION_SUPPORT))
+    implementation(support("support-annotations", VERSION_SUPPORT))
 
     testImplementation(junit())
     androidTestImplementation(androidKTX())

@@ -2,6 +2,7 @@ package com.example.errorbar
 
 import android.os.Bundle
 import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -27,7 +28,7 @@ class Example1Activity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.make -> Errorbar.make(frameLayout, "No internet connection", length)
+            R.id.make -> frameLayout.errorbar("No internet connection", length)
                 .setBackdropResource(R.drawable.errorbar_bg_cloud)
                 .setLogoResource(R.drawable.errorbar_ic_cloud)
                 .setAction("Retry", {
@@ -42,7 +43,6 @@ class Example1Activity : AppCompatActivity() {
                         toast("onDismissed event: $event")
                     }
                 })
-                .show()
             else -> item.isChecked = true
         }
         return super.onOptionsItemSelected(item)

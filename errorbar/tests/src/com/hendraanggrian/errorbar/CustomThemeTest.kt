@@ -11,7 +11,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.activity.CustomThemeActivity
-import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +27,7 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                errorbar(view as FrameLayout, "No internet connection.")
+                (view as FrameLayout).errorbar("No internet connection.")
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))
