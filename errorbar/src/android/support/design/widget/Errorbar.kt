@@ -29,8 +29,6 @@ import android.support.annotation.IntDef
 import android.support.annotation.IntRange
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
-import android.support.design.widget.ErrorbarContent.Companion.NO_GETTER
-import android.support.design.widget.ErrorbarContent.Companion.noGetter
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +41,6 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.hendraanggrian.errorbar.R
-import kotlin.DeprecationLevel.ERROR
 
 /**
  * A larger Snackbar to display error and empty state.
@@ -55,8 +52,7 @@ class Errorbar private constructor(
     parent: ViewGroup,
     content: View,
     contentViewCallback: ContentViewCallback
-) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback),
-    ErrorbarContent<Errorbar> {
+) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback), ErrorbarBuilder {
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
     @IntRange(from = 1)
@@ -72,8 +68,8 @@ class Errorbar private constructor(
          * Make an Errorbar to display a message.
          *
          * @param view the view to find a parent from.
-         * @param text the text to show.  Can be formatted text.
-         * @param duration how long to display the message.  Either [LENGTH_SHORT] or [LENGTH_LONG]
+         * @param duration how long to display the message. Either [LENGTH_SHORT], [LENGTH_LONG],
+         * or [LENGTH_INDEFINITE].
          * @see Snackbar.make
          */
         fun make(view: View?, @Duration duration: Int): Errorbar {
@@ -92,7 +88,7 @@ class Errorbar private constructor(
         }
 
         /**
-         * While [Snackbar] prioritizes [CollapsingToolbarLayout] to be its parent,
+         * While [Errorbar] prioritizes [CollapsingToolbarLayout] to be its parent,
          * Errorbar accepts any parent capable of holding more than one child.
          */
         private fun View?.findSuitableParent(): ViewGroup? {
@@ -125,69 +121,38 @@ class Errorbar private constructor(
     private inline val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
     override val backdropView: ImageView get() = layout.backdropView
+
     override val containerView: ViewGroup get() = layout.containerView
+
     override val logoView: ImageView get() = layout.logoView
+
     override val textView: TextView get() = layout.textView
+
     override val actionView: Button get() = layout.actionView
 
-    override var backdropDrawable: Drawable?
-        get() = super.backdropDrawable
-        set(value) {
-            super.backdropDrawable = value
-            backdropView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var backdropBitmap: Bitmap?
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.backdropBitmap = value
-            backdropView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var backdropUri: Uri?
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.backdropUri = value
-            backdropView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var backdropResource: Int
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.backdropResource = value
-            backdropView.visibility = if (value != -1) VISIBLE else GONE
-        }
-
-    override var backdropColorStateList: ColorStateList?
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.backdropColorStateList = value
-            backdropView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
     /** Set a backdrop from drawable. */
-    inline fun setBackdropDrawable(backdrop: Drawable?): Errorbar = also {
-        it.backdropDrawable = backdrop
+    inline fun setBackdropDrawable(drawable: Drawable?): Errorbar = also {
+        it.backdropDrawable = drawable
     }
 
     /** Set a backdrop from bitmap. */
-    inline fun setBackdropBitmap(backdrop: Bitmap?): Errorbar = also {
-        it.backdropBitmap = backdrop
+    inline fun setBackdropBitmap(bitmap: Bitmap?): Errorbar = also {
+        it.backdropBitmap = bitmap
     }
 
     /** Set a backdrop from uri. */
-    inline fun setBackdropUri(backdrop: Uri?): Errorbar = also {
-        it.backdropUri = backdrop
+    inline fun setBackdropUri(uri: Uri?): Errorbar = also {
+        it.backdropUri = uri
     }
 
     /** Set a backdrop from drawable resource. */
-    inline fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar = also {
-        it.backdropResource = backdrop
+    inline fun setBackdropResource(@DrawableRes resource: Int): Errorbar = also {
+        it.backdropResource = resource
     }
 
     /** Set a backdrop from color state list. */
-    inline fun setBackdropColor(backdrop: ColorStateList?): Errorbar = also {
-        it.backdropColorStateList = backdrop
+    inline fun setBackdropColor(colorStateList: ColorStateList?): Errorbar = also {
+        it.backdropColorStateList = colorStateList
     }
 
     /** Set a backdrop from color. */
@@ -226,60 +191,25 @@ class Errorbar private constructor(
         it.contentMarginBottom = contentMarginBottom
     }
 
-    override var logoDrawable: Drawable?
-        get() = super.logoDrawable
-        set(value) {
-            super.logoDrawable = value
-            logoView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var logoBitmap: Bitmap?
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.logoBitmap = value
-            logoView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var logoUri: Uri?
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) {
-            super.logoUri = value
-            logoView.visibility = value?.let { VISIBLE } ?: GONE
-        }
-
-    override var logoResource: Int
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) {
-            super.logoResource = value
-            logoView.visibility = if (value != -1) VISIBLE else GONE
-        }
-
     /** Set logo from drawable. */
-    inline fun setLogoDrawable(logo: Drawable?): Errorbar = also {
-        it.logoDrawable = logo
+    inline fun setLogoDrawable(drawable: Drawable?): Errorbar = also {
+        it.logoDrawable = drawable
     }
 
     /** Set logo from bitmap. */
-    inline fun setLogoBitmap(logo: Bitmap?): Errorbar = also {
-        it.logoBitmap = logo
+    inline fun setLogoBitmap(bitmap: Bitmap?): Errorbar = also {
+        it.logoBitmap = bitmap
     }
 
     /** Set logo from uri. */
-    inline fun setLogoUri(logo: Uri?): Errorbar = also {
-        it.logoUri = logo
+    inline fun setLogoUri(uri: Uri?): Errorbar = also {
+        it.logoUri = uri
     }
 
     /** Set logo from drawable resource. */
-    inline fun setLogoResource(@DrawableRes logo: Int): Errorbar = also {
-        it.logoResource = logo
+    inline fun setLogoResource(@DrawableRes resource: Int): Errorbar = also {
+        it.logoResource = resource
     }
-
-    override var text: CharSequence?
-        get() = super.text
-        set(value) {
-            super.text = value
-            textView.visibility = value?.let { VISIBLE } ?: GONE
-        }
 
     /** Set text to this Errorbar. */
     inline fun setText(text: CharSequence?): Errorbar = also {
@@ -309,9 +239,9 @@ class Errorbar private constructor(
 
     open class Callback : BaseCallback<Errorbar>() {
 
-        override fun onShown(v: Errorbar) { }
+        override fun onShown(v: Errorbar) {}
 
-        override fun onDismissed(v: Errorbar, @DismissEvent event: Int) { }
+        override fun onDismissed(v: Errorbar, @DismissEvent event: Int) {}
 
         companion object {
             const val DISMISS_EVENT_SWIPE = BaseCallback.DISMISS_EVENT_SWIPE

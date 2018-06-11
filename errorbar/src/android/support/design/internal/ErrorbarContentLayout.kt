@@ -22,7 +22,6 @@ import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.Px
 import android.support.design.widget.BaseTransientBottomBar
-import android.support.design.widget.ErrorbarContent
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
@@ -42,14 +41,13 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
-) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback,
-    ErrorbarContent<Unit> {
+) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
 
-    override lateinit var backdropView: ImageView
-    override lateinit var containerView: ViewGroup
-    override lateinit var logoView: ImageView
-    override lateinit var textView: TextView
-    override lateinit var actionView: Button
+    lateinit var backdropView: ImageView
+    lateinit var containerView: ViewGroup
+    lateinit var logoView: ImageView
+    lateinit var textView: TextView
+    lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
     @SuppressLint("CustomViewStyleable")
@@ -185,22 +183,9 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView.animateBy(delay, duration, false)
     }
 
-    override fun setAction(text: CharSequence?, action: ((View) -> Unit)?) {
-        actionView.run {
-            visibility = if (!text.isNullOrEmpty() && action != null) VISIBLE else GONE
-            when (visibility) {
-                VISIBLE -> {
-                    setText(text)
-                    setOnClickListener { action?.invoke(this) }
-                }
-                else -> setOnClickListener(null)
-            }
-        }
-    }
+    private companion object {
 
-    companion object {
-
-        private fun View.animateBy(
+        fun View.animateBy(
             delay: Int,
             duration: Int,
             animateIn: Boolean,

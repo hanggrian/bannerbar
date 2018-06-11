@@ -20,12 +20,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlin.DeprecationLevel.ERROR
 
-interface ErrorbarContent<T> {
+interface ErrorbarBuilder {
 
-    companion object {
-        internal const val NO_GETTER = "Property does not have a getter"
+    private companion object {
+        const val NO_GETTER = "Property does not have a getter"
 
-        internal fun noGetter(): Nothing = throw UnsupportedClassVersionError(NO_GETTER)
+        fun noGetter(): Nothing = throw UnsupportedClassVersionError(NO_GETTER)
     }
 
     val backdropView: ImageView
@@ -40,23 +40,38 @@ interface ErrorbarContent<T> {
 
     var backdropDrawable: Drawable?
         get() = backdropView.drawable
-        set(value) = backdropView.setImageDrawable(value)
+        set(value) = backdropView.run {
+            setImageDrawable(value)
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var backdropBitmap: Bitmap?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.setImageBitmap(value)
+        set(value) = backdropView.run {
+            setImageBitmap(value)
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var backdropUri: Uri?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.setImageURI(value)
+        set(value) = backdropView.run {
+            setImageURI(value)
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var backdropResource: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) = backdropView.setImageResource(value)
+        set(@DrawableRes value) = backdropView.run {
+            setImageResource(value)
+            visibility = if (value != -1) VISIBLE else GONE
+        }
 
     var backdropColorStateList: ColorStateList?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = backdropView.setImageDrawable(ColorDrawable(value?.defaultColor ?: WHITE))
+        set(value) = backdropView.run {
+            setImageDrawable(ColorDrawable(value?.defaultColor ?: WHITE))
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var backdropColor: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
@@ -97,26 +112,36 @@ interface ErrorbarContent<T> {
     var logoDrawable: Drawable?
         get() = logoView.drawable
         set(value) = logoView.run {
+            setImageDrawable(value)
             visibility = value?.let { VISIBLE } ?: GONE
-            if (visibility == VISIBLE) setImageDrawable(value)
         }
 
     var logoBitmap: Bitmap?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.setImageBitmap(value)
+        set(value) = logoView.run {
+            setImageBitmap(value)
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var logoUri: Uri?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.setImageURI(value)
+        set(value) = logoView.run {
+            setImageURI(value)
+            visibility = value?.let { VISIBLE } ?: GONE
+        }
 
     var logoResource: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) = logoView.setImageResource(value)
+        set(@DrawableRes value) = logoView.run {
+            setImageResource(value)
+            visibility = if (value != -1) VISIBLE else GONE
+        }
 
     var text: CharSequence?
         get() = textView.text
-        set(value) {
-            textView.text = value
+        set(value) = textView.run {
+            text = value
+            visibility = value?.let { VISIBLE } ?: GONE
         }
 
     var textResource: Int
@@ -126,9 +151,9 @@ interface ErrorbarContent<T> {
         }
 
     /** Set button text and its click listener. */
-    fun setAction(text: CharSequence?, action: ((View) -> Unit)? = null): T
+    fun setAction(text: CharSequence?, action: ((View) -> Unit)? = null): Errorbar
 
     /** Set button text from string resource and its click listener. */
-    fun setAction(@StringRes resId: Int, action: ((View) -> Unit)? = null): T =
+    fun setAction(@StringRes resId: Int, action: ((View) -> Unit)? = null): Errorbar =
         setAction(actionView.context.getText(resId), action)
 }
