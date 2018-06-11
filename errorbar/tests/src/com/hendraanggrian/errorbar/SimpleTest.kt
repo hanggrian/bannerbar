@@ -10,6 +10,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.widget.toast
 import com.hendraanggrian.errorbar.activity.InstrumentedActivity
 import com.hendraanggrian.errorbar.test.R
 import org.jetbrains.anko.toast

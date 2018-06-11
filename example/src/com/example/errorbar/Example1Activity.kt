@@ -5,8 +5,8 @@ import android.support.design.widget.Errorbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.widget.toast
 import kotlinx.android.synthetic.main.activity_example.*
-import org.jetbrains.anko.toast
 
 class Example1Activity : AppCompatActivity() {
 

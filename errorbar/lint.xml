@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<lint>
-    <!-- Duration in BaseTransientBottomBar falsely has IntRange annotation. -->
-    <issue id="Range" severity="ignore" />
-    <!-- Lint falsely claiming some resources are unused, possible Kotlin bug -->
-    <issue id="UnusedResources" severity="ignore" />
-</lint>

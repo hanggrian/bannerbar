@@ -35,7 +35,7 @@ android {
         }
     }
     libraryVariants.all {
-        generateBuildConfig.enabled = false
+        generateBuildConfig?.enabled = false
     }
 }
 
@@ -46,7 +46,7 @@ dependencies {
     implementation(support("design", VERSION_SUPPORT))
 
     testImplementation(junit())
-    androidTestImplementation(anko("commons"))
+    androidTestImplementation(androidKTX())
     androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
     androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
     androidTestImplementation(support("rules", VERSION_RULES, "test"))

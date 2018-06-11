@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example.collapsingtoolbarlayoutsubtitle"
+        applicationId = "com.example.errorbar"
         versionCode = 1
         versionName = "1.0"
     }
@@ -41,7 +41,8 @@ android {
 }
 
 dependencies {
+    api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":errorbar"))
-    implementation(kotlin("stdlib", VERSION_KOTLIN))
-    implementation(anko("commons"))
+    implementation(support("design", VERSION_SUPPORT))
+    implementation(androidKTX())
 }

@@ -18,12 +18,9 @@ package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.TypedArray
 import android.os.Build
-import android.support.annotation.AnyRes
 import android.support.annotation.AttrRes
 import android.support.annotation.Px
-import android.support.annotation.StyleableRes
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
@@ -53,14 +50,13 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     internal lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
-    private val a = context.obtainStyledAttributes(
-        attrs,
-        R.styleable.ErrorbarLayout,
-        defStyleAttr,
-        R.style.Widget_Design_Errorbar)
-    @Px private val mMaxWidth = a.getDimensionPixelSize(
+    @SuppressLint("CustomViewStyleable")
+    private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
+        defStyleAttr, R.style.Widget_Design_Errorbar)
+
+    @Px private val _maxWidth = a.getDimensionPixelSize(
         R.styleable.ErrorbarLayout_android_maxWidth, -1)
-    @Px private val mMaxInlineActionWidth = a.getDimensionPixelSize(
+    @Px private val _maxInlineActionWidth = a.getDimensionPixelSize(
         R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
 
     override fun onFinishInflate() {
@@ -74,55 +70,52 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) backdropView.run {
             visibility = VISIBLE
-            setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_backdrop))
+            setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_logo)) logoView.run {
             visibility = VISIBLE
-            setImageDrawable(a.getDrawableNotNull(R.styleable.ErrorbarLayout_logo))
+            setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
                 23 -> messageView.setTextAppearance(
-                    a.getResourceIdNotNull(R.styleable.ErrorbarLayout_android_textAppearance))
+                    a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
                 else -> messageView.setTextAppearance(context,
-                    a.getResourceIdNotNull(R.styleable.ErrorbarLayout_android_textAppearance))
+                    a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
             messageView.setTextColor(
-                a.getColorStateListNotNull(R.styleable.ErrorbarLayout_android_textColor))
+                a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
-            messageView.textSize = a.getDimensionNotNull(
-                R.styleable.ErrorbarLayout_android_textSize)
+            messageView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
             @Suppress("DEPRECATION")
             when (Build.VERSION.SDK_INT) {
                 23 -> actionView.setTextAppearance(
-                    a.getResourceIdNotNull(R.styleable.ErrorbarLayout_actionTextAppearance))
+                    a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
                 else -> actionView.setTextAppearance(context,
-                    a.getResourceIdNotNull(R.styleable.ErrorbarLayout_actionTextAppearance))
+                    a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
-            actionView.setTextColor(
-                a.getColorStateListNotNull(R.styleable.ErrorbarLayout_actionTextColor))
+            actionView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
-            actionView.textSize = a.getDimensionNotNull(
-                R.styleable.ErrorbarLayout_actionTextSize)
+            actionView.textSize = a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f)
         }
         a.recycle()
     }
 
     @SuppressLint("PrivateResource")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var _widthMeasureSpec = widthMeasureSpec
-        super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
-        if (mMaxWidth in 1..(measuredWidth - 1)) {
-            _widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(mMaxWidth, MeasureSpec.EXACTLY)
-            super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
+        var width = widthMeasureSpec
+        super.onMeasure(width, heightMeasureSpec)
+        if (_maxWidth in 1..(measuredWidth - 1)) {
+            width = View.MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
+            super.onMeasure(width, heightMeasureSpec)
         }
         val multiLineVPadding = resources.getDimensionPixelSize(
             R.dimen.design_snackbar_padding_vertical_2lines)
@@ -131,29 +124,30 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         val isMultiLine = messageView.layout.lineCount > 1
         var remeasure = false
         when {
-            isMultiLine && mMaxInlineActionWidth > 0 &&
-                actionView.measuredWidth > mMaxInlineActionWidth ->
-                if (updateViewsWithinLayout(
-                        multiLineVPadding,
+            isMultiLine && _maxInlineActionWidth > 0 &&
+                actionView.measuredWidth > _maxInlineActionWidth ->
+                if (updateViewsWithinLayout(multiLineVPadding,
                         multiLineVPadding - singleLineVPadding)) {
                     remeasure = true
                 }
             else -> {
-                val messagePadding = if (isMultiLine) multiLineVPadding else singleLineVPadding
+                val messagePadding = when {
+                    isMultiLine -> multiLineVPadding
+                    else -> singleLineVPadding
+                }
                 if (updateViewsWithinLayout(messagePadding, messagePadding)) {
                     remeasure = true
                 }
             }
         }
         if (remeasure) {
-            super.onMeasure(_widthMeasureSpec, heightMeasureSpec)
+            super.onMeasure(width, heightMeasureSpec)
         }
     }
 
     private fun updateViewsWithinLayout(messagePadTop: Int, messagePadBottom: Int): Boolean {
         var changed = false
-        if (messageView.paddingTop != messagePadTop ||
-            messageView.paddingBottom != messagePadBottom) {
+        if (messageView.run { paddingTop != messagePadTop || paddingBottom != messagePadBottom }) {
             updateTopBottomPadding(messageView, messagePadTop, messagePadBottom)
             changed = true
         }
@@ -190,36 +184,22 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView.animateBy(delay, duration, false)
     }
 
-    private fun View.animateBy(
-        delay: Int,
-        duration: Int,
-        animateIn: Boolean,
-        condition: Boolean = visibility == VISIBLE
-    ) {
-        if (condition) {
-            alpha = if (animateIn) 0.0f else 1.0f
-            animate()
-                .alpha(if (animateIn) 1.0f else 0.0f)
-                .setDuration(duration.toLong())
-                .setStartDelay(delay.toLong())
-                .start()
+    companion object {
+
+        private fun View.animateBy(
+            delay: Int,
+            duration: Int,
+            animateIn: Boolean,
+            condition: Boolean = visibility == VISIBLE
+        ) {
+            if (condition) {
+                alpha = if (animateIn) 0.0f else 1.0f
+                animate()
+                    .alpha(if (animateIn) 1.0f else 0.0f)
+                    .setDuration(duration.toLong())
+                    .setStartDelay(delay.toLong())
+                    .start()
+            }
         }
-    }
-
-    @Suppress("NOTHING_TO_INLINE")
-    private companion object {
-
-        inline fun TypedArray.getDrawableNotNull(@StyleableRes index: Int) =
-            checkNotNull(getDrawable(index))
-
-        @AnyRes
-        inline fun TypedArray.getResourceIdNotNull(@StyleableRes index: Int) =
-            checkNotNull(getResourceId(index, 0))
-
-        inline fun TypedArray.getColorStateListNotNull(@StyleableRes index: Int) =
-            checkNotNull(getColorStateList(index))
-
-        inline fun TypedArray.getDimensionNotNull(@StyleableRes index: Int) =
-            checkNotNull(getDimension(index, 0f))
     }
 }

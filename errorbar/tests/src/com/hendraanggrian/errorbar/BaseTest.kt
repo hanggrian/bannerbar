@@ -11,7 +11,7 @@ import android.widget.ProgressBar
 
 abstract class BaseTest {
 
-    internal fun setTitle(title: String) = object : ViewAction {
+    fun setTitle(title: String) = object : ViewAction {
         override fun getConstraints() = isAssignableFrom(Toolbar::class.java)
         override fun getDescription() = "setTitle($title)"
         override fun perform(uiController: UiController, view: View) {
@@ -19,7 +19,7 @@ abstract class BaseTest {
         }
     }
 
-    internal fun delay(millis: Long) = object : ViewAction {
+    fun delay(millis: Long) = object : ViewAction {
         override fun getConstraints() = isAssignableFrom(ProgressBar::class.java)
         override fun getDescription() = "delay($millis)"
         override fun perform(uiController: UiController, view: View) {

@@ -152,7 +152,7 @@ class Errorbar private constructor(
     /** Set a backdrop from drawable resource. */
     fun setBackdropResource(@DrawableRes backdrop: Int): Errorbar = apply {
         layout.backdropView.run {
-            visibility = if (backdrop > 0) VISIBLE else GONE
+            visibility = if (backdrop != -1) VISIBLE else GONE
             if (visibility == VISIBLE) setImageResource(backdrop)
         }
     }
@@ -230,7 +230,7 @@ class Errorbar private constructor(
     /** Set logo from drawable resource. */
     fun setLogoResource(@DrawableRes logo: Int): Errorbar = apply {
         layout.logoView.run {
-            visibility = if (logo > 0) VISIBLE else GONE
+            visibility = if (logo != -1) VISIBLE else GONE
             if (visibility == VISIBLE) setImageResource(logo)
         }
     }

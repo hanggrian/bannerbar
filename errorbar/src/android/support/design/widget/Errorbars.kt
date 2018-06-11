@@ -1,7 +1,9 @@
 @file:Suppress("NOTHING_TO_INLINE")
+@file:SuppressLint("Range")
 
 package android.support.design.widget
 
+import android.annotation.SuppressLint
 import android.support.annotation.StringRes
 import android.view.View
 

@@ -10,7 +10,7 @@ fun DependencyHandler.support(module: String, version: String, vararg groupSuffi
         groupSuffixes.forEach { append(".$it") }
     }}:$module:$version"
 
-fun DependencyHandler.anko(module: String) = "org.jetbrains.anko:anko-$module:$VERSION_ANKO"
+fun DependencyHandler.androidKTX() = "androidx.core:core-ktx:$VERSION_ANDROID_KTX"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 
