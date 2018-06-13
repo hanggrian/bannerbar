@@ -112,7 +112,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var width = widthMeasureSpec
         super.onMeasure(width, heightMeasureSpec)
-        if (_maxWidth in 1..(measuredWidth - 1)) {
+        if (_maxWidth in 1 until measuredWidth) {
             width = MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
             super.onMeasure(width, heightMeasureSpec)
         }
@@ -123,12 +123,11 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         val isMultiLine = textView.layout.lineCount > 1
         var remeasure = false
         when {
-            isMultiLine && _maxInlineActionWidth > 0 &&
-                actionView.measuredWidth > _maxInlineActionWidth ->
-                if (updateViewsWithinLayout(multiLineVPadding,
-                        multiLineVPadding - singleLineVPadding)) {
-                    remeasure = true
-                }
+            isMultiLine && _maxInlineActionWidth > 0 && actionView.measuredWidth >
+                _maxInlineActionWidth -> if (updateViewsWithinLayout(multiLineVPadding,
+                    multiLineVPadding - singleLineVPadding)) {
+                remeasure = true
+            }
             else -> {
                 val messagePadding = when {
                     isMultiLine -> multiLineVPadding
@@ -147,24 +146,10 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     private fun updateViewsWithinLayout(messagePadTop: Int, messagePadBottom: Int): Boolean {
         var changed = false
         if (textView.run { paddingTop != messagePadTop || paddingBottom != messagePadBottom }) {
-            updateTopBottomPadding(textView, messagePadTop, messagePadBottom)
+            textView.updateTopBottomPadding(messagePadTop, messagePadBottom)
             changed = true
         }
         return changed
-    }
-
-    private fun updateTopBottomPadding(
-        view: View,
-        topPadding: Int,
-        bottomPadding: Int
-    ) = when {
-        ViewCompat.isPaddingRelative(view) -> ViewCompat.setPaddingRelative(
-            view,
-            ViewCompat.getPaddingStart(view),
-            topPadding,
-            ViewCompat.getPaddingEnd(view),
-            bottomPadding)
-        else -> view.setPadding(view.paddingLeft, topPadding, view.paddingRight, bottomPadding)
     }
 
     override fun animateContentIn(delay: Int, duration: Int) {
@@ -184,6 +169,14 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     }
 
     private companion object {
+        fun View.updateTopBottomPadding(topPadding: Int, bottomPadding: Int) = when {
+            ViewCompat.isPaddingRelative(this) -> ViewCompat.setPaddingRelative(this,
+                ViewCompat.getPaddingStart(this),
+                topPadding,
+                ViewCompat.getPaddingEnd(this),
+                bottomPadding)
+            else -> setPadding(paddingLeft, topPadding, paddingRight, bottomPadding)
+        }
 
         fun View.animateBy(
             delay: Int,

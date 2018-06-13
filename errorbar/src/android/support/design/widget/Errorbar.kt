@@ -41,6 +41,7 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.hendraanggrian.errorbar.R
+import kotlin.annotation.AnnotationRetention.SOURCE
 
 /**
  * A larger Snackbar to display error and empty state.
@@ -56,7 +57,7 @@ class Errorbar private constructor(
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
     @IntRange(from = 1)
-    @Retention(AnnotationRetention.SOURCE)
+    @Retention(SOURCE)
     annotation class Duration
 
     companion object {
@@ -65,7 +66,7 @@ class Errorbar private constructor(
         const val LENGTH_LONG = BaseTransientBottomBar.LENGTH_LONG
 
         /**
-         * Make an Errorbar to display a message.
+         * Make an [Errorbar] to display a message.
          *
          * @param view the view to find a parent from.
          * @param duration how long to display the message. Either [LENGTH_SHORT], [LENGTH_LONG],
@@ -89,7 +90,7 @@ class Errorbar private constructor(
 
         /**
          * While [Errorbar] prioritizes [CollapsingToolbarLayout] to be its parent,
-         * Errorbar accepts any parent capable of holding more than one child.
+         * [Errorbar] accepts any parent capable of holding more than one child.
          */
         private fun View?.findSuitableParent(): ViewGroup? {
             var view = this
