@@ -29,8 +29,8 @@ class Example1Activity : AppCompatActivity() {
             android.R.id.home -> finish()
             R.id.make -> Errorbar.make(frameLayout, length)
                 .setText("No internet connection")
+                .setImageResource(R.drawable.errorbar_ic_cloud)
                 .setBackdropResource(R.drawable.errorbar_bg_cloud)
-                .setLogoResource(R.drawable.errorbar_ic_cloud)
                 .setAction("Retry", {
                     toast("Clicked.")
                 })

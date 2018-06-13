@@ -125,7 +125,7 @@ class Errorbar private constructor(
 
     override val containerView: ViewGroup get() = layout.containerView
 
-    override val logoView: ImageView get() = layout.logoView
+    override val imageView: ImageView get() = layout.imageView
 
     override val textView: TextView get() = layout.textView
 
@@ -193,23 +193,23 @@ class Errorbar private constructor(
     }
 
     /** Set logo from drawable. */
-    inline fun setLogoDrawable(drawable: Drawable?): Errorbar = also {
-        it.logoDrawable = drawable
+    inline fun setImageDrawable(drawable: Drawable?): Errorbar = also {
+        it.imageDrawable = drawable
     }
 
     /** Set logo from bitmap. */
-    inline fun setLogoBitmap(bitmap: Bitmap?): Errorbar = also {
-        it.logoBitmap = bitmap
+    inline fun setImageBitmap(bitmap: Bitmap?): Errorbar = also {
+        it.imageBitmap = bitmap
     }
 
     /** Set logo from uri. */
-    inline fun setLogoUri(uri: Uri?): Errorbar = also {
-        it.logoUri = uri
+    inline fun setImageUri(uri: Uri?): Errorbar = also {
+        it.imageUri = uri
     }
 
     /** Set logo from drawable resource. */
-    inline fun setLogoResource(@DrawableRes resource: Int): Errorbar = also {
-        it.logoResource = resource
+    inline fun setImageResource(@DrawableRes resource: Int): Errorbar = also {
+        it.imageResource = resource
     }
 
     /** Set text to this Errorbar. */

@@ -33,7 +33,7 @@ class SimpleTest : BaseTest() {
                 view.longErrorbar {
                     text = "No internet connection."
                     backdropResource = R.drawable.errorbar_bg_cloud
-                    logoResource = R.drawable.errorbar_ic_cloud
+                    imageResource = R.drawable.errorbar_ic_cloud
                     setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }

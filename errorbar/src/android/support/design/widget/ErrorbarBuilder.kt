@@ -32,14 +32,14 @@ interface ErrorbarBuilder {
 
     val containerView: ViewGroup
 
-    val logoView: ImageView
+    val imageView: ImageView
 
     val textView: TextView
 
     val actionView: Button
 
     var backdropDrawable: Drawable?
-        get() = backdropView.drawable
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(value) = backdropView.run {
             setImageDrawable(value)
             visibility = value?.let { VISIBLE } ?: GONE
@@ -86,59 +86,59 @@ interface ErrorbarBuilder {
         }
 
     var contentMarginLeft: Int
-        get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = value
         }
 
     var contentMarginTop: Int
-        get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin = value
         }
 
     var contentMarginRight: Int
-        get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = value
         }
 
     var contentMarginBottom: Int
-        get() = (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(@Px value) {
             (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = value
         }
 
-    var logoDrawable: Drawable?
-        get() = logoView.drawable
-        set(value) = logoView.run {
+    var imageDrawable: Drawable?
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+        set(value) = imageView.run {
             setImageDrawable(value)
             visibility = value?.let { VISIBLE } ?: GONE
         }
 
-    var logoBitmap: Bitmap?
+    var imageBitmap: Bitmap?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.run {
+        set(value) = imageView.run {
             setImageBitmap(value)
             visibility = value?.let { VISIBLE } ?: GONE
         }
 
-    var logoUri: Uri?
+    var imageUri: Uri?
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) = logoView.run {
+        set(value) = imageView.run {
             setImageURI(value)
             visibility = value?.let { VISIBLE } ?: GONE
         }
 
-    var logoResource: Int
+    var imageResource: Int
         @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(@DrawableRes value) = logoView.run {
+        set(@DrawableRes value) = imageView.run {
             setImageResource(value)
             visibility = if (value != -1) VISIBLE else GONE
         }
 
     var text: CharSequence?
-        get() = textView.text
+        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
         set(value) = textView.run {
             text = value
             visibility = value?.let { VISIBLE } ?: GONE

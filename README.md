@@ -36,7 +36,7 @@ Create Errorbar just like a Snackbar.
 
 ```kotlin
 Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
-    .setLogoDrawable(R.drawable.errorbar_ic_cloud)
+    .setImageDrawable(R.drawable.errorbar_ic_cloud)
     .setAction("Retry", { v -> 
         // do something
     })

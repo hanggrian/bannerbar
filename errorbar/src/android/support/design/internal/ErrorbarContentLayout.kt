@@ -45,7 +45,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     lateinit var backdropView: ImageView
     lateinit var containerView: ViewGroup
-    lateinit var logoView: ImageView
+    lateinit var imageView: ImageView
     lateinit var textView: TextView
     lateinit var actionView: Button
 
@@ -64,7 +64,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         // bind views
         backdropView = findViewById(R.id.errorbar_backdrop)
         containerView = findViewById(R.id.errorbar_container)
-        logoView = findViewById(R.id.errorbar_logo)
+        imageView = findViewById(R.id.errorbar_image)
         textView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
         // apply attr and finally recycle
@@ -72,7 +72,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
             visibility = VISIBLE
             setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
         }
-        if (a.hasValue(R.styleable.ErrorbarLayout_logo)) logoView.run {
+        if (a.hasValue(R.styleable.ErrorbarLayout_logo)) imageView.run {
             visibility = VISIBLE
             setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
         }
@@ -154,7 +154,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     override fun animateContentIn(delay: Int, duration: Int) {
         backdropView.animateBy(delay, duration, true)
-        logoView.animateBy(delay, duration, true)
+        imageView.animateBy(delay, duration, true)
         // inherited from Snackbar
         textView.animateBy(delay, duration, true, true)
         actionView.animateBy(delay, duration, true)
@@ -162,7 +162,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     override fun animateContentOut(delay: Int, duration: Int) {
         backdropView.animateBy(delay, duration, false)
-        logoView.animateBy(delay, duration, false)
+        imageView.animateBy(delay, duration, false)
         // inherited from Snackbar
         textView.animateBy(delay, duration, false, true)
         actionView.animateBy(delay, duration, false)
