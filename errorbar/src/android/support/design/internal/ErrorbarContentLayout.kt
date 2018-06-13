@@ -69,12 +69,12 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) backdropView.run {
-            visibility = VISIBLE
             setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+            visibility = VISIBLE
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_logo)) imageView.run {
-            visibility = VISIBLE
             setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
+            visibility = VISIBLE
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {

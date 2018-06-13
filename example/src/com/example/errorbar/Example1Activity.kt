@@ -29,11 +29,11 @@ class Example1Activity : AppCompatActivity() {
             android.R.id.home -> finish()
             R.id.make -> Errorbar.make(frameLayout, length)
                 .setText("No internet connection")
-                .setImageResource(R.drawable.errorbar_ic_cloud)
-                .setBackdropResource(R.drawable.errorbar_bg_cloud)
-                .setAction("Retry", {
+                .setImage(R.drawable.errorbar_ic_cloud)
+                .setBackdrop(R.drawable.errorbar_bg_cloud)
+                .setAction("Retry") {
                     toast("Clicked.")
-                })
+                }
                 .addCallback(object : Errorbar.Callback() {
                     override fun onShown(v: Errorbar) {
                         toast("onShown")
