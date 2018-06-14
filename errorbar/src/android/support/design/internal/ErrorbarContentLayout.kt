@@ -19,7 +19,6 @@ package android.support.design.internal
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -33,7 +32,10 @@ import android.support.design.widget.ErrorbarContent
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.MeasureSpec.EXACTLY
+import android.view.View.MeasureSpec.makeMeasureSpec
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -81,12 +83,8 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
 
         // apply attr and finally recycle
-        when {
-            a.hasValue(R.styleable.ErrorbarLayout_backdrop) ->
-                setBackdrop(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
-            a.hasValue(R.styleable.ErrorbarLayout_backdropColor) -> {
-                setBackdropColor(a.getColor(R.styleable.ErrorbarLayout_backdropColor, TRANSPARENT))
-            }
+        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
+            setBackdrop(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_image)) {
             setImage(a.getDrawable(R.styleable.ErrorbarLayout_image))
@@ -191,7 +189,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
         var width = widthMeasureSpec
         if (_maxWidth in 1 until measuredWidth) {
-            width = MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
+            width = makeMeasureSpec(_maxWidth, EXACTLY)
             super.onMeasure(width, heightMeasureSpec)
         }
 
@@ -221,6 +219,19 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
         if (remeasure) {
             super.onMeasure(width, heightMeasureSpec)
+        }
+
+        /**
+         * From [android.support.design.widget.Snackbar.SnackbarLayout.onMeasure].
+         */
+        val childCount = childCount
+        val availableWidth = measuredWidth - paddingLeft - paddingRight
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            if (child.layoutParams.width == MATCH_PARENT) {
+                child.measure(makeMeasureSpec(availableWidth, EXACTLY),
+                    makeMeasureSpec(child.measuredHeight, EXACTLY))
+            }
         }
     }
 
