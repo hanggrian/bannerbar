@@ -61,20 +61,22 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+
         // bind views
         backdropView = findViewById(R.id.errorbar_backdrop)
         containerView = findViewById(R.id.errorbar_container)
         imageView = findViewById(R.id.errorbar_image)
         textView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
+
         // apply attr and finally recycle
-        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) backdropView.run {
-            setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
-            visibility = VISIBLE
+        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
+            backdropView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+            backdropView.visibility = VISIBLE
         }
-        if (a.hasValue(R.styleable.ErrorbarLayout_logo)) imageView.run {
-            setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_logo))
-            visibility = VISIBLE
+        if (a.hasValue(R.styleable.ErrorbarLayout_image)) {
+            imageView.setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_image))
+            imageView.visibility = VISIBLE
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
@@ -110,17 +112,20 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     @SuppressLint("PrivateResource")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var width = widthMeasureSpec
         super.onMeasure(width, heightMeasureSpec)
+
+        var width = widthMeasureSpec
         if (_maxWidth in 1 until measuredWidth) {
             width = MeasureSpec.makeMeasureSpec(_maxWidth, MeasureSpec.EXACTLY)
             super.onMeasure(width, heightMeasureSpec)
         }
+
         val multiLineVPadding = resources.getDimensionPixelSize(
             R.dimen.design_snackbar_padding_vertical_2lines)
         val singleLineVPadding = resources.getDimensionPixelSize(
             R.dimen.design_snackbar_padding_vertical)
-        val isMultiLine = textView.layout.lineCount > 1
+        val isMultiLine = textView.layout?.lineCount?.let { it > 1 } ?: false
+
         var remeasure = false
         when {
             isMultiLine && _maxInlineActionWidth > 0 && actionView.measuredWidth >
@@ -138,6 +143,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
                 }
             }
         }
+
         if (remeasure) {
             super.onMeasure(width, heightMeasureSpec)
         }

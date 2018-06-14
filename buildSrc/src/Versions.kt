@@ -4,7 +4,7 @@ const val SDK_MIN = 14
 const val SDK_TARGET = 27
 const val BUILD_TOOLS = "27.0.3"
 
-const val VERSION_KOTLIN = "1.2.41"
+const val VERSION_KOTLIN = "1.2.50"
 const val VERSION_SUPPORT = "27.1.1"
 
 const val VERSION_ESPRESSO = "3.0.2"

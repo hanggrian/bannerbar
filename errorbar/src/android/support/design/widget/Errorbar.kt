@@ -228,7 +228,7 @@ class Errorbar private constructor(
     /** Set text to this Errorbar. */
     fun setText(text: CharSequence): Errorbar = apply {
         layout.textView.run {
-            visibility = if (!text.isEmpty()) VISIBLE else GONE
+            visibility = if (text.isNotEmpty()) VISIBLE else GONE
             if (visibility == VISIBLE) setText(text)
         }
     }
