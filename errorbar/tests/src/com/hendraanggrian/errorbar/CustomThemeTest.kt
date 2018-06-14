@@ -11,6 +11,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.activity.CustomThemeActivity
+import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
