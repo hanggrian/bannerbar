@@ -7,6 +7,7 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.hendraanggrian.errorbar.test.R
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 
