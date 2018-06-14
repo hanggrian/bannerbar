@@ -31,8 +31,6 @@ import android.support.design.internal.ErrorbarContentLayout
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ScrollView
@@ -75,12 +73,15 @@ class Errorbar private constructor(
             val context = parent.context
             val content = LayoutInflater.from(context).inflate(
                 R.layout.design_layout_errorbar_include, parent, false) as ErrorbarContentLayout
-            return Errorbar(parent, content, content).apply {
-                this.duration = duration
+            return Errorbar(parent, content, content).also {
+                it.layout.dismisser = {
+                    it.dispatchDismiss(BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
+                }
+                it.duration = duration
                 // hack Snackbar's view container
-                mView.setPadding(0, 0, 0, 0)
-                mView.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground))
-                mView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                it.mView.setPadding(0, 0, 0, 0)
+                it.mView.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground))
+                it.mView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             }
         }
 
@@ -115,7 +116,7 @@ class Errorbar private constructor(
         }
     }
 
-    private inline val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+    val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
     override fun setBackdrop(drawable: Drawable): Errorbar = apply {
         layout.setBackdrop(drawable)
@@ -187,21 +188,7 @@ class Errorbar private constructor(
     }
 
     override fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar = apply {
-
-
-        layout.actionView.run {
-            visibility = if (!text.isNullOrEmpty() && action != null) VISIBLE else GONE
-            when (visibility) {
-                VISIBLE -> {
-                    setText(text)
-                    setOnClickListener {
-                        action?.invoke(this)
-                        dispatchDismiss(BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
-                    }
-                }
-                else -> setOnClickListener(null)
-            }
-        }
+        layout.setAction(text, action)
     }
 
     override fun setAction(@StringRes text: Int, action: ((View) -> Unit)?): Errorbar = apply {

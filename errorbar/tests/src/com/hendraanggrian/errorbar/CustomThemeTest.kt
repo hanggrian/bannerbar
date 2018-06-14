@@ -1,6 +1,6 @@
 package com.hendraanggrian.errorbar
 
-import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -28,10 +28,9 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view as FrameLayout
-                Errorbar.make(view, Errorbar.LENGTH_SHORT)
-                    .setText("No internet connection.")
-                    .show()
+                view.errorbar {
+                    setText("No internet connection.")
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))

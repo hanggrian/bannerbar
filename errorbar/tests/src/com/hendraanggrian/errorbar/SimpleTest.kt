@@ -1,6 +1,6 @@
 package com.hendraanggrian.errorbar
 
-import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -29,14 +29,14 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view, Errorbar.LENGTH_LONG)
-                    .setText("No internet connection.")
-                    .setBackdrop(R.drawable.errorbar_bg_cloud)
-                    .setImage(R.drawable.errorbar_ic_cloud)
-                    .setAction("Retry") { v ->
+                view.errorbar {
+                    setText("No internet connection.")
+                    setBackdrop(R.drawable.errorbar_bg_cloud)
+                    setImage(R.drawable.errorbar_ic_cloud)
+                    setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }
-                    .show()
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
@@ -45,11 +45,11 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view, Errorbar.LENGTH_LONG)
-                    .setText("You have no new emails")
-                    .setBackdrop(R.drawable.bg_empty)
-                    .setContentMarginBottom(150)
-                    .show()
+                view.errorbar {
+                    setText("You have no new emails")
+                    setBackdrop(R.drawable.bg_empty)
+                    setContentMarginBottom(150)
+                }
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))

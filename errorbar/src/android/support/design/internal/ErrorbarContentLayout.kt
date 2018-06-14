@@ -19,6 +19,7 @@ package android.support.design.internal
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color.TRANSPARENT
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -51,6 +52,8 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback,
     ErrorbarContent<Unit> {
 
+    internal var dismisser: (() -> Unit)? = null
+
     lateinit var backdropView: ImageView
     lateinit var containerView: ViewGroup
     lateinit var imageView: ImageView
@@ -78,8 +81,12 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
 
         // apply attr and finally recycle
-        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
-            setBackdrop(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+        when {
+            a.hasValue(R.styleable.ErrorbarLayout_backdrop) ->
+                setBackdrop(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+            a.hasValue(R.styleable.ErrorbarLayout_backdropColor) -> {
+                setBackdropColor(a.getColor(R.styleable.ErrorbarLayout_backdropColor, TRANSPARENT))
+            }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_image)) {
             setImage(a.getDrawable(R.styleable.ErrorbarLayout_image))
@@ -168,7 +175,10 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     override fun setAction(text: CharSequence?, action: ((View) -> Unit)?) {
         if (!text.isNullOrEmpty() && action != null) actionView {
             it.text = text
-            it.setOnClickListener { action.invoke(this) }
+            it.setOnClickListener {
+                dismisser!!
+                action.invoke(this)
+            }
         }
     }
 

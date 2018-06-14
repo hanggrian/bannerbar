@@ -9,7 +9,12 @@ import android.support.annotation.Px
 import android.support.annotation.StringRes
 import android.view.View
 
-interface ErrorbarContent<R> {
+/**
+ * Base [Errorbar] interface consist of common operations.
+ *
+ * @param R return type of function.
+ */
+interface ErrorbarContent<out R> {
 
     /** Set a backdrop from drawable. */
     fun setBackdrop(drawable: Drawable): R

@@ -6,8 +6,8 @@
     </style>
 
     <style name="CustomErrorbar" parent="Widget.Design.Errorbar">
-        <item name="image">@android:drawable/stat_sys_download_done</item>
-        <item name="backdrop">@android:color/holo_green_light</item>
+        <item name="image">@android:drawable/checkbox_on_background</item>
+        <item name="backdropColor">@android:color/background_dark</item>
 
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
         <item name="actionTextColor">@android:color/holo_red_light</item>
