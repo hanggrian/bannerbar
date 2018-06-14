@@ -8,29 +8,15 @@
 <a href="../../index.html">errorbar</a>&nbsp;/&nbsp;<a href="../index.html">android.support.design.widget</a>&nbsp;/&nbsp;<a href="index.html">Errorbar</a>&nbsp;/&nbsp;<a href="./make.html">make</a><br/>
 <br/>
 <h1>make</h1>
-<a name="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)"></a>
-<code><span class="keyword">fun </span><span class="identifier">make</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/duration">duration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">Errorbar</span></a></code>
-<p>Make an Errorbar to display a message.</p>
+<a name="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">make</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int)/duration">duration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Make an <a href="index.html">Errorbar</a> to display a message.</p>
 <h3>Parameters</h3>
 <p><a name="view"></a>
 <code>view</code> - the view to find a parent from.</p>
-<p><a name="text"></a>
-<code>text</code> - the text to show.  Can be formatted text.</p>
 <p><a name="duration"></a>
-<code>duration</code> - how long to display the message.  Either <a href="-l-e-n-g-t-h_-s-h-o-r-t.html">LENGTH_SHORT</a> or <a href="-l-e-n-g-t-h_-l-o-n-g.html">LENGTH_LONG</a></p>
-<p><strong>See Also</strong><br/>
-<p><a href="#">Snackbar.make</a></p>
-</p>
-<a name="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)"></a>
-<code><span class="keyword">fun </span><span class="identifier">make</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier">@StringRes</span> <span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/resId">resId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/duration">duration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">Errorbar</span></a></code>
-<p>Make an Errorbar to display a message.</p>
-<h3>Parameters</h3>
-<p><a name="view"></a>
-<code>view</code> - the view to find a parent from.</p>
-<p><a name="resId"></a>
-<code>resId</code> - the resource id of the string resource to use. Can be formatted text.</p>
-<p><a name="duration"></a>
-<code>duration</code> - how long to display the message.  Either <a href="-l-e-n-g-t-h_-s-h-o-r-t.html">LENGTH_SHORT</a> or <a href="-l-e-n-g-t-h_-l-o-n-g.html">LENGTH_LONG</a></p>
+<code>duration</code> - how long to display the message. Either <a href="-l-e-n-g-t-h_-s-h-o-r-t.html">LENGTH_SHORT</a>, <a href="-l-e-n-g-t-h_-l-o-n-g.html">LENGTH_LONG</a>,
+or <a href="-l-e-n-g-t-h_-i-n-d-e-f-i-n-i-t-e.html">LENGTH_INDEFINITE</a>.</p>
 <p><strong>See Also</strong><br/>
 <p><a href="#">Snackbar.make</a></p>
 </p>

@@ -1,5 +1,7 @@
 $dokka.format:html
 $dokka.linkExtension:html
-
+$dokka.location:android.support.design.widget$errorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))android.support.design.widget/android.view.-view/errorbar.html
+$dokka.location:android.support.design.widget$indefiniteErrorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))android.support.design.widget/android.view.-view/indefinite-errorbar.html
+$dokka.location:android.support.design.widget$longErrorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))android.support.design.widget/android.view.-view/long-errorbar.html
 android.support.design.internal
 android.support.design.widget

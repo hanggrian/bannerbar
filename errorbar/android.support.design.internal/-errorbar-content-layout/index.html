@@ -8,7 +8,7 @@
 <a href="../../index.html">errorbar</a>&nbsp;/&nbsp;<a href="../index.html">android.support.design.internal</a>&nbsp;/&nbsp;<a href="./index.html">ErrorbarContentLayout</a><br/>
 <br/>
 <h1>ErrorbarContentLayout</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ErrorbarContentLayout</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/FrameLayout.html"><span class="identifier">FrameLayout</span></a><span class="symbol">, </span><span class="identifier">ContentViewCallback</span></code>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ErrorbarContentLayout</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/FrameLayout.html"><span class="identifier">FrameLayout</span></a><span class="symbol">, </span><span class="identifier">ContentViewCallback</span><span class="symbol">, </span><a href="../../android.support.design.widget/-errorbar-content/index.html"><span class="identifier">ErrorbarContent</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code>
 <p>Actual content of <a href="../../android.support.design.widget/-errorbar/index.html">android.support.design.widget.Errorbar</a>.</p>
 <p><strong>See Also</strong><br/>
 <p><a href="#">SnackbarContentLayout</a></p>
@@ -24,6 +24,46 @@
 <code><span class="identifier">ErrorbarContentLayout</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;R.attr.errorbarStyle<span class="symbol">)</span></code>
 <p>Actual content of <a href="../../android.support.design.widget/-errorbar/index.html">android.support.design.widget.Errorbar</a>.</p>
 </td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="action-view.html">actionView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">actionView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/Button.html"><span class="identifier">Button</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="backdrop-view.html">backdropView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">backdropView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="container-view.html">containerView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">containerView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="image-view.html">imageView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">imageView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/ImageView.html"><span class="identifier">ImageView</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="text-view.html">textView</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">textView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -53,10 +93,149 @@
 </tr>
 <tr>
 <td>
-<p><a href="on-measure.html">onMeasure</a></p>
+<p><a href="set-action.html">setAction</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onMeasure</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$onMeasure(kotlin.Int, kotlin.Int)/widthMeasureSpec">widthMeasureSpec</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$onMeasure(kotlin.Int, kotlin.Int)/heightMeasureSpec">heightMeasureSpec</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setAction</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setAction(kotlin.CharSequence, kotlin.Function1((android.view.View, kotlin.Unit)))/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setAction(kotlin.CharSequence, kotlin.Function1((android.view.View, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set button text and its click listener.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setAction</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setAction(kotlin.Int, kotlin.Function1((android.view.View, kotlin.Unit)))/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setAction(kotlin.Int, kotlin.Function1((android.view.View, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set button text from string resource and its click listener.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-backdrop.html">setBackdrop</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(kotlin.Int)/resource">resource</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set backdrop from drawable resource.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(android.net.Uri)/uri">uri</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set backdrop from uri.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(android.graphics.drawable.Drawable)/drawable">drawable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set backdrop from drawable.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(android.graphics.drawable.Icon)/icon">icon</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Icon.html"><span class="identifier">Icon</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set backdrop from icon.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(android.content.res.ColorStateList)/tint">tint</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/res/ColorStateList.html"><span class="identifier">ColorStateList</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set backdrop from tint.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdrop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdrop(android.graphics.Bitmap)/bitmap">bitmap</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Bitmap.html"><span class="identifier">Bitmap</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a backdrop from bitmap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-backdrop-color.html">setBackdropColor</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setBackdropColor</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setBackdropColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a backdrop from color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-content-margin.html">setContentMargin</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setContentMargin</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMargin(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/left">left</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMargin(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/top">top</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMargin(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/right">right</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMargin(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bottom">bottom</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set content margin each side.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-content-margin-bottom.html">setContentMarginBottom</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setContentMarginBottom</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMarginBottom(kotlin.Int)/bottom">bottom</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set content bottom margin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-content-margin-left.html">setContentMarginLeft</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setContentMarginLeft</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMarginLeft(kotlin.Int)/left">left</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set content left margin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-content-margin-right.html">setContentMarginRight</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setContentMarginRight</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMarginRight(kotlin.Int)/right">right</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set content right margin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-content-margin-top.html">setContentMarginTop</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setContentMarginTop</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setContentMarginTop(kotlin.Int)/top">top</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set content top margin.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-image.html">setImage</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(kotlin.Int)/resource">resource</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from drawable resource.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(android.net.Uri)/uri">uri</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from uri.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(android.graphics.drawable.Drawable)/drawable">drawable</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from drawable.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(android.graphics.drawable.Icon)/icon">icon</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Icon.html"><span class="identifier">Icon</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from icon.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(android.content.res.ColorStateList)/tint">tint</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/res/ColorStateList.html"><span class="identifier">ColorStateList</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from tint.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setImage</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setImage(android.graphics.Bitmap)/bitmap">bitmap</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Bitmap.html"><span class="identifier">Bitmap</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set image from bitmap.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-text.html">setText</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setText</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setText(kotlin.CharSequence)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set text to this Errorbar.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setText</span><span class="symbol">(</span><span class="identifier" id="android.support.design.internal.ErrorbarContentLayout$setText(kotlin.Int)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set text from string resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../android.support.design.widget/android.view.-view/errorbar.html">errorbar</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">.</span><span class="identifier">errorbar</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget$errorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))/content">content</span><span class="symbol">:</span>&nbsp;<a href="../../android.support.design.widget/-errorbar-content/index.html"><span class="identifier">ErrorbarContent</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../android.support.design.widget/-errorbar/index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Display the <a href="../../android.support.design.widget/-errorbar/index.html">Errorbar</a> with the <a href="../../android.support.design.widget/-errorbar/-l-e-n-g-t-h_-s-h-o-r-t.html">Errorbar.LENGTH_SHORT</a> duration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../android.support.design.widget/android.view.-view/indefinite-errorbar.html">indefiniteErrorbar</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">.</span><span class="identifier">indefiniteErrorbar</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget$indefiniteErrorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))/content">content</span><span class="symbol">:</span>&nbsp;<a href="../../android.support.design.widget/-errorbar-content/index.html"><span class="identifier">ErrorbarContent</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../android.support.design.widget/-errorbar/index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Display the <a href="../../android.support.design.widget/-errorbar/index.html">Errorbar</a> with the <a href="../../android.support.design.widget/-errorbar/-l-e-n-g-t-h_-i-n-d-e-f-i-n-i-t-e.html">Errorbar.LENGTH_INDEFINITE</a> duration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../android.support.design.widget/android.view.-view/long-errorbar.html">longErrorbar</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">.</span><span class="identifier">longErrorbar</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget$longErrorbar(android.view.View, kotlin.Function1((android.support.design.widget.ErrorbarContent((kotlin.Unit)), )))/content">content</span><span class="symbol">:</span>&nbsp;<a href="../../android.support.design.widget/-errorbar-content/index.html"><span class="identifier">ErrorbarContent</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../android.support.design.widget/-errorbar/index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Display the <a href="../../android.support.design.widget/-errorbar/index.html">Errorbar</a> with the <a href="../../android.support.design.widget/-errorbar/-l-e-n-g-t-h_-l-o-n-g.html">Errorbar.LENGTH_LONG</a> duration.</p>
+</td>
 </tr>
 </tbody>
 </table>
