@@ -17,8 +17,6 @@
         <attr name="actionTextSize" format="dimension" />
 
         <!-- inherited from SnackbarLayout -->
-        <attr name="android:maxWidth" />
         <attr name="elevation" />
-        <attr name="maxActionInlineWidth" />
     </declare-styleable>
 </resources>

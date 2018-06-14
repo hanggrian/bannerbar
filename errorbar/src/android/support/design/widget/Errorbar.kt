@@ -16,9 +16,11 @@
 
 package android.support.design.widget
 
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
@@ -26,6 +28,7 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IntDef
 import android.support.annotation.IntRange
 import android.support.annotation.Px
+import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
 import android.support.v4.widget.NestedScrollView
@@ -118,20 +121,28 @@ class Errorbar private constructor(
 
     val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
-    override fun setBackdrop(drawable: Drawable): Errorbar = apply {
-        layout.setBackdrop(drawable)
-    }
-
-    override fun setBackdrop(bitmap: Bitmap): Errorbar = apply {
-        layout.setBackdrop(bitmap)
+    override fun setBackdrop(@DrawableRes resource: Int): Errorbar = apply {
+        layout.setBackdrop(resource)
     }
 
     override fun setBackdrop(uri: Uri): Errorbar = apply {
         layout.setBackdrop(uri)
     }
 
-    override fun setBackdrop(@DrawableRes resource: Int): Errorbar = apply {
-        layout.setBackdrop(resource)
+    override fun setBackdrop(drawable: Drawable): Errorbar = apply {
+        layout.setBackdrop(drawable)
+    }
+
+    @RequiresApi(23) override fun setBackdrop(icon: Icon): Errorbar = apply {
+        layout.setBackdrop(icon)
+    }
+
+    @RequiresApi(21) override fun setBackdrop(tint: ColorStateList): Errorbar = apply {
+        layout.setBackdrop(tint)
+    }
+
+    override fun setBackdrop(bitmap: Bitmap): Errorbar = apply {
+        layout.setBackdrop(bitmap)
     }
 
     override fun setBackdropColor(@ColorInt color: Int): Errorbar = apply {
@@ -163,20 +174,28 @@ class Errorbar private constructor(
         layout.setContentMarginBottom(bottom)
     }
 
-    override fun setImage(drawable: Drawable): Errorbar = apply {
-        layout.setImage(drawable)
-    }
-
-    override fun setImage(bitmap: Bitmap): Errorbar = apply {
-        layout.setImage(bitmap)
+    override fun setImage(@DrawableRes resource: Int): Errorbar = apply {
+        layout.setImage(resource)
     }
 
     override fun setImage(uri: Uri): Errorbar = apply {
         layout.setImage(uri)
     }
 
-    override fun setImage(@DrawableRes resource: Int): Errorbar = apply {
-        layout.setImage(resource)
+    override fun setImage(drawable: Drawable): Errorbar = apply {
+        layout.setImage(drawable)
+    }
+
+    @RequiresApi(23) override fun setImage(icon: Icon): Errorbar = apply {
+        layout.setImage(icon)
+    }
+
+    @RequiresApi(21) override fun setImage(tint: ColorStateList): Errorbar = apply {
+        layout.setImage(tint)
+    }
+
+    override fun setImage(bitmap: Bitmap): Errorbar = apply {
+        layout.setImage(bitmap)
     }
 
     override fun setText(text: CharSequence): Errorbar = apply {

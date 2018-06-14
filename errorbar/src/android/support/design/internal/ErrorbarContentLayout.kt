@@ -18,24 +18,23 @@ package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.support.annotation.AttrRes
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.Px
+import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.ErrorbarContent
-import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
-import android.view.View.MeasureSpec.EXACTLY
-import android.view.View.MeasureSpec.makeMeasureSpec
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -66,11 +65,6 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     @SuppressLint("CustomViewStyleable")
     private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
         defStyleAttr, R.style.Widget_Design_Errorbar)
-
-    @Px private val _maxWidth = a.getDimensionPixelSize(
-        R.styleable.ErrorbarLayout_android_maxWidth, -1)
-    @Px private val _maxInlineActionWidth = a.getDimensionPixelSize(
-        R.styleable.ErrorbarLayout_maxActionInlineWidth, -1)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -121,15 +115,21 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         a.recycle()
     }
 
-    override fun setBackdrop(drawable: Drawable) = backdropView { it.setImageDrawable(drawable) }
-
-    override fun setBackdrop(bitmap: Bitmap) = backdropView { it.setImageBitmap(bitmap) }
-
-    override fun setBackdrop(uri: Uri) = backdropView { it.setImageURI(uri) }
-
     override fun setBackdrop(@DrawableRes resource: Int) = backdropView {
         it.setImageResource(resource)
     }
+
+    override fun setBackdrop(uri: Uri) = backdropView { it.setImageURI(uri) }
+
+    override fun setBackdrop(drawable: Drawable) = backdropView { it.setImageDrawable(drawable) }
+
+    @RequiresApi(23) override fun setBackdrop(icon: Icon) = backdropView { it.setImageIcon(icon) }
+
+    @RequiresApi(21) override fun setBackdrop(tint: ColorStateList) = backdropView {
+        it.imageTintList = tint
+    }
+
+    override fun setBackdrop(bitmap: Bitmap) = backdropView { it.setImageBitmap(bitmap) }
 
     override fun setBackdropColor(@ColorInt color: Int) = backdropView {
         it.setBackgroundColor(color)
@@ -156,13 +156,21 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
     }
 
-    override fun setImage(drawable: Drawable) = imageView { it.setImageDrawable(drawable) }
-
-    override fun setImage(bitmap: Bitmap) = imageView { it.setImageBitmap(bitmap) }
+    override fun setImage(@DrawableRes resource: Int) = imageView {
+        it.setImageResource(resource)
+    }
 
     override fun setImage(uri: Uri) = imageView { it.setImageURI(uri) }
 
-    override fun setImage(@DrawableRes resource: Int) = imageView { it.setImageResource(resource) }
+    override fun setImage(drawable: Drawable) = imageView { it.setImageDrawable(drawable) }
+
+    @RequiresApi(23) override fun setImage(icon: Icon) = imageView { it.setImageIcon(icon) }
+
+    @RequiresApi(21) override fun setImage(tint: ColorStateList) = imageView {
+        it.imageTintList = tint
+    }
+
+    override fun setImage(bitmap: Bitmap) = backdropView { it.setImageBitmap(bitmap) }
 
     override fun setText(text: CharSequence) {
         if (text.isNotEmpty()) textView { it.text = text }
@@ -174,7 +182,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         if (!text.isNullOrEmpty() && action != null) actionView {
             it.text = text
             it.setOnClickListener {
-                dismisser!!
+                dismisser!!()
                 action.invoke(this)
             }
         }
@@ -182,67 +190,6 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
     override fun setAction(@StringRes text: Int, action: ((View) -> Unit)?) =
         setAction(resources.getText(text), action)
-
-    @SuppressLint("PrivateResource")
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(width, heightMeasureSpec)
-
-        var width = widthMeasureSpec
-        if (_maxWidth in 1 until measuredWidth) {
-            width = makeMeasureSpec(_maxWidth, EXACTLY)
-            super.onMeasure(width, heightMeasureSpec)
-        }
-
-        val multiLineVPadding = resources.getDimensionPixelSize(
-            R.dimen.design_snackbar_padding_vertical_2lines)
-        val singleLineVPadding = resources.getDimensionPixelSize(
-            R.dimen.design_snackbar_padding_vertical)
-        val isMultiLine = textView.layout?.lineCount?.let { it > 1 } ?: false
-
-        var remeasure = false
-        when {
-            isMultiLine && _maxInlineActionWidth > 0 && actionView.measuredWidth >
-                _maxInlineActionWidth -> if (updateViewsWithinLayout(multiLineVPadding,
-                    multiLineVPadding - singleLineVPadding)) {
-                remeasure = true
-            }
-            else -> {
-                val messagePadding = when {
-                    isMultiLine -> multiLineVPadding
-                    else -> singleLineVPadding
-                }
-                if (updateViewsWithinLayout(messagePadding, messagePadding)) {
-                    remeasure = true
-                }
-            }
-        }
-
-        if (remeasure) {
-            super.onMeasure(width, heightMeasureSpec)
-        }
-
-        /**
-         * From [android.support.design.widget.Snackbar.SnackbarLayout.onMeasure].
-         */
-        val childCount = childCount
-        val availableWidth = measuredWidth - paddingLeft - paddingRight
-        for (i in 0 until childCount) {
-            val child = getChildAt(i)
-            if (child.layoutParams.width == MATCH_PARENT) {
-                child.measure(makeMeasureSpec(availableWidth, EXACTLY),
-                    makeMeasureSpec(child.measuredHeight, EXACTLY))
-            }
-        }
-    }
-
-    private fun updateViewsWithinLayout(messagePadTop: Int, messagePadBottom: Int): Boolean {
-        var changed = false
-        if (textView.run { paddingTop != messagePadTop || paddingBottom != messagePadBottom }) {
-            textView.updateTopBottomPadding(messagePadTop, messagePadBottom)
-            changed = true
-        }
-        return changed
-    }
 
     override fun animateContentIn(delay: Int, duration: Int) {
         backdropView.animateBy(delay, duration, true)
@@ -261,15 +208,6 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     }
 
     private companion object {
-
-        fun View.updateTopBottomPadding(topPadding: Int, bottomPadding: Int) = when {
-            ViewCompat.isPaddingRelative(this) -> ViewCompat.setPaddingRelative(this,
-                ViewCompat.getPaddingStart(this),
-                topPadding,
-                ViewCompat.getPaddingEnd(this),
-                bottomPadding)
-            else -> setPadding(paddingLeft, topPadding, paddingRight, bottomPadding)
-        }
 
         fun View.animateBy(
             delay: Int,

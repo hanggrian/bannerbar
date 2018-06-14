@@ -16,7 +16,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
+        versionName = VERSION_SUPPORT
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -91,7 +91,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = RELEASE_ARTIFACT
-    publishVersion = RELEASE_VERSION
+    publishVersion = VERSION_SUPPORT
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }

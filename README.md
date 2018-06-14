@@ -12,6 +12,7 @@ It is useful to display an error or empty state that requires full attention in 
 Download
 --------
 This library relies heavily on private resources and internal classes from [Android's support design library][design].
+Which is why the versioning is tied to Android support library versioning.
 
 ```gradle
 repositories {
@@ -20,7 +21,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:errorbar:0.4'
+    implementation 'com.hendraanggrian:errorbar:$version'
+    implementation 'com.android.support:design:$version'
 }
 ```
 
@@ -37,9 +39,9 @@ Create Errorbar just like a Snackbar.
 ```kotlin
 Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
     .setImageDrawable(R.drawable.errorbar_ic_cloud)
-    .setAction("Retry", { v -> 
+    .setAction("Retry") { v -> 
         // do something
-    })
+    }                    }
     .show()
 ```
 
@@ -48,9 +50,9 @@ Or with Kotlin DSL.
 ```kotlin
 parent.errorbar {
     logoDrawable = R.drawable.errorbar_ic_cloud
-    setAction("Retry", { v -> 
+    setAction("Retry") { v -> 
         // do something
-    })
+    }
 }
 ```
 

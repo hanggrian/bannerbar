@@ -1,6 +1,6 @@
 package com.hendraanggrian.errorbar
 
-import android.support.design.widget.errorbar
+import android.support.design.widget.longErrorbar
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -11,7 +11,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.activity.CustomThemeActivity
-import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +27,7 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.errorbar {
+                view.longErrorbar {
                     setText("No internet connection.")
                 }
             }
