@@ -5,7 +5,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     `android-library`
     kotlin("android")
-    `dokka-android`
+    dokka
     `git-publish`
     `bintray-release`
 }
@@ -46,7 +46,7 @@ dependencies {
     implementation(support("design", VERSION_SUPPORT))
 
     testImplementation(junit())
-    androidTestImplementation(androidKTX())
+    androidTestImplementation(anko("commons"))
     androidTestImplementation(support("espresso-core", VERSION_ESPRESSO, "test", "espresso"))
     androidTestImplementation(support("runner", VERSION_RUNNER, "test"))
     androidTestImplementation(support("rules", VERSION_RULES, "test"))

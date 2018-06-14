@@ -44,5 +44,5 @@ dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":errorbar"))
     implementation(support("design", VERSION_SUPPORT))
-    implementation(androidKTX())
+    implementation(anko("commons"))
 }
