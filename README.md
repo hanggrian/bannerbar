@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.hendraanggrian:errorbar:$version'
-    implementation 'com.android.support:design:$version'
+    implementation "com.hendraanggrian:errorbar:$version"
+    implementation "com.android.support:design:$version"
 }
 ```
 
