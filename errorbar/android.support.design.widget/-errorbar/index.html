@@ -9,7 +9,7 @@
 <br/>
 <h1>Errorbar</h1>
 <code><span class="keyword">class </span><span class="identifier">Errorbar</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BaseTransientBottomBar</span><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Errorbar</span></a><span class="symbol">&gt;</span></code>
-<p>A larger <a href="#">Snackbar</a> to display error and empty state.</p>
+<p>A larger Snackbar to display error and empty state.</p>
 <p><strong>See Also</strong><br/>
 <p><a href="#">Snackbar</a></p>
 </p>
@@ -21,7 +21,9 @@
 <p><a href="-callback/index.html">Callback</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">Callback</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BaseCallback</span><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Errorbar</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">Callback</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">BaseCallback</span><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Errorbar</span></a><span class="symbol">&gt;</span></code>
+<p>Callback class for <a href="./index.html">Errorbar</a> instances.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -42,15 +44,6 @@
 <tbody>
 <tr>
 <td>
-<p><a href="add-callback.html">addCallback</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">addCallback</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar$addCallback(kotlin.Function1((android.support.design.widget.CallbackBuilder, kotlin.Unit)))/builder">builder</span><span class="symbol">:</span>&nbsp;<a href="../-callback-builder/index.html"><span class="identifier">CallbackBuilder</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code>
-<p>Add callback Kotlin DSL style.</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="set-action.html">setAction</a></p>
 </td>
 <td>
@@ -58,6 +51,16 @@
 <p>Set button text and its click listener.</p>
 <code><span class="keyword">fun </span><span class="identifier">setAction</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar$setAction(kotlin.Int, kotlin.Function1((android.view.View, kotlin.Unit)))/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar$setAction(kotlin.Int, kotlin.Function1((android.view.View, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code>
 <p>Set button text from string resource and its click listener.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-action-text-color.html">setActionTextColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setActionTextColor</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar$setActionTextColor(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setActionTextColor</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar$setActionTextColor(android.content.res.ColorStateList)/colors">colors</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/res/ColorStateList.html"><span class="identifier">ColorStateList</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Sets the text color of the action specified in <a href="set-action.html">Errorbar.setAction</a>.</p>
 </td>
 </tr>
 <tr>
@@ -202,6 +205,20 @@
 <code><span class="keyword">fun </span><span class="identifier">make</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.CharSequence, kotlin.Int)/duration">duration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code><br/>
 <code><span class="keyword">fun </span><span class="identifier">make</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/text">text</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="android.support.design.widget.Errorbar.Companion$make(android.view.View, kotlin.Int, kotlin.Int)/duration">duration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code>
 <p>Make an <a href="./index.html">Errorbar</a> to display a message.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../add-callback.html">addCallback</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">Errorbar</span></a><span class="symbol">.</span><span class="identifier">addCallback</span><span class="symbol">(</span><span class="identifier" id="android.support.design.widget$addCallback(android.support.design.widget.Errorbar, kotlin.Function1((android.support.design.widget.CallbackBuilder, kotlin.Unit)))/builder">builder</span><span class="symbol">:</span>&nbsp;<a href="../-callback-builder/index.html"><span class="identifier">CallbackBuilder</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Errorbar</span></a></code>
+<p>Add callback Kotlin DSL style.</p>
 </td>
 </tr>
 </tbody>
