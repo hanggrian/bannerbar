@@ -18,20 +18,9 @@ package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
-import android.net.Uri
 import android.os.Build
 import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.Px
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
 import android.support.design.widget.BaseTransientBottomBar
-import android.support.design.widget.ErrorbarContent
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -50,10 +39,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
-) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback,
-    ErrorbarContent<Unit> {
-
-    internal var dismisser: (() -> Unit)? = null
+) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
 
     lateinit var backdropView: ImageView
     lateinit var containerView: ViewGroup
@@ -78,10 +64,10 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
 
         // apply attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
-            setBackdrop(a.getDrawable(R.styleable.ErrorbarLayout_backdrop))
+            backdropView { setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop)) }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_image)) {
-            setImage(a.getDrawable(R.styleable.ErrorbarLayout_image))
+            imageView { setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_image)) }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
@@ -115,82 +101,6 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         a.recycle()
     }
 
-    override fun setBackdrop(@DrawableRes resource: Int) = backdropView {
-        it.setImageResource(resource)
-    }
-
-    override fun setBackdrop(uri: Uri) = backdropView { it.setImageURI(uri) }
-
-    override fun setBackdrop(drawable: Drawable) = backdropView { it.setImageDrawable(drawable) }
-
-    @RequiresApi(23) override fun setBackdrop(icon: Icon) = backdropView { it.setImageIcon(icon) }
-
-    @RequiresApi(21) override fun setBackdrop(tint: ColorStateList) = backdropView {
-        it.imageTintList = tint
-    }
-
-    override fun setBackdrop(bitmap: Bitmap) = backdropView { it.setImageBitmap(bitmap) }
-
-    override fun setBackdropColor(@ColorInt color: Int) = backdropView {
-        it.setBackgroundColor(color)
-    }
-
-    override fun setContentMargin(@Px left: Int, @Px top: Int, @Px right: Int, @Px bottom: Int) {
-        (containerView.layoutParams as ViewGroup.MarginLayoutParams)
-            .setMargins(left, top, right, bottom)
-    }
-
-    override fun setContentMarginLeft(@Px left: Int) {
-        (containerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = left
-    }
-
-    override fun setContentMarginTop(@Px top: Int) {
-        (containerView.layoutParams as ViewGroup.MarginLayoutParams).topMargin = top
-    }
-
-    override fun setContentMarginRight(@Px right: Int) {
-        (containerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = right
-    }
-
-    override fun setContentMarginBottom(@Px bottom: Int) {
-        (containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
-    }
-
-    override fun setImage(@DrawableRes resource: Int) = imageView {
-        it.setImageResource(resource)
-    }
-
-    override fun setImage(uri: Uri) = imageView { it.setImageURI(uri) }
-
-    override fun setImage(drawable: Drawable) = imageView { it.setImageDrawable(drawable) }
-
-    @RequiresApi(23) override fun setImage(icon: Icon) = imageView { it.setImageIcon(icon) }
-
-    @RequiresApi(21) override fun setImage(tint: ColorStateList) = imageView {
-        it.imageTintList = tint
-    }
-
-    override fun setImage(bitmap: Bitmap) = backdropView { it.setImageBitmap(bitmap) }
-
-    override fun setText(text: CharSequence) {
-        if (text.isNotEmpty()) textView { it.text = text }
-    }
-
-    override fun setText(@StringRes text: Int) = setText(resources.getText(text))
-
-    override fun setAction(text: CharSequence?, action: ((View) -> Unit)?) {
-        if (!text.isNullOrEmpty() && action != null) actionView {
-            it.text = text
-            it.setOnClickListener {
-                dismisser!!()
-                action.invoke(this)
-            }
-        }
-    }
-
-    override fun setAction(@StringRes text: Int, action: ((View) -> Unit)?) =
-        setAction(resources.getText(text), action)
-
     override fun animateContentIn(delay: Int, duration: Int) {
         backdropView.animateBy(delay, duration, true)
         imageView.animateBy(delay, duration, true)
@@ -223,11 +133,6 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
                     .setStartDelay(delay.toLong())
                     .start()
             }
-        }
-
-        inline operator fun <T : View> T.invoke(block: (T) -> Unit) {
-            visibility = VISIBLE
-            block(this)
         }
     }
 }

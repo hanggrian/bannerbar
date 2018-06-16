@@ -18,7 +18,7 @@ fun DependencyHandler.anko(module: String? = null) = "org.jetbrains.anko:${modul
     ?: "anko"}:$VERSION_ANKO"
 
 fun DependencyHandler.dokka() = "org.jetbrains.dokka:dokka-android-gradle-plugin:$VERSION_DOKKA"
-inline val PluginDependenciesSpec.`dokka` get() = id("org.jetbrains.dokka-android")
+inline val PluginDependenciesSpec.dokka get() = id("org.jetbrains.dokka-android")
 
 fun DependencyHandler.gitPublish() = "org.ajoberstar:gradle-git-publish:$VERSION_GIT_PUBLISH"
 inline val PluginDependenciesSpec.`git-publish` get() = id("org.ajoberstar.git-publish")
