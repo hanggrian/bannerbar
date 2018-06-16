@@ -11,11 +11,11 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.activity.InstrumentedActivity
-import com.hendraanggrian.errorbar.test.R
 import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.hendraanggrian.errorbar.test.R
 
 @RunWith(AndroidJUnit4::class)
 class SimpleTest : BaseTest() {
@@ -29,10 +29,9 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.errorbar {
-                    setText("No internet connection.")
-                    setBackdrop(R.drawable.errorbar_bg_cloud)
-                    setImage(R.drawable.errorbar_ic_cloud)
+                view.errorbar("No internet connection.") {
+                    setBackground(R.drawable.errorbar_bg_cloud)
+                    setIcon(R.drawable.errorbar_ic_cloud)
                     setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }
@@ -45,9 +44,8 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.errorbar {
-                    setText("You have no new emails")
-                    setBackdrop(R.drawable.bg_empty)
+                view.errorbar("You have no new emails") {
+                    setBackground(R.drawable.bg_empty)
                     setContentMarginBottom(150)
                 }
             }

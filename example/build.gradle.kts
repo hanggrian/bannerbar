@@ -41,8 +41,11 @@ android {
 }
 
 dependencies {
-    api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":errorbar"))
-    implementation(support("design", VERSION_SUPPORT))
+
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(anko("commons"))
+    implementation(anko("design"))
+
+    implementation(support("design", VERSION_SUPPORT))
 }

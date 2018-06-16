@@ -2,10 +2,12 @@ package com.example.errorbar
 
 import android.os.Bundle
 import android.support.design.widget.Errorbar
+import android.support.design.widget.addCallback
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_example.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.toast
 
 class Example1Activity : AppCompatActivity() {
@@ -27,22 +29,20 @@ class Example1Activity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.make -> Errorbar.make(frameLayout, length)
-                .setText("No internet connection")
-                .setImage(R.drawable.errorbar_ic_cloud)
-                .setBackdrop(R.drawable.errorbar_bg_cloud)
+            R.id.make -> Errorbar.make(frameLayout, "No internet connection", length)
+                .setBackground(R.drawable.errorbar_bg_cloud)
+                .setIcon(R.drawable.errorbar_ic_cloud)
                 .setAction("Retry") {
-                    toast("Clicked.")
+                    snackbar(frameLayout, "Clicked.")
                 }
-                .addCallback(object : Errorbar.Callback() {
-                    override fun onShown(v: Errorbar) {
-                        toast("onShown")
+                .addCallback {
+                    onShown {
+                        toast("shown")
                     }
-
-                    override fun onDismissed(v: Errorbar, event: Int) {
-                        toast("onDismissed event: $event")
+                    onDismissed { _, event ->
+                        toast("dismissed event: $event")
                     }
-                })
+                }
                 .show()
             else -> item.isChecked = true
         }

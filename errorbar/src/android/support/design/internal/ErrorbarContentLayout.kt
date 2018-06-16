@@ -41,34 +41,27 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
 ) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
 
-    lateinit var backdropView: ImageView
+    lateinit var backgroundView: ImageView
     lateinit var containerView: ViewGroup
     lateinit var imageView: ImageView
     lateinit var textView: TextView
     lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
-    @SuppressLint("CustomViewStyleable")
-    private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
-        defStyleAttr, R.style.Widget_Design_Errorbar)
+    @SuppressLint("CustomViewStyleable") private val a = context.obtainStyledAttributes(attrs,
+        R.styleable.ErrorbarLayout, defStyleAttr, R.style.Widget_Design_Errorbar)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
         // bind views
-        backdropView = findViewById(R.id.errorbar_backdrop)
+        backgroundView = findViewById(R.id.errorbar_background)
         containerView = findViewById(R.id.errorbar_container)
         imageView = findViewById(R.id.errorbar_image)
         textView = findViewById(R.id.errorbar_text)
         actionView = findViewById(R.id.errorbar_action)
 
         // apply attr and finally recycle
-        if (a.hasValue(R.styleable.ErrorbarLayout_backdrop)) {
-            backdropView { setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_backdrop)) }
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_image)) {
-            imageView { setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_image)) }
-        }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
             @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
                 23 -> textView.setTextAppearance(
@@ -102,7 +95,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     }
 
     override fun animateContentIn(delay: Int, duration: Int) {
-        backdropView.animateBy(delay, duration, true)
+        backgroundView.animateBy(delay, duration, true)
         imageView.animateBy(delay, duration, true)
         // inherited from Snackbar
         textView.animateBy(delay, duration, true, true)
@@ -110,7 +103,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     }
 
     override fun animateContentOut(delay: Int, duration: Int) {
-        backdropView.animateBy(delay, duration, false)
+        backgroundView.animateBy(delay, duration, false)
         imageView.animateBy(delay, duration, false)
         // inherited from Snackbar
         textView.animateBy(delay, duration, false, true)

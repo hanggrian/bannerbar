@@ -11,10 +11,10 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import com.hendraanggrian.errorbar.activity.CustomThemeActivity
-import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.hendraanggrian.errorbar.test.R
 
 @RunWith(AndroidJUnit4::class)
 class CustomThemeTest : BaseTest() {
@@ -28,9 +28,7 @@ class CustomThemeTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.longErrorbar {
-                    setText("No internet connection.")
-                }
+                view.longErrorbar("No internet connection.")
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))

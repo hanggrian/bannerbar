@@ -12,9 +12,8 @@ class Example2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
         setSupportActionBar(toolbar)
-        frameLayout.indefiniteErrorbar {
-            setText("You have no new emails")
-            setBackdrop(R.drawable.bg_empty)
+        frameLayout.indefiniteErrorbar("You have no new emails") {
+            setBackground(R.drawable.bg_empty)
             setContentMarginBottom(resources.getDimensionPixelSize(R.dimen.margin_bottom))
         }
     }

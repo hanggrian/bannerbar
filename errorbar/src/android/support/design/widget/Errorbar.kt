@@ -31,7 +31,6 @@ import android.support.annotation.Px
 import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
-import android.support.design.internal.invoke
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +41,7 @@ import com.hendraanggrian.errorbar.R
 import kotlin.annotation.AnnotationRetention.SOURCE
 
 /**
- * A larger [Snackbar] to display error and empty state.
+ * A larger Snackbar to display error and empty state.
  *
  * @see Snackbar
  */
@@ -66,17 +65,18 @@ class Errorbar private constructor(
          * Make an [Errorbar] to display a message.
          *
          * @param view the view to find a parent from.
-         * @param duration how long to display the message. Either [LENGTH_SHORT], [LENGTH_LONG],
-         * or [LENGTH_INDEFINITE].
+         * @param text the text to show. Can be formatted text.
+         * @param duration how long to display the message.
          * @see Snackbar.make
          */
-        fun make(view: View?, @Duration duration: Int): Errorbar {
+        fun make(view: View, text: CharSequence, @Duration duration: Int): Errorbar {
             val parent = view.findSuitableParent()
                 ?: throw IllegalStateException("No suitable parent")
             val context = parent.context
             val content = LayoutInflater.from(context).inflate(
                 R.layout.design_layout_errorbar_include, parent, false) as ErrorbarContentLayout
             return Errorbar(parent, content, content).also {
+                it.setText(text)
                 it.duration = duration
                 // hack Snackbar's view container
                 it.mView.setPadding(0, 0, 0, 0)
@@ -84,6 +84,17 @@ class Errorbar private constructor(
                 it.mView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             }
         }
+
+        /**
+         * Make an [Errorbar] to display a message.
+         *
+         * @param view the view to find a parent from.
+         * @param text the resource id of the string resource to use. Can be formatted text.
+         * @param duration how long to display the message.
+         */
+        @Suppress("NOTHING_TO_INLINE")
+        inline fun make(view: View, @StringRes text: Int, @Duration duration: Int): Errorbar =
+            make(view, view.resources.getText(text), duration)
 
         /**
          * While [Errorbar] prioritizes [CollapsingToolbarLayout] to be its parent,
@@ -115,45 +126,50 @@ class Errorbar private constructor(
             a.recycle()
             return value
         }
+
+        private inline operator fun <T : View> T.invoke(block: T.() -> Unit) {
+            visibility = View.VISIBLE
+            block(this)
+        }
     }
 
     private inline val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
 
     /** Set backdrop from drawable resource. */
-    fun setBackdrop(@DrawableRes resource: Int): Errorbar = apply {
-        layout.backdropView { setImageResource(resource) }
+    fun setBackground(@DrawableRes resource: Int): Errorbar = apply {
+        layout.backgroundView { setImageResource(resource) }
     }
 
     /** Set backdrop from uri. */
-    fun setBackdrop(uri: Uri): Errorbar = apply {
-        layout.backdropView { setImageURI(uri) }
+    fun setBackground(uri: Uri): Errorbar = apply {
+        layout.backgroundView { setImageURI(uri) }
     }
 
     /** Set backdrop from drawable. */
-    fun setBackdrop(drawable: Drawable): Errorbar = apply {
-        layout.backdropView { setImageDrawable(drawable) }
+    fun setBackground(drawable: Drawable): Errorbar = apply {
+        layout.backgroundView { setImageDrawable(drawable) }
     }
 
     /** Set backdrop from icon. */
     @RequiresApi(23)
-    fun setBackdrop(icon: Icon): Errorbar = apply {
-        layout.backdropView { setImageIcon(icon) }
+    fun setBackground(icon: Icon): Errorbar = apply {
+        layout.backgroundView { setImageIcon(icon) }
     }
 
     /** Set backdrop from tint. */
     @RequiresApi(21)
-    fun setBackdrop(tint: ColorStateList): Errorbar = apply {
-        layout.backdropView { imageTintList = tint }
+    fun setBackground(tint: ColorStateList): Errorbar = apply {
+        layout.backgroundView { imageTintList = tint }
     }
 
     /** Set a backdrop from bitmap. */
-    fun setBackdrop(bitmap: Bitmap): Errorbar = apply {
-        layout.backdropView { setImageBitmap(bitmap) }
+    fun setBackground(bitmap: Bitmap): Errorbar = apply {
+        layout.backgroundView { setImageBitmap(bitmap) }
     }
 
     /** Set a backdrop from color. */
-    fun setBackdropColor(@ColorInt color: Int): Errorbar = apply {
-        layout.backdropView { setBackgroundColor(color) }
+    fun setBackgroundColor(@ColorInt color: Int): Errorbar = apply {
+        layout.backgroundView { setBackgroundColor(color) }
     }
 
     /** Set content margin each side. */
@@ -184,35 +200,35 @@ class Errorbar private constructor(
     }
 
     /** Set image from drawable resource. */
-    fun setImage(@DrawableRes resource: Int): Errorbar = apply {
+    fun setIcon(@DrawableRes resource: Int): Errorbar = apply {
         layout.imageView { setImageResource(resource) }
     }
 
     /** Set image from uri. */
-    fun setImage(uri: Uri): Errorbar = apply {
+    fun setIcon(uri: Uri): Errorbar = apply {
         layout.imageView { setImageURI(uri) }
     }
 
     /** Set image from drawable. */
-    fun setImage(drawable: Drawable): Errorbar = apply {
+    fun setIcon(drawable: Drawable): Errorbar = apply {
         layout.imageView { setImageDrawable(drawable) }
     }
 
     /** Set image from icon. */
     @RequiresApi(23)
-    fun setImage(icon: Icon): Errorbar = apply {
+    fun setIcon(icon: Icon): Errorbar = apply {
         layout.imageView { setImageIcon(icon) }
     }
 
     /** Set image from tint. */
     @RequiresApi(21)
-    fun setImage(tint: ColorStateList): Errorbar = apply {
+    fun setIcon(tint: ColorStateList): Errorbar = apply {
         layout.imageView { imageTintList = tint }
     }
 
     /** Set image from bitmap. */
-    fun setImage(bitmap: Bitmap): Errorbar = apply {
-        layout.backdropView { setImageBitmap(bitmap) }
+    fun setIcon(bitmap: Bitmap): Errorbar = apply {
+        layout.backgroundView { setImageBitmap(bitmap) }
     }
 
     /** Set text to this Errorbar. */
@@ -224,32 +240,50 @@ class Errorbar private constructor(
     fun setText(@StringRes text: Int): Errorbar = setText(layout.resources.getText(text))
 
     /** Set button text and its click listener. */
-    fun setAction(text: CharSequence?, action: ((View) -> Unit)?): Errorbar = apply {
+    fun setAction(text: CharSequence?, action: ((View) -> Unit)? = null): Errorbar = apply {
         if (!text.isNullOrEmpty()) layout.actionView {
             setText(text)
             setOnClickListener {
-                dispatchDismiss(Callback.DISMISS_EVENT_ACTION)
                 action?.invoke(it)
+                dispatchDismiss(Callback.DISMISS_EVENT_ACTION)
             }
         }
     }
 
     /** Set button text from string resource and its click listener. */
-    fun setAction(@StringRes text: Int, action: ((View) -> Unit)?): Errorbar =
+    fun setAction(@StringRes text: Int, action: ((View) -> Unit)? = null): Errorbar =
         setAction(context.resources.getText(text), action)
 
+    /** Sets the text color of the action specified in [Errorbar.setAction]. */
+    fun setActionTextColor(@ColorInt color: Int): Errorbar = apply {
+        layout.textView.setTextColor(color)
+    }
+
+    /** Sets the text color of the action specified in [Errorbar.setAction]. */
+    fun setActionTextColor(colors: ColorStateList): Errorbar = apply {
+        layout.textView.setTextColor(colors)
+    }
+
+    /**
+     * Callback class for [Errorbar] instances.
+     */
     open class Callback : BaseCallback<Errorbar>() {
 
-        override fun onShown(v: Errorbar) {}
-
-        override fun onDismissed(v: Errorbar, @DismissEvent event: Int) {}
-
         companion object {
+            /** Indicates that the Errorbar was dismissed via a swipe.*/
             const val DISMISS_EVENT_SWIPE = BaseCallback.DISMISS_EVENT_SWIPE
+            /** Indicates that the Errorbar was dismissed via an action click.*/
             const val DISMISS_EVENT_ACTION = BaseCallback.DISMISS_EVENT_ACTION
+            /** Indicates that the Errorbar was dismissed via a timeout.*/
             const val DISMISS_EVENT_TIMEOUT = BaseCallback.DISMISS_EVENT_TIMEOUT
+            /** Indicates that the Errorbar was dismissed via a call to [Errorbar.dismiss].*/
             const val DISMISS_EVENT_MANUAL = BaseCallback.DISMISS_EVENT_MANUAL
+            /** Indicates that the Errorbar was dismissed from a new Snackbar being shown.*/
             const val DISMISS_EVENT_CONSECUTIVE = BaseCallback.DISMISS_EVENT_CONSECUTIVE
         }
+
+        override fun onShown(errorbar: Errorbar) {}
+
+        override fun onDismissed(errorbar: Errorbar, @DismissEvent event: Int) {}
     }
 }

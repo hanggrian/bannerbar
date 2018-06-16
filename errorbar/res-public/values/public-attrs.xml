@@ -2,9 +2,6 @@
 <resources>
     <public name="errorbarStyle" type="attr" />
 
-    <public name="image" type="attr" />
-    <public name="backdrop" type="attr" />
-
     <public name="actionTextAppearance" type="attr" />
     <public name="actionTextColor" type="attr" />
     <public name="actionTextSize" type="attr" />

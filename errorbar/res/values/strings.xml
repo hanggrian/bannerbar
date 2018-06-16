@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="errorbar_backdrop_description">Error backdrop</string>
+    <string name="errorbar_background_description">Error background</string>
     <string name="errorbar_image_description">Error image</string>
 </resources>

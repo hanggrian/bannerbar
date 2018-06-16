@@ -31,14 +31,14 @@ Usage
 Errorbar is everything a Snackbar is, with some modifications:
  * Errorbar stretch its height to match its parent size, unlike Snackbar's wrapping height.
  * Errorbar has default current app theme's background color, unlike Snackbar's dark background.
- * In addition to Snackbar's properties, Errorbar has backdrop as background replacement and logo.
+ * In addition to Snackbar's properties, Errorbar supports background and icon.
  
 #### Programatically
 Create Errorbar just like a Snackbar.
 
 ```kotlin
 Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
-    .setImageDrawable(R.drawable.errorbar_ic_cloud)
+    .setIcon(R.drawable.errorbar_ic_cloud)
     .setAction("Retry") { v -> 
         // do something
     }                    }
@@ -48,8 +48,8 @@ Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
 Or with Kotlin DSL.
 
 ```kotlin
-parent.errorbar {
-    logoDrawable = R.drawable.errorbar_ic_cloud
+parent.errorbar("No internet connection") {
+    setIcon(R.drawable.errorbar_ic_cloud)
     setAction("Retry") { v -> 
         // do something
     }
@@ -66,7 +66,6 @@ Customize Errorbar default text appearance, logo and backdrop with styling.
     </style>
     
     <style name="MyErrorbarStyle" parent="Widget.Design.Errorbar">
-        <item name="logo">@drawable/ic_error</item>
         <item name="android:textSize">24sp</item>
         <item name="actionTextColor">@color/blue</item>
     </style>
@@ -77,7 +76,7 @@ See [attrs.xml][attrs] for complete list of attributes.
 
 #### Limitation
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
-It would mean that a View cannot have more than one Snackbar or Errorbar at the same time.
+It would mean that a parent cannot have more than one Snackbar or Errorbar at the same time.
 When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
 
 License
