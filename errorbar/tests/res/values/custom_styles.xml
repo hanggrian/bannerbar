@@ -5,7 +5,7 @@
         <item name="errorbarStyle">@style/CustomErrorbar</item>
     </style>
 
-    <style name="CustomErrorbar" parent="Widget.Design.Errorbar">
+    <style name="CustomErrorbar" parent="Base.Widget.Design.Errorbar">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
         <item name="actionTextColor">@android:color/holo_red_light</item>
     </style>
