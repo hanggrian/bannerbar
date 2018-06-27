@@ -21,8 +21,9 @@ repositories {
 }
 
 dependencies {
-    implementation "com.hendraanggrian:errorbar:$version"
     implementation "com.android.support:design:$version"
+    implementation "com.hendraanggrian:errorbar:$version"
+    implementation "com.hendraanggrian:errorbar-commons:$version"
 }
 ```
 
@@ -78,6 +79,10 @@ See [attrs.xml][attrs] for complete list of attributes.
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
 It would mean that a parent cannot have more than one Snackbar or Errorbar at the same time.
 When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
+
+Commons
+-------
+Commons package contains cloud images, backgrounds, and public styles.
 
 License
 -------

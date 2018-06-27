@@ -5,6 +5,9 @@
     </declare-styleable>
 
     <declare-styleable name="ErrorbarLayout">
+        <attr name="android:src" />
+        <attr name="android:background" />
+
         <attr name="android:textAppearance" />
         <attr name="android:textColor" />
         <attr name="android:textSize" />

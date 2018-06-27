@@ -31,9 +31,11 @@ import android.support.annotation.Px
 import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
+import android.support.design.internal.invoke
 import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ScrollView
@@ -126,14 +128,15 @@ class Errorbar private constructor(
             a.recycle()
             return value
         }
-
-        private inline operator fun <T : View> T.invoke(block: T.() -> Unit) {
-            visibility = View.VISIBLE
-            block(this)
-        }
     }
 
-    private inline val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+    val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+
+    /** Clear background. */
+    fun noBackground(): Errorbar = apply {
+        layout.backgroundView.setImageDrawable(null)
+        layout.backgroundView.visibility = GONE
+    }
 
     /** Set backdrop from drawable resource. */
     fun setBackground(@DrawableRes resource: Int): Errorbar = apply {
@@ -199,35 +202,41 @@ class Errorbar private constructor(
         (layout.containerView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = bottom
     }
 
+    /** Clear image. */
+    fun noImage(): Errorbar = apply {
+        layout.imageView.setImageDrawable(null)
+        layout.imageView.visibility = GONE
+    }
+
     /** Set image from drawable resource. */
-    fun setIcon(@DrawableRes resource: Int): Errorbar = apply {
+    fun setImage(@DrawableRes resource: Int): Errorbar = apply {
         layout.imageView { setImageResource(resource) }
     }
 
     /** Set image from uri. */
-    fun setIcon(uri: Uri): Errorbar = apply {
+    fun setImage(uri: Uri): Errorbar = apply {
         layout.imageView { setImageURI(uri) }
     }
 
     /** Set image from drawable. */
-    fun setIcon(drawable: Drawable): Errorbar = apply {
+    fun setImage(drawable: Drawable): Errorbar = apply {
         layout.imageView { setImageDrawable(drawable) }
     }
 
     /** Set image from icon. */
     @RequiresApi(23)
-    fun setIcon(icon: Icon): Errorbar = apply {
+    fun setImage(icon: Icon): Errorbar = apply {
         layout.imageView { setImageIcon(icon) }
     }
 
     /** Set image from tint. */
     @RequiresApi(21)
-    fun setIcon(tint: ColorStateList): Errorbar = apply {
+    fun setImage(tint: ColorStateList): Errorbar = apply {
         layout.imageView { imageTintList = tint }
     }
 
     /** Set image from bitmap. */
-    fun setIcon(bitmap: Bitmap): Errorbar = apply {
+    fun setImage(bitmap: Bitmap): Errorbar = apply {
         layout.backgroundView { setImageBitmap(bitmap) }
     }
 

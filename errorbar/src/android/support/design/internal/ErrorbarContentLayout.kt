@@ -18,7 +18,7 @@ package android.support.design.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.support.annotation.AttrRes
 import android.support.design.widget.BaseTransientBottomBar
 import android.util.AttributeSet
@@ -48,8 +48,9 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     lateinit var actionView: Button
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
-    @SuppressLint("CustomViewStyleable") private val a = context.obtainStyledAttributes(attrs,
-        R.styleable.ErrorbarLayout, defStyleAttr, R.style.Widget_Design_Errorbar)
+    @SuppressLint("CustomViewStyleable")
+    private val a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
+        defStyleAttr, R.style.Base_Widget_Design_Errorbar)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -62,12 +63,24 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
         actionView = findViewById(R.id.errorbar_action)
 
         // apply attr and finally recycle
+        if (a.hasValue(R.styleable.ErrorbarLayout_android_background)) {
+            when {
+                SDK_INT >= 16 -> background = null
+                else -> @Suppress("DEPRECATION") setBackgroundDrawable(null)
+            }
+            backgroundView {
+                setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_android_background))
+            }
+        }
+        if (a.hasValue(R.styleable.ErrorbarLayout_android_src)) {
+            imageView { setImageDrawable(a.getDrawable(R.styleable.ErrorbarLayout_android_src)) }
+        }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            @Suppress("DEPRECATION") when (Build.VERSION.SDK_INT) {
-                23 -> textView.setTextAppearance(
-                    a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
-                else -> textView.setTextAppearance(context,
-                    a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0))
+            a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0).let {
+                when {
+                    SDK_INT >= 23 -> textView.setTextAppearance(it)
+                    else -> @Suppress("DEPRECATION") textView.setTextAppearance(context, it)
+                }
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
@@ -77,12 +90,11 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
             textView.textSize = a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f)
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            @Suppress("DEPRECATION")
-            when (Build.VERSION.SDK_INT) {
-                23 -> actionView.setTextAppearance(
-                    a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
-                else -> actionView.setTextAppearance(context,
-                    a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0))
+            a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0).let {
+                when {
+                    SDK_INT >= 23 -> actionView.setTextAppearance(it)
+                    else -> @Suppress("DEPRECATION") actionView.setTextAppearance(context, it)
+                }
             }
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {

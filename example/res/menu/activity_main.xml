@@ -9,14 +9,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/length_short"
+            android:id="@+id/lengthShortItem"
             android:checked="true"
             android:title="Short" />
         <item
-            android:id="@+id/length_long"
+            android:id="@+id/lengthLongItem"
             android:title="Long" />
         <item
-            android:id="@+id/length_indefinite"
+            android:id="@+id/lengthIndefiniteItem"
             android:title="Indefinite" />
     </group>
 </menu>

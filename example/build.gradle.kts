@@ -13,9 +13,9 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example.errorbar"
+        applicationId = "com.example.$RELEASE_ARTIFACT"
         versionCode = 1
-        versionName = "1.0"
+        versionName = VERSION_SUPPORT
     }
     sourceSets {
         getByName("main") {
@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":errorbar"))
+    implementation(project(":$RELEASE_ARTIFACT-commons"))
 
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(anko("commons"))

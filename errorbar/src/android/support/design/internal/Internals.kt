@@ -2,6 +2,7 @@ package android.support.design.internal
 
 import android.support.design.widget.CallbackBuilder
 import android.support.design.widget.Errorbar
+import android.view.View
 
 @PublishedApi
 @Suppress("ClassName")
@@ -24,4 +25,9 @@ internal class _Callback : Errorbar.Callback(), CallbackBuilder {
     override fun onDismissed(errorbar: Errorbar, event: Int) {
         onDismissed?.invoke(errorbar, event)
     }
+}
+
+internal inline operator fun <T : View> T.invoke(block: T.() -> Unit) {
+    visibility = View.VISIBLE
+    block(this)
 }

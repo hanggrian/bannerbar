@@ -30,8 +30,6 @@ class SimpleTest : BaseTest() {
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
                 view.errorbar("No internet connection.") {
-                    setBackground(R.drawable.errorbar_bg_cloud)
-                    setIcon(R.drawable.errorbar_ic_cloud)
                     setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }

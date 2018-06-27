@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
+    <style name="Base.Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
 
         <!-- inherited from Snackbar -->

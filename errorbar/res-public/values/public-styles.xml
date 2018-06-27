@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="Widget.Design.Errorbar" type="style" />
+    <public name="Base.Widget.Design.Errorbar" type="style" />
 </resources>

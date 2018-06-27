@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Design.Errorbar" parent="Base.Widget.Design.Errorbar">
+        <item name="android:background">@drawable/errorbar_bg_cloud</item>
+        <item name="android:src">@drawable/errorbar_ic_cloud</item>
+    </style>
+
+    <style name="Widget.Design.Errorbar.Light" parent="Base.Widget.Design.Errorbar">
+        <item name="android:background">@drawable/errorbar_bg_cloud_light</item>
+        <item name="android:src">@drawable/errorbar_ic_cloud_light</item>
+    </style>
+</resources>
