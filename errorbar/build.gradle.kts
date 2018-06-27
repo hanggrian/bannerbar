@@ -88,6 +88,8 @@ tasks {
 }
 
 publish {
+    repoName = RELEASE_ARTIFACT
+
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = RELEASE_ARTIFACT
