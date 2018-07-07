@@ -21,9 +21,9 @@ repositories {
 }
 
 dependencies {
-    implementation "com.android.support:design:$version"
+    implementation "com.google.android.material:material:$version"
     implementation "com.hendraanggrian.errorbar:errorbar:$version"
-    implementation "com.hendraanggrian.errorbar:errorbar-commons:$version"
+    implementation "com.hendraanggrian.errorbar:errorbar-commons:$version" // optional
 }
 ```
 
@@ -33,14 +33,14 @@ Errorbar is everything a Snackbar is, with some modifications:
  * Errorbar stretch its height to match its parent size, unlike Snackbar's wrapping height.
  * Errorbar has default current app theme's background color, unlike Snackbar's dark background.
  * In addition to Snackbar's properties, Errorbar supports background and icon.
- 
+
 #### Programatically
 Create Errorbar just like a Snackbar.
 
 ```kotlin
 Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
     .setIcon(R.drawable.errorbar_ic_cloud)
-    .setAction("Retry") { v -> 
+    .setAction("Retry") { v ->
         // do something
     }                    }
     .show()
@@ -51,7 +51,7 @@ Or with Kotlin DSL.
 ```kotlin
 parent.errorbar("No internet connection") {
     setIcon(R.drawable.errorbar_ic_cloud)
-    setAction("Retry") { v -> 
+    setAction("Retry") { v ->
         // do something
     }
 }
@@ -65,7 +65,7 @@ Customize Errorbar default text appearance, logo and backdrop with styling.
     <style name="MyAppTheme" parent="Theme.Appcompat.Light.NoActionBar">
         <item name="errorbarStyle">@style/MyErrorbarStyle</item>
     </style>
-    
+
     <style name="MyErrorbarStyle" parent="Widget.Design.Errorbar">
         <item name="android:textSize">24sp</item>
         <item name="actionTextColor">@color/blue</item>
@@ -99,7 +99,7 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
- 
+
 [demo]: /art/demo.gif
 [attrs]: /errorbar/res/values/attrs.xml
 [design]: https://github.com/android/platform_frameworks_support/tree/master/design

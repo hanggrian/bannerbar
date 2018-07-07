@@ -1,4 +1,4 @@
-include(":errorbar")
-include(":errorbar-commons")
+include(":$RELEASE_ARTIFACT")
+include(":$RELEASE_ARTIFACT-commons")
 
 include(":example")
