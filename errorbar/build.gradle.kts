@@ -17,7 +17,7 @@ android {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
         versionName = VERSION_ANDROIDX
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
         getByName("main") {
@@ -46,10 +46,11 @@ dependencies {
     implementation(material())
 
     testImplementation(junit())
+    androidTestImplementation(androidx("appcompat"))
     androidTestImplementation(anko("commons"))
-    androidTestImplementation(androidX("test.espresso", "espresso-core", VERSION_ESPRESSO))
-    androidTestImplementation(androidX("test", "runner", VERSION_RUNNER))
-    androidTestImplementation(androidX("test", "rules", VERSION_RULES))
+    androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
+    androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
+    androidTestImplementation(androidx("test", "rules", VERSION_RULES))
 
     ktlint(ktlint())
 }
@@ -88,6 +89,9 @@ tasks {
 }
 
 publish {
+    bintrayUser = bintrayUserEnv
+    bintrayKey = bintrayKeyEnv
+    dryRun = false
     repoName = RELEASE_ARTIFACT
 
     userOrg = RELEASE_USER

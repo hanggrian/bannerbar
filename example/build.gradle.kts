@@ -47,6 +47,6 @@ dependencies {
     implementation(anko("commons"))
 
     implementation(material())
-    implementation(androidX("appcompat"))
-    implementation(androidX("coordinatorlayout"))
+    implementation(androidx("appcompat"))
+    implementation(androidx("coordinatorlayout"))
 }

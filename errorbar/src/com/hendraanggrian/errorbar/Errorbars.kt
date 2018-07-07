@@ -1,8 +1,8 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package android.support.design.widget
+package com.hendraanggrian.errorbar
 
-import android.support.design.internal._Callback
+import com.hendraanggrian.errorbar.internal._Callback
 import android.view.View
 import androidx.annotation.StringRes
 

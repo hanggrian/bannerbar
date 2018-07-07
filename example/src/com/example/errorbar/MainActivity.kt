@@ -1,12 +1,12 @@
 package com.example.errorbar
 
 import android.os.Bundle
-import android.support.design.widget.Errorbar
-import android.support.design.widget.addCallback
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.hendraanggrian.errorbar.Errorbar
+import com.hendraanggrian.errorbar.addCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package android.support.design.internal
+@file:Suppress("DEPRECATION")
+
+package com.hendraanggrian.errorbar.internal
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -39,7 +41,7 @@ open class ErrorbarContentLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
-) : FrameLayout(context, attrs, defStyleAttr), @Suppress("DEPRECATION") ContentViewCallback {
+) : FrameLayout(context, attrs, defStyleAttr), ContentViewCallback {
 
     lateinit var backgroundView: ImageView
     lateinit var containerView: ViewGroup

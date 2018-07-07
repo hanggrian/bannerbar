@@ -1,22 +1,23 @@
 package com.hendraanggrian.errorbar
 
-import android.support.design.widget.longErrorbar
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.errorbar.activity.CustomThemeActivity
+import com.hendraanggrian.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.hendraanggrian.errorbar.test.R
 
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class CustomThemeTest : BaseTest() {
 
     @Rule @JvmField val rule = ActivityTestRule(CustomThemeActivity::class.java)

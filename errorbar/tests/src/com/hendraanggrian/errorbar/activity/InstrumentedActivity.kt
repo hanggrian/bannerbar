@@ -1,9 +1,9 @@
 package com.hendraanggrian.errorbar.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.errorbar.test.R
 
 open class InstrumentedActivity : AppCompatActivity() {

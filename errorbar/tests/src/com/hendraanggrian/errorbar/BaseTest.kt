@@ -2,14 +2,14 @@ package com.hendraanggrian.errorbar
 
 import android.os.Build
 import android.os.CountDownTimer
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ProgressBar
+import androidx.appcompat.widget.Toolbar
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 
 abstract class BaseTest {
 

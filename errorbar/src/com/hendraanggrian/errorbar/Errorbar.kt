@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package android.support.design.widget
+@file:Suppress("DEPRECATION")
+
+package com.hendraanggrian.errorbar
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -22,8 +24,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.net.Uri
-import android.support.design.internal.ErrorbarContentLayout
-import android.support.design.internal.invoke
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -40,18 +40,19 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.hendraanggrian.errorbar.R
+import com.hendraanggrian.errorbar.internal.ErrorbarContentLayout
+import com.hendraanggrian.errorbar.internal.invoke
 import kotlin.annotation.AnnotationRetention.SOURCE
 
 /**
  * A larger Snackbar to display error and empty state.
  *
- * @see Snackbar
+ * @see com.google.android.material.snackbar.Snackbar
  */
 class Errorbar private constructor(
     parent: ViewGroup,
     content: View,
-    contentViewCallback: @Suppress("DEPRECATION") ContentViewCallback
+    contentViewCallback: ContentViewCallback
 ) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)

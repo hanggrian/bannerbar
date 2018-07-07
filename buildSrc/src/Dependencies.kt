@@ -5,7 +5,7 @@ fun DependencyHandler.android() = "com.android.tools.build:gradle:$VERSION_ANDRO
 inline val PluginDependenciesSpec.`android-library` get() = id("com.android.library")
 inline val PluginDependenciesSpec.`android-application` get() = id("com.android.application")
 
-fun androidX(
+fun androidx(
     repository: String,
     module: String = repository,
     version: String = VERSION_ANDROIDX

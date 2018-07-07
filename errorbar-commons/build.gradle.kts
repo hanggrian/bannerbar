@@ -32,6 +32,9 @@ dependencies {
 }
 
 publish {
+    bintrayUser = bintrayUserEnv
+    bintrayKey = bintrayKeyEnv
+    dryRun = false
     repoName = RELEASE_ARTIFACT
 
     userOrg = RELEASE_USER
