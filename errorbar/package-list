@@ -1,10 +1,10 @@
 $dokka.format:html
 $dokka.linkExtension:html
-$dokka.location:android.support.design.widget$errorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/errorbar.html
-$dokka.location:android.support.design.widget$errorbar(android.view.View, kotlin.Int, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/errorbar.html
-$dokka.location:android.support.design.widget$indefiniteErrorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/indefinite-errorbar.html
-$dokka.location:android.support.design.widget$indefiniteErrorbar(android.view.View, kotlin.Int, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/indefinite-errorbar.html
-$dokka.location:android.support.design.widget$longErrorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/long-errorbar.html
-$dokka.location:android.support.design.widget$longErrorbar(android.view.View, kotlin.Int, kotlin.Function1((android.support.design.widget.Errorbar, kotlin.Unit)))android.support.design.widget/android.view.-view/long-errorbar.html
-android.support.design.internal
-android.support.design.widget
+$dokka.location:com.hendraanggrian.errorbar$errorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/errorbar.html
+$dokka.location:com.hendraanggrian.errorbar$errorbar(android.view.View, kotlin.Int, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/errorbar.html
+$dokka.location:com.hendraanggrian.errorbar$indefiniteErrorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/indefinite-errorbar.html
+$dokka.location:com.hendraanggrian.errorbar$indefiniteErrorbar(android.view.View, kotlin.Int, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/indefinite-errorbar.html
+$dokka.location:com.hendraanggrian.errorbar$longErrorbar(android.view.View, kotlin.CharSequence, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/long-errorbar.html
+$dokka.location:com.hendraanggrian.errorbar$longErrorbar(android.view.View, kotlin.Int, kotlin.Function1((com.hendraanggrian.errorbar.Errorbar, kotlin.Unit)))com.hendraanggrian.errorbar/android.view.-view/long-errorbar.html
+com.hendraanggrian.errorbar
+com.hendraanggrian.errorbar.internal
