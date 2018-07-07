@@ -1,15 +1,15 @@
 const val VERSION_GRADLE = "4.4.1"
 
 const val SDK_MIN = 14
-const val SDK_TARGET = 27
+const val SDK_TARGET = 28
 const val BUILD_TOOLS = "27.0.3"
 
 const val VERSION_KOTLIN = "1.2.50"
-const val VERSION_SUPPORT = "27.1.1"
 
-const val VERSION_ESPRESSO = "3.0.2"
-const val VERSION_RUNNER = "1.0.2"
-const val VERSION_RULES = "1.0.2"
+const val VERSION_ANDROIDX = "1.0.0-alpha1"
+const val VERSION_ESPRESSO = "3.1.0-alpha1"
+const val VERSION_RUNNER = "1.1.0-alpha1"
+const val VERSION_RULES = "1.1.0-alpha1"
 
 internal const val VERSION_ANDROID_PLUGIN = "3.1.3"
 internal const val VERSION_JUNIT = "4.12"

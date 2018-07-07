@@ -2,9 +2,9 @@
 
 package android.support.design.widget
 
-import android.support.annotation.StringRes
 import android.support.design.internal._Callback
 import android.view.View
+import androidx.annotation.StringRes
 
 /** Interface to invoke [Errorbar.Callback] Kotlin DSL style. */
 interface CallbackBuilder {

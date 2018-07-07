@@ -19,8 +19,6 @@ package android.support.design.internal
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
-import android.support.annotation.AttrRes
-import android.support.design.widget.BaseTransientBottomBar
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -28,18 +26,20 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.AttrRes
+import com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback
 import com.hendraanggrian.errorbar.R
 
 /**
  * Actual content of [android.support.design.widget.Errorbar].
  *
- * @see SnackbarContentLayout
+ * @see com.google.android.material.snackbar.SnackbarContentLayout
  */
 open class ErrorbarContentLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = R.attr.errorbarStyle
-) : FrameLayout(context, attrs, defStyleAttr), BaseTransientBottomBar.ContentViewCallback {
+) : FrameLayout(context, attrs, defStyleAttr), @Suppress("DEPRECATION") ContentViewCallback {
 
     lateinit var backgroundView: ImageView
     lateinit var containerView: ViewGroup

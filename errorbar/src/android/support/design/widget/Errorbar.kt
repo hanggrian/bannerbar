@@ -22,23 +22,24 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.net.Uri
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.IntDef
-import android.support.annotation.IntRange
-import android.support.annotation.Px
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
 import android.support.design.internal.ErrorbarContentLayout
 import android.support.design.internal.invoke
-import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ScrollView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.IntDef
+import androidx.annotation.IntRange
+import androidx.annotation.Px
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
+import androidx.core.widget.NestedScrollView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.hendraanggrian.errorbar.R
 import kotlin.annotation.AnnotationRetention.SOURCE
 
@@ -50,7 +51,7 @@ import kotlin.annotation.AnnotationRetention.SOURCE
 class Errorbar private constructor(
     parent: ViewGroup,
     content: View,
-    contentViewCallback: ContentViewCallback
+    contentViewCallback: @Suppress("DEPRECATION") ContentViewCallback
 ) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
 
     @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
@@ -81,9 +82,9 @@ class Errorbar private constructor(
                 it.setText(text)
                 it.duration = duration
                 // hack Snackbar's view container
-                it.mView.setPadding(0, 0, 0, 0)
-                it.mView.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground))
-                it.mView.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                it.view.setPadding(0, 0, 0, 0)
+                it.view.setBackgroundColor(context.theme.getColor(android.R.attr.windowBackground))
+                it.view.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             }
         }
 
@@ -130,7 +131,7 @@ class Errorbar private constructor(
         }
     }
 
-    val layout get() = mView.getChildAt(0) as ErrorbarContentLayout
+    val layout get() = view.getChildAt(0) as ErrorbarContentLayout
 
     /** Clear background. */
     fun noBackground(): Errorbar = apply {
@@ -156,13 +157,13 @@ class Errorbar private constructor(
     /** Set backdrop from icon. */
     @RequiresApi(23)
     fun setBackground(icon: Icon): Errorbar = apply {
-        layout.backgroundView { setImageIcon(icon) }
+        layout.backgroundView { setImage(icon) }
     }
 
     /** Set backdrop from tint. */
     @RequiresApi(21)
     fun setBackground(tint: ColorStateList): Errorbar = apply {
-        layout.backgroundView { imageTintList = tint }
+        layout.backgroundView { setImage(tint) }
     }
 
     /** Set a backdrop from bitmap. */
@@ -226,13 +227,13 @@ class Errorbar private constructor(
     /** Set image from icon. */
     @RequiresApi(23)
     fun setImage(icon: Icon): Errorbar = apply {
-        layout.imageView { setImageIcon(icon) }
+        layout.imageView { setImage(icon) }
     }
 
     /** Set image from tint. */
     @RequiresApi(21)
     fun setImage(tint: ColorStateList): Errorbar = apply {
-        layout.imageView { imageTintList = tint }
+        layout.imageView { setImage(tint) }
     }
 
     /** Set image from bitmap. */

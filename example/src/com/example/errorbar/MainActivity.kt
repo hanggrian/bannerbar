@@ -3,11 +3,11 @@ package com.example.errorbar
 import android.os.Bundle
 import android.support.design.widget.Errorbar
 import android.support.design.widget.addCallback
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             R.id.make -> {
                 val errorbar = Errorbar.make(frameLayout, "No internet connection", length)
                     .setAction("Retry") {
-                        snackbar(frameLayout, "Clicked.")
+                        Snackbar.make(frameLayout, "Clicked", Snackbar.LENGTH_SHORT).show()
                     }
                     .addCallback {
                         onShown {

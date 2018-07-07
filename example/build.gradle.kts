@@ -15,7 +15,7 @@ android {
         targetSdkVersion(SDK_TARGET)
         applicationId = "com.example.$RELEASE_ARTIFACT"
         versionCode = 1
-        versionName = VERSION_SUPPORT
+        versionName = VERSION_ANDROIDX
     }
     sourceSets {
         getByName("main") {
@@ -45,7 +45,8 @@ dependencies {
 
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(anko("commons"))
-    implementation(anko("design"))
 
-    implementation(support("design", VERSION_SUPPORT))
+    implementation(material())
+    implementation(androidX("appcompat"))
+    implementation(androidX("coordinatorlayout"))
 }

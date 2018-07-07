@@ -5,10 +5,13 @@ fun DependencyHandler.android() = "com.android.tools.build:gradle:$VERSION_ANDRO
 inline val PluginDependenciesSpec.`android-library` get() = id("com.android.library")
 inline val PluginDependenciesSpec.`android-application` get() = id("com.android.application")
 
-fun DependencyHandler.support(module: String, version: String, vararg groupSuffixes: String) =
-    "${StringBuilder("com.android.support").apply {
-        groupSuffixes.forEach { append(".$it") }
-    }}:$module:$version"
+fun androidX(
+    repository: String,
+    module: String = repository,
+    version: String = VERSION_ANDROIDX
+): String = "androidx.$repository:$module:$version"
+
+fun material() = "com.google.android.material:material:$VERSION_ANDROIDX"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 
