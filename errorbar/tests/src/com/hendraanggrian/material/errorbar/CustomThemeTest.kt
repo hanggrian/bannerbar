@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar
+package com.hendraanggrian.material.errorbar
 
 import android.view.View
 import android.widget.FrameLayout
@@ -10,8 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.hendraanggrian.errorbar.activity.CustomThemeActivity
-import com.hendraanggrian.errorbar.test.R
+import com.hendraanggrian.material.errorbar.activity.CustomThemeActivity
+import com.hendraanggrian.material.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

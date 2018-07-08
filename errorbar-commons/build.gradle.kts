@@ -35,7 +35,7 @@ publish {
     bintrayUser = bintrayUserEnv
     bintrayKey = bintrayKeyEnv
     dryRun = false
-    repoName = RELEASE_ARTIFACT
+    repoName = RELEASE_REPO
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP

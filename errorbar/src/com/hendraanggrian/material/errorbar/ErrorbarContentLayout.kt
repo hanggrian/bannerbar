@@ -16,7 +16,7 @@
 
 @file:Suppress("DEPRECATION")
 
-package com.hendraanggrian.errorbar.internal
+package com.hendraanggrian.material.errorbar
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -30,7 +30,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback
-import com.hendraanggrian.errorbar.R
 
 /**
  * Actual content of [android.support.design.widget.Errorbar].

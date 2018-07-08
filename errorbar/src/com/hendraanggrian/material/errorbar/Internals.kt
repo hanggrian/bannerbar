@@ -1,7 +1,5 @@
-package com.hendraanggrian.errorbar.internal
+package com.hendraanggrian.material.errorbar
 
-import com.hendraanggrian.errorbar.CallbackBuilder
-import com.hendraanggrian.errorbar.Errorbar
 import android.view.View
 
 @PublishedApi

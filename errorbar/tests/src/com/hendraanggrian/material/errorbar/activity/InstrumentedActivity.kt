@@ -1,10 +1,10 @@
-package com.hendraanggrian.errorbar.activity
+package com.hendraanggrian.material.errorbar.activity
 
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import com.hendraanggrian.errorbar.test.R
+import com.hendraanggrian.material.errorbar.test.R
 
 open class InstrumentedActivity : AppCompatActivity() {
 

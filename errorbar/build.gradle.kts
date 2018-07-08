@@ -46,8 +46,8 @@ dependencies {
     implementation(material())
 
     testImplementation(junit())
-    androidTestImplementation(androidx("appcompat"))
     androidTestImplementation(anko("commons"))
+    androidTestImplementation(androidx("appcompat"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))
@@ -92,7 +92,7 @@ publish {
     bintrayUser = bintrayUserEnv
     bintrayKey = bintrayKeyEnv
     dryRun = false
-    repoName = RELEASE_ARTIFACT
+    repoName = RELEASE_REPO
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP

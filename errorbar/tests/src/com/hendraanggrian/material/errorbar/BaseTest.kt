@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar
+package com.hendraanggrian.material.errorbar
 
 import android.os.Build
 import android.os.CountDownTimer

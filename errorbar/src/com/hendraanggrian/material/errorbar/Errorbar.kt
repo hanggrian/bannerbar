@@ -16,7 +16,7 @@
 
 @file:Suppress("DEPRECATION")
 
-package com.hendraanggrian.errorbar
+package com.hendraanggrian.material.errorbar
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -40,8 +40,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.hendraanggrian.errorbar.internal.ErrorbarContentLayout
-import com.hendraanggrian.errorbar.internal.invoke
 import kotlin.annotation.AnnotationRetention.SOURCE
 
 /**
@@ -54,11 +52,6 @@ class Errorbar private constructor(
     content: View,
     contentViewCallback: ContentViewCallback
 ) : BaseTransientBottomBar<Errorbar>(parent, content, contentViewCallback) {
-
-    @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
-    @IntRange(from = 1)
-    @Retention(SOURCE)
-    annotation class Duration
 
     companion object {
         const val LENGTH_INDEFINITE = BaseTransientBottomBar.LENGTH_INDEFINITE
@@ -297,4 +290,9 @@ class Errorbar private constructor(
 
         override fun onDismissed(errorbar: Errorbar, @DismissEvent event: Int) {}
     }
+
+    @IntDef(LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG)
+    @IntRange(from = 1)
+    @Retention(SOURCE)
+    annotation class Duration
 }
