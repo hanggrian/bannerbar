@@ -2,6 +2,7 @@ package com.hendraanggrian.material.errorbar
 
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -12,7 +13,6 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.material.errorbar.activity.InstrumentedActivity
 import com.hendraanggrian.material.errorbar.test.R
-import org.jetbrains.anko.toast
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,7 +33,7 @@ class SimpleTest : BaseTest() {
                     .setBackground(R.drawable.errorbar_bg_cloud)
                     .setImage(R.drawable.errorbar_ic_cloud)
                     .setAction("Retry") { v ->
-                        v.context.toast("Clicked!")
+                        Toast.makeText(v.context, "Clicked!", Toast.LENGTH_SHORT).show()
                     }
                     .show()
             }

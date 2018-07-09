@@ -3,12 +3,12 @@ package com.example.errorbar
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.hendraanggrian.material.errorbar.Errorbar
 import com.hendraanggrian.material.errorbar.addCallback
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     .addCallback {
                         onShown {
-                            toast("shown")
+                            Toast.makeText(this@MainActivity, "shown", Toast.LENGTH_SHORT).show()
                         }
                         onDismissed { _, event ->
-                            toast("dismissed event: $event")
+                            Toast.makeText(this@MainActivity, "dismissed event: $event", Toast.LENGTH_SHORT).show()
                         }
                     }
                 errorbar.show()

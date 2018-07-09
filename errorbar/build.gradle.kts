@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation(junit())
     androidTestImplementation(kotlin("stdlib"))
-    androidTestImplementation(anko("commons"))
+    androidTestImplementation(androidx("core", "core-ktx"))
     androidTestImplementation(androidx("appcompat"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))

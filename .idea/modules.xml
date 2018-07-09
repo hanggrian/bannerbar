@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/errorbar.iml" filepath="$PROJECT_DIR$/errorbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorbar/errorbar-errorbar.iml" filepath="$PROJECT_DIR$/errorbar/errorbar-errorbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" filepath="$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" filepath="$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
     </modules>
   </component>

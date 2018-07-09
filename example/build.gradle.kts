@@ -41,12 +41,11 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
 
-    implementation(kotlin("stdlib", VERSION_KOTLIN))
-    implementation(anko("commons"))
-
     implementation(material())
+    implementation(androidx("core", "core-ktx"))
     implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout"))
 }
