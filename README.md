@@ -23,7 +23,7 @@ repositories {
 dependencies {
     implementation "com.google.android.material:material:$version"
     implementation "com.hendraanggrian.material:errorbar:$version"
-    implementation "com.hendraanggrian.material:errorbar-ktx:$version" // Kotlin extensions
+    implementation "com.hendraanggrian.material:errorbar-ktx:$version" // optional Kotlin extensions
 }
 ```
 
@@ -46,7 +46,7 @@ Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
     .show()
 ```
 
-With `android-ktx`, this process if simplified.
+With `errorbar-ktx`, this process if simplified.
 
 ```kotlin
 parent.indefiniteErrorbar("No internet connection") {

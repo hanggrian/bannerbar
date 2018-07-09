@@ -3,7 +3,8 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin.*
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    `android-library`
+    android("library")
+    kotlin("android")
     `bintray-release`
 }
 
@@ -40,6 +41,7 @@ dependencies {
     implementation(material())
 
     testImplementation(junit())
+    androidTestImplementation(kotlin("stdlib"))
     androidTestImplementation(anko("commons"))
     androidTestImplementation(androidx("appcompat"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))

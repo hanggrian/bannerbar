@@ -33,7 +33,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -53,6 +52,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+/**
+ * @see com.google.android.material.snackbar.Snackbar
+ */
 public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
 
     @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
@@ -84,7 +86,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     public static final int LENGTH_LONG = BaseTransientBottomBar.LENGTH_LONG;
 
     /**
-     * Callback class for {@link Snackbar} instances.
+     * Callback class for {@link Errorbar} instances.
      * <p>
      * <p>Note: this class is here to provide backwards-compatible way for apps written before the
      * existence of the base {@link BaseTransientBottomBar} class.
@@ -93,23 +95,23 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     public static class Callback extends BaseCallback<Errorbar> {
         /**
-         * Indicates that the Snackbar was dismissed via a swipe.
+         * Indicates that the Errorbar was dismissed via a swipe.
          */
         public static final int DISMISS_EVENT_SWIPE = BaseCallback.DISMISS_EVENT_SWIPE;
         /**
-         * Indicates that the Snackbar was dismissed via an action click.
+         * Indicates that the Errorbar was dismissed via an action click.
          */
         public static final int DISMISS_EVENT_ACTION = BaseCallback.DISMISS_EVENT_ACTION;
         /**
-         * Indicates that the Snackbar was dismissed via a timeout.
+         * Indicates that the Errorbar was dismissed via a timeout.
          */
         public static final int DISMISS_EVENT_TIMEOUT = BaseCallback.DISMISS_EVENT_TIMEOUT;
         /**
-         * Indicates that the Snackbar was dismissed via a call to {@link #dismiss()}.
+         * Indicates that the Errorbar was dismissed via a call to {@link #dismiss()}.
          */
         public static final int DISMISS_EVENT_MANUAL = BaseCallback.DISMISS_EVENT_MANUAL;
         /**
-         * Indicates that the Snackbar was dismissed from a new Snackbar being shown.
+         * Indicates that the Errorbar was dismissed from a new Errorbar being shown.
          */
         public static final int DISMISS_EVENT_CONSECUTIVE = BaseCallback.DISMISS_EVENT_CONSECUTIVE;
 
@@ -131,7 +133,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     }
 
     /**
-     * Make a Snackbar to display a message
+     * Make a Errorbar to display a message
      * <p>
      * <p>Errorbar will try and find a parent view to hold Errorbar's view from the value given to
      * {@code view}. Errorbar will walk up the view tree trying to find a suitable parent, which is
@@ -217,7 +219,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Clear background.
      */
     public Errorbar noBackground() {
-        Utils.clearImage(getContentLayout().getBackgroundView());
+        ViewCompat2.clearImage(getContentLayout().getBackgroundView());
         return this;
     }
 
@@ -225,7 +227,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set background from drawable resource.
      */
     public Errorbar setBackground(@DrawableRes int resId) {
-        Utils.setImageResource(getContentLayout().getBackgroundView(), resId);
+        ViewCompat2.setImageResource(getContentLayout().getBackgroundView(), resId);
         return this;
     }
 
@@ -233,7 +235,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set background from uri.
      */
     public Errorbar setBackground(@NonNull Uri uri) {
-        Utils.setImageURI(getContentLayout().getBackgroundView(), uri);
+        ViewCompat2.setImageURI(getContentLayout().getBackgroundView(), uri);
         return this;
     }
 
@@ -241,7 +243,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set background from drawable.
      */
     public Errorbar setBackground(@NonNull Drawable drawable) {
-        Utils.setImageDrawable(getContentLayout().getBackgroundView(), drawable);
+        ViewCompat2.setImageDrawable(getContentLayout().getBackgroundView(), drawable);
         return this;
     }
 
@@ -250,7 +252,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @RequiresApi(23)
     public Errorbar setBackground(@NonNull Icon icon) {
-        Utils.setImageIcon(getContentLayout().getBackgroundView(), icon);
+        ViewCompat2.setImageIcon(getContentLayout().getBackgroundView(), icon);
         return this;
     }
 
@@ -259,7 +261,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @RequiresApi(21)
     public Errorbar setBackground(@NonNull ColorStateList tint) {
-        Utils.setImageTintList(getContentLayout().getBackgroundView(), tint);
+        ViewCompat2.setImageTintList(getContentLayout().getBackgroundView(), tint);
         return this;
     }
 
@@ -267,7 +269,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set a background from bitmap.
      */
     public Errorbar setBackground(@NonNull Bitmap bitmap) {
-        Utils.setImageBitmap(getContentLayout().getBackgroundView(), bitmap);
+        ViewCompat2.setImageBitmap(getContentLayout().getBackgroundView(), bitmap);
         return this;
     }
 
@@ -275,7 +277,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set a background from color.
      */
     public Errorbar setBackgroundColor(@ColorInt int color) {
-        Utils.setBackgroundColor(getContentLayout().getBackgroundView(), color);
+        ViewCompat2.setBackgroundColor(getContentLayout().getBackgroundView(), color);
         return this;
     }
 
@@ -328,7 +330,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Clear image.
      */
     public Errorbar noImage() {
-        Utils.clearImage(getContentLayout().getImageView());
+        ViewCompat2.clearImage(getContentLayout().getImageView());
         return this;
     }
 
@@ -336,7 +338,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set image from drawable resource.
      */
     public Errorbar setImage(@DrawableRes int resId) {
-        Utils.setImageResource(getContentLayout().getImageView(), resId);
+        ViewCompat2.setImageResource(getContentLayout().getImageView(), resId);
         return this;
     }
 
@@ -344,7 +346,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set image from uri.
      */
     public Errorbar setImage(@NonNull Uri uri) {
-        Utils.setImageURI(getContentLayout().getImageView(), uri);
+        ViewCompat2.setImageURI(getContentLayout().getImageView(), uri);
         return this;
     }
 
@@ -352,7 +354,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set image from drawable.
      */
     public Errorbar setImage(@NonNull Drawable drawable) {
-        Utils.setImageDrawable(getContentLayout().getImageView(), drawable);
+        ViewCompat2.setImageDrawable(getContentLayout().getImageView(), drawable);
         return this;
     }
 
@@ -361,7 +363,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @RequiresApi(23)
     public Errorbar setImage(@NonNull Icon icon) {
-        Utils.setImageIcon(getContentLayout().getImageView(), icon);
+        ViewCompat2.setImageIcon(getContentLayout().getImageView(), icon);
         return this;
     }
 
@@ -369,7 +371,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set image from bitmap.
      */
     public Errorbar setImage(@NonNull Bitmap bitmap) {
-        Utils.setImageBitmap(getContentLayout().getImageView(), bitmap);
+        ViewCompat2.setImageBitmap(getContentLayout().getImageView(), bitmap);
         return this;
     }
 
@@ -424,7 +426,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
                         @Override
                         public void onClick(View view) {
                             listener.onClick(view);
-                            // Now dismiss the Snackbar
+                            // Now dismiss the Errorbar
                             dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION);
                         }
                     });

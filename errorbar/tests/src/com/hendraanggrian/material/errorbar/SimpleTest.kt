@@ -23,18 +23,19 @@ class SimpleTest : BaseTest() {
 
     @Rule @JvmField val rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test
-    fun test() {
+    @Test fun test() {
         onView(withId(R.id.toolbar)).perform(setTitle("Here's an errorbar"))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.errorbar("No internet connection.") {
-                    setAction("Retry") { v ->
+                Errorbar.make(view, "No internet connection.", Errorbar.LENGTH_SHORT)
+                    .setBackground(R.drawable.errorbar_bg_cloud)
+                    .setImage(R.drawable.errorbar_ic_cloud)
+                    .setAction("Retry") { v ->
                         v.context.toast("Clicked!")
                     }
-                }
+                    .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
@@ -43,10 +44,10 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.errorbar("You have no new emails") {
-                    setBackground(R.drawable.bg_empty)
-                    setContentMarginBottom(150)
-                }
+                Errorbar.make(view, "You have no new emails", Errorbar.LENGTH_SHORT)
+                    .setBackground(R.drawable.bg_empty)
+                    .setContentMarginBottom(150)
+                    .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))

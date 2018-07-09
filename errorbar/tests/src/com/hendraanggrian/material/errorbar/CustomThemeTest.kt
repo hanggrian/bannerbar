@@ -22,14 +22,14 @@ class CustomThemeTest : BaseTest() {
 
     @Rule @JvmField val rule = ActivityTestRule(CustomThemeActivity::class.java)
 
-    @Test
-    fun test() {
+    @Test fun test() {
         onView(withId(R.id.toolbar)).perform(setTitle("Here's an errorbar"))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                view.longErrorbar("No internet connection.")
+                Errorbar.make(view, "No internet connection.", Errorbar.LENGTH_LONG)
+                    .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(5000))

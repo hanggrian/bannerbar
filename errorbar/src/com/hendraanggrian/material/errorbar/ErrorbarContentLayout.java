@@ -32,8 +32,7 @@ import com.google.android.material.snackbar.ContentViewCallback;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import static android.os.Build.VERSION.SDK_INT;
+import androidx.core.view.ViewCompat;
 
 /**
  * @see com.google.android.material.snackbar.SnackbarContentLayout
@@ -75,20 +74,16 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
 
         // setImageDrawable attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_android_background)) {
-            if (SDK_INT >= 16) {
-                setBackground(null);
-            } else {
-                setBackgroundDrawable(null);
-            }
-            Utils.setImageDrawable(backgroundView,
+            ViewCompat.setBackground(this, null);
+            ViewCompat2.setImageDrawable(backgroundView,
                     a.getDrawable(R.styleable.ErrorbarLayout_android_background));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_src)) {
-            Utils.setImageDrawable(imageView,
+            ViewCompat2.setImageDrawable(imageView,
                     a.getDrawable(R.styleable.ErrorbarLayout_android_src));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            Utils.setTextAppearance(textView,
+            ViewCompat2.setTextAppearance(textView,
                     a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
@@ -98,7 +93,7 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
             textView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            Utils.setTextAppearance(actionView,
+            ViewCompat2.setTextAppearance(actionView,
                     a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {

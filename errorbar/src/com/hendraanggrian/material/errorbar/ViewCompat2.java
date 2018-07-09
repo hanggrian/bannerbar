@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,20 +14,23 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
-import static android.os.Build.VERSION.SDK_INT;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-final class Utils {
+/**
+ * @see androidx.core.view.ViewCompat
+ */
+final class ViewCompat2 {
 
     /**
      * No instance.
      */
-    private Utils() {
+    private ViewCompat2() {
     }
 
+    @SuppressWarnings("deprecation")
     static void setTextAppearance(@NonNull TextView view, int resId) {
-        if (SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23) {
             view.setTextAppearance(resId);
         } else {
             view.setTextAppearance(view.getContext(), resId);

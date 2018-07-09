@@ -3,7 +3,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin.*
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    `android-library`
+    android("library")
     kotlin("android")
     dokka
     `git-publish`
@@ -62,6 +62,9 @@ tasks {
         args("--android", "-F", "src/**/*.kt")
     }
 
+    withType<Javadoc> {
+        isEnabled = false
+    }
     val dokka by tasks.getting(DokkaTask::class) {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
