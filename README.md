@@ -23,7 +23,7 @@ repositories {
 dependencies {
     implementation "com.google.android.material:material:$version"
     implementation "com.hendraanggrian.material:errorbar:$version"
-    implementation "com.hendraanggrian.material:errorbar-commons:$version" // optional
+    implementation "com.hendraanggrian.material:errorbar-ktx:$version" // Kotlin extensions
 }
 ```
 
@@ -39,18 +39,18 @@ Create Errorbar just like a Snackbar.
 
 ```kotlin
 Errorbar.make(parent, "No internet connection", Errorbar.LENGTH_INDEFINITE)
-    .setIcon(R.drawable.errorbar_ic_cloud)
+    .setImage(R.drawable.my_image)
     .setAction("Retry") { v ->
         // do something
     }                    }
     .show()
 ```
 
-Or with Kotlin DSL.
+With `android-ktx`, this process if simplified.
 
 ```kotlin
-parent.errorbar("No internet connection") {
-    setIcon(R.drawable.errorbar_ic_cloud)
+parent.indefiniteErrorbar("No internet connection") {
+    setImage(R.drawable.my_image)
     setAction("Retry") { v ->
         // do something
     }
@@ -79,10 +79,6 @@ See [attrs.xml][attrs] for complete list of attributes.
 Since Errorbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
 It would mean that a parent cannot have more than one Snackbar or Errorbar at the same time.
 When a Snackbar appear, an attached Errorbar will disappear, and vice-versa.
-
-Commons
--------
-Commons package contains cloud images, backgrounds, and public styles.
 
 License
 -------

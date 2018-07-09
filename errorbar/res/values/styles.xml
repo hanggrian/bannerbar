@@ -7,4 +7,10 @@
         <!-- inherited from Snackbar -->
         <item name="elevation">@dimen/design_snackbar_elevation</item>
     </style>
+
+
+    <style name="Widget.Design.Errorbar" parent="Base.Widget.Design.Errorbar">
+        <item name="android:background">@drawable/errorbar_bg_cloud</item>
+        <item name="android:src">@drawable/errorbar_ic_cloud</item>
+    </style>
 </resources>

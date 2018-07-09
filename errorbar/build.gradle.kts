@@ -4,9 +4,6 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     `android-library`
-    kotlin("android")
-    dokka
-    `git-publish`
     `bintray-release`
 }
 
@@ -39,10 +36,7 @@ android {
     }
 }
 
-val ktlint by configurations.creating
-
 dependencies {
-    api(kotlin("stdlib", VERSION_KOTLIN))
     implementation(material())
 
     testImplementation(junit())
@@ -51,41 +45,6 @@ dependencies {
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))
-
-    ktlint(ktlint())
-}
-
-tasks {
-    "ktlint"(JavaExec::class) {
-        get("check").dependsOn(this)
-        group = VERIFICATION_GROUP
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Check Kotlin code style."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "src/**/*.kt")
-    }
-    "ktlintFormat"(JavaExec::class) {
-        group = "formatting"
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Fix Kotlin code style deviations."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "-F", "src/**/*.kt")
-    }
-
-    val dokka by tasks.getting(DokkaTask::class) {
-        outputDirectory = "$buildDir/docs"
-        doFirst { file(outputDirectory).deleteRecursively() }
-    }
-    gitPublish {
-        repoUri = RELEASE_WEBSITE
-        branch = "gh-pages"
-        contents.from(dokka.outputDirectory)
-    }
-    get("gitPublishCopy").dependsOn(dokka)
 }
 
 publish {

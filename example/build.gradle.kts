@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":$RELEASE_ARTIFACT-commons"))
+    implementation(project(":$RELEASE_ARTIFACT-ktx"))
 
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(anko("commons"))

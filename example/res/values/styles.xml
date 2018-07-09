@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.App" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="errorbarStyle">@style/Widget.Design.Errorbar</item>
-    </style>
-
-    <style name="Theme.App.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="errorbarStyle">@style/Widget.Design.Errorbar.Light</item>
     </style>
 </resources>
