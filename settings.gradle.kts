@@ -1,4 +1,4 @@
-/** Extended Snackbar java library. */
+/** Extended `Snackbar` java library. */
 include(":$RELEASE_ARTIFACT")
 
 /** Kotlin extensions. */
