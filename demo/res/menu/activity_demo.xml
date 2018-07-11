@@ -5,20 +5,20 @@
 
     <item
         android:id="@+id/make"
-        android:title="Make"
+        android:title="@string/make"
         app:showAsAction="always"
         tools:ignore="AppCompatResource" />
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/lengthShortItem"
+            android:id="@+id/shortLengthItem"
             android:checked="true"
-            android:title="Short" />
+            android:title="@string/short2" />
         <item
-            android:id="@+id/lengthLongItem"
-            android:title="Long" />
+            android:id="@+id/longLengthItem"
+            android:title="@string/long2" />
         <item
-            android:id="@+id/lengthIndefiniteItem"
-            android:title="Indefinite" />
+            android:id="@+id/indefiniteLengthItem"
+            android:title="@string/indefinite" />
     </group>
 </menu>

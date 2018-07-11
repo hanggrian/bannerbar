@@ -3,11 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorbar.iml" filepath="$PROJECT_DIR$/errorbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorbar/errorbar-errorbar.iml" filepath="$PROJECT_DIR$/errorbar/errorbar-errorbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" filepath="$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" filepath="$PROJECT_DIR$/errorbar-ktx/errorbar-ktx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
     </modules>
   </component>
 </project>

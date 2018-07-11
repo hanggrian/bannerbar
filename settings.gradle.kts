@@ -5,4 +5,4 @@ include(":$RELEASE_ARTIFACT")
 include(":$RELEASE_ARTIFACT-ktx")
 
 /** Example app. */
-include(":example")
+include(":demo")

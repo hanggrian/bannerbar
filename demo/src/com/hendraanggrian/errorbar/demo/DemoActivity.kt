@@ -1,4 +1,4 @@
-package com.example.errorbar
+package com.hendraanggrian.errorbar.demo
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,25 +8,25 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.hendraanggrian.material.errorbar.Errorbar
 import com.hendraanggrian.material.errorbar.addCallback
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_demo.*
 
-class MainActivity : AppCompatActivity() {
+class DemoActivity : AppCompatActivity() {
 
-    private lateinit var lengthShortItem: MenuItem
-    private lateinit var lengthLongItem: MenuItem
-    private lateinit var lengthIndefiniteItem: MenuItem
+    private lateinit var shortLengthItem: MenuItem
+    private lateinit var longLengthItem: MenuItem
+    private lateinit var indefiniteLengthItem: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_demo)
         setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_main, menu)
-        lengthShortItem = menu.findItem(R.id.lengthShortItem)
-        lengthLongItem = menu.findItem(R.id.lengthLongItem)
-        lengthIndefiniteItem = menu.findItem(R.id.lengthIndefiniteItem)
+        menuInflater.inflate(R.menu.activity_demo, menu)
+        shortLengthItem = menu.findItem(R.id.shortLengthItem)
+        longLengthItem = menu.findItem(R.id.longLengthItem)
+        indefiniteLengthItem = menu.findItem(R.id.indefiniteLengthItem)
         return true
     }
 
@@ -40,10 +40,11 @@ class MainActivity : AppCompatActivity() {
                     }
                     .addCallback {
                         onShown {
-                            Toast.makeText(this@MainActivity, "shown", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@DemoActivity, "shown", Toast.LENGTH_SHORT).show()
                         }
                         onDismissed { _, event ->
-                            Toast.makeText(this@MainActivity, "dismissed event: $event", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@DemoActivity, "dismissed event: $event",
+                                Toast.LENGTH_SHORT).show()
                         }
                     }
                 errorbar.show()
@@ -55,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 
     private inline val length
         get() = when {
-            lengthShortItem.isChecked -> Errorbar.LENGTH_SHORT
-            lengthLongItem.isChecked -> Errorbar.LENGTH_LONG
+            shortLengthItem.isChecked -> Errorbar.LENGTH_SHORT
+            longLengthItem.isChecked -> Errorbar.LENGTH_LONG
             else -> Errorbar.LENGTH_INDEFINITE
         }
 }
