@@ -1,9 +1,9 @@
 Errorbar
 ========
-[![Repository](https://img.shields.io/badge/Repository-material-brightgreen.svg)](https://bintray.com/hendraanggrian/material)
-[![Download](https://api.bintray.com/packages/hendraanggrian/material/errorbar/images/download.svg)](https://bintray.com/hendraanggrian/material/errorbar/_latestVersion)
-[![Build Status](https://travis-ci.com/hendraanggrian/errorbar.svg)](https://travis-ci.com/hendraanggrian/errorbar)
-[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+[![jcenter](https://img.shields.io/badge/jcenter-material-green.svg)](https://bintray.com/hendraanggrian/material)
+[![download](https://api.bintray.com/packages/hendraanggrian/material/errorbar/images/download.svg)](https://bintray.com/hendraanggrian/material/errorbar/_latestVersion)
+[![build](https://travis-ci.com/hendraanggrian/errorbar.svg)](https://travis-ci.com/hendraanggrian/errorbar)
+[![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ![demo][demo]
 
