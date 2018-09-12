@@ -7,6 +7,7 @@ plugins {
     kotlin("android")
     dokka
     `git-publish`
+    bintray
     `bintray-release`
 }
 
@@ -22,8 +23,6 @@ android {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDirs("src")
-            res.srcDir("res")
-            resources.srcDir("src")
         }
     }
     libraryVariants.all {

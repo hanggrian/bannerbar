@@ -33,28 +33,29 @@ class DemoActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()
-            R.id.make -> {
-                val errorbar = Errorbar.make(frameLayout, "No internet connection", length)
-                    .setAction("Retry") {
-                        Snackbar.make(frameLayout, "Clicked", Snackbar.LENGTH_SHORT).show()
+            R.id.make -> Errorbar.make(frameLayout, "No internet connection", length)
+                .setAction("Retry") {
+                    Snackbar.make(frameLayout, "Clicked", Snackbar.LENGTH_SHORT).show()
+                }
+                .addCallback {
+                    onShown {
+                        Toast.makeText(this@DemoActivity, "shown", Toast.LENGTH_SHORT).show()
                     }
-                    .addCallback {
-                        onShown {
-                            Toast.makeText(this@DemoActivity, "shown", Toast.LENGTH_SHORT).show()
-                        }
-                        onDismissed { _, event ->
-                            Toast.makeText(this@DemoActivity, "dismissed event: $event",
-                                Toast.LENGTH_SHORT).show()
-                        }
+                    onDismissed { _, event ->
+                        Toast.makeText(
+                            this@DemoActivity,
+                            "dismissed event: $event",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                errorbar.show()
-            }
+                }
+                .show()
             else -> item.isChecked = true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private inline val length
+    private inline val length: Int
         get() = when {
             shortLengthItem.isChecked -> Errorbar.LENGTH_SHORT
             longLengthItem.isChecked -> Errorbar.LENGTH_LONG
