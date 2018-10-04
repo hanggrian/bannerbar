@@ -13,27 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.core.widget.TextViewCompat;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-/**
- * @see androidx.core.view.ViewCompat
- */
-final class ViewCompat2 {
+final class ErrorbarUtils {
 
-    /**
-     * No instance.
-     */
-    private ViewCompat2() {
+    private ErrorbarUtils() {
     }
 
-    @SuppressWarnings("deprecation")
     static void setTextAppearance(@NonNull TextView view, int resId) {
         if (Build.VERSION.SDK_INT >= 23) {
             view.setTextAppearance(resId);
         } else {
-            view.setTextAppearance(view.getContext(), resId);
+            TextViewCompat.setTextAppearance(view, resId);
         }
     }
 

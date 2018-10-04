@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.language.base.plugins.LifecycleBasePlugin.*
-import org.jetbrains.dokka.gradle.DokkaTask
-
 plugins {
     android("library")
     kotlin("android")
@@ -43,7 +39,7 @@ dependencies {
 tasks {
     "ktlint"(JavaExec::class) {
         get("check").dependsOn(this)
-        group = VERIFICATION_GROUP
+        group = org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
         inputs.dir("src")
         outputs.dir("src")
         description = "Check Kotlin code style."
@@ -64,7 +60,7 @@ tasks {
     withType<Javadoc> {
         isEnabled = false
     }
-    val dokka by tasks.getting(DokkaTask::class) {
+    val dokka by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }

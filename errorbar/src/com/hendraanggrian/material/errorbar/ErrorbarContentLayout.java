@@ -56,9 +56,18 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     }
 
     @SuppressLint("CustomViewStyleable")
-    public ErrorbarContentLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public ErrorbarContentLayout(
+        @NonNull Context context,
+        @Nullable AttributeSet attrs,
+        @AttrRes int defStyleAttr
+    ) {
         super(context, attrs, defStyleAttr);
-        a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout, defStyleAttr, R.style.Base_Widget_Design_Errorbar);
+        a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.ErrorbarLayout,
+            defStyleAttr,
+            R.style.Base_Widget_Design_Errorbar
+        );
     }
 
     @Override
@@ -75,29 +84,39 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
         // setImageDrawable attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_android_background)) {
             ViewCompat.setBackground(this, null);
-            ViewCompat2.setImageDrawable(backgroundView,
-                    a.getDrawable(R.styleable.ErrorbarLayout_android_background));
+            ErrorbarUtils.setImageDrawable(
+                backgroundView,
+                a.getDrawable(R.styleable.ErrorbarLayout_android_background)
+            );
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_src)) {
-            ViewCompat2.setImageDrawable(imageView,
-                    a.getDrawable(R.styleable.ErrorbarLayout_android_src));
+            ErrorbarUtils.setImageDrawable(
+                imageView,
+                a.getDrawable(R.styleable.ErrorbarLayout_android_src)
+            );
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            ViewCompat2.setTextAppearance(textView,
-                    a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0));
+            ErrorbarUtils.setTextAppearance(
+                textView,
+                a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0)
+            );
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
-            textView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor));
+            textView
+                .setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
             textView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            ViewCompat2.setTextAppearance(actionView,
-                    a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0));
+            ErrorbarUtils.setTextAppearance(
+                actionView,
+                a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0)
+            );
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
-            actionView.setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor));
+            actionView
+                .setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
             actionView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f));
@@ -150,12 +169,17 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
         }
     }
 
-    private static void animateView(@NonNull View view, int delay, int duration, boolean animateIn) {
+    private static void animateView(
+        @NonNull View view,
+        int delay,
+        int duration,
+        boolean animateIn
+    ) {
         view.setAlpha(animateIn ? 0f : 1f);
         view.animate()
-                .alpha(animateIn ? 1f : 0f)
-                .setDuration(duration)
-                .setStartDelay(delay)
-                .start();
+            .alpha(animateIn ? 1f : 0f)
+            .setDuration(duration)
+            .setStartDelay(delay)
+            .start();
     }
 }

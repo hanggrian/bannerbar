@@ -1,4 +1,4 @@
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "ClassName")
 
 package com.hendraanggrian.material.errorbar
 
@@ -14,7 +14,6 @@ interface CallbackBuilder {
 }
 
 @PublishedApi
-@Suppress("ClassName")
 internal class _Callback : Errorbar.Callback(), CallbackBuilder {
     private var onShown: ((Errorbar) -> Unit)? = null
     private var onDismissed: ((Errorbar, Int) -> Unit)? = null

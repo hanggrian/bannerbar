@@ -1,6 +1,4 @@
 import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
-import org.gradle.kotlin.dsl.kotlin
-import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     android("application")
@@ -38,8 +36,6 @@ android {
     }
 }
 
-val ktlint by configurations.creating
-
 dependencies {
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
@@ -48,28 +44,4 @@ dependencies {
     implementation(androidx("core", "core-ktx"))
     implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout"))
-
-    ktlint(ktlint())
-}
-
-tasks {
-    "ktlint"(JavaExec::class) {
-        get("check").dependsOn(this)
-        group = LifecycleBasePlugin.VERIFICATION_GROUP
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Check Kotlin code style."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "src/**/*.kt")
-    }
-    "ktlintFormat"(JavaExec::class) {
-        group = "formatting"
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Fix Kotlin code style deviations."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "-F", "src/**/*.kt")
-    }
 }
