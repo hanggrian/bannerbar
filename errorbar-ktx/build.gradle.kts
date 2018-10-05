@@ -60,7 +60,7 @@ tasks {
     withType<Javadoc> {
         isEnabled = false
     }
-    val dokka by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
+    val dokka by getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }
