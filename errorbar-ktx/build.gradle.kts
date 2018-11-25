@@ -2,7 +2,6 @@ plugins {
     android("library")
     kotlin("android")
     dokka
-    `git-publish`
     bintray
     `bintray-release`
 }
@@ -37,8 +36,7 @@ dependencies {
 }
 
 tasks {
-    "ktlint"(JavaExec::class) {
-        get("check").dependsOn(this)
+    register("ktlint", JavaExec::class) {
         group = org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
         inputs.dir("src")
         outputs.dir("src")
@@ -47,7 +45,10 @@ tasks {
         main = "com.github.shyiko.ktlint.Main"
         args("--android", "src/**/*.kt")
     }
-    "ktlintFormat"(JavaExec::class) {
+    "check" {
+        dependsOn("ktlint")
+    }
+    register("ktlintFormat", JavaExec::class) {
         group = "formatting"
         inputs.dir("src")
         outputs.dir("src")
@@ -60,16 +61,10 @@ tasks {
     withType<Javadoc> {
         isEnabled = false
     }
-    val dokka by getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
+    "dokka"(org.jetbrains.dokka.gradle.DokkaTask::class) {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }
-    gitPublish {
-        repoUri = RELEASE_WEBSITE
-        branch = "gh-pages"
-        contents.from(dokka.outputDirectory)
-    }
-    get("gitPublishCopy").dependsOn(dokka)
 }
 
 publish {

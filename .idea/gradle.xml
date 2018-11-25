@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/errorbar" />
             <option value="$PROJECT_DIR$/errorbar-ktx" />
+            <option value="$PROJECT_DIR$/website" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
