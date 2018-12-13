@@ -29,6 +29,9 @@ android {
             resources.srcDir("tests/src")
         }
     }
+    lintOptions {
+        isCheckTestSources = true
+    }
     libraryVariants.all {
         generateBuildConfig?.enabled = false
     }
