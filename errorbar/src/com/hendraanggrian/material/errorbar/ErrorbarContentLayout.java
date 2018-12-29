@@ -27,12 +27,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.ContentViewCallback;
-
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+import androidx.core.widget.TextViewCompat;
+
+import com.google.android.material.snackbar.ContentViewCallback;
 
 /**
  * @see com.google.android.material.snackbar.SnackbarContentLayout
@@ -96,7 +97,7 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
             );
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            ErrorbarUtils.setTextAppearance(
+            TextViewCompat.setTextAppearance(
                 textView,
                 a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0)
             );
@@ -109,7 +110,7 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
             textView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            ErrorbarUtils.setTextAppearance(
+            TextViewCompat.setTextAppearance(
                 actionView,
                 a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0)
             );

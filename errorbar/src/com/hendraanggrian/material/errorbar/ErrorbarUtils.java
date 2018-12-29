@@ -6,14 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
-import android.os.Build;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.core.widget.TextViewCompat;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -21,14 +18,6 @@ import static android.view.View.VISIBLE;
 final class ErrorbarUtils {
 
     private ErrorbarUtils() {
-    }
-
-    static void setTextAppearance(@NonNull TextView view, int resId) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            view.setTextAppearance(resId);
-        } else {
-            TextViewCompat.setTextAppearance(view, resId);
-        }
     }
 
     static void clearImage(@NonNull ImageView view) {
