@@ -1,5 +1,3 @@
-import javax.xml.ws.Endpoint.publish
-
 plugins {
     android("library")
     kotlin("android")
@@ -21,9 +19,6 @@ android {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDirs("src")
         }
-    }
-    lintOptions {
-        isCheckTestSources = true
     }
     libraryVariants.all {
         generateBuildConfig?.enabled = false

@@ -139,6 +139,27 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
             (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
     }
 
+    // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
+    // (and instead properly utilize BaseTransientBottomBar hierarchy).
+    @Override
+    public void show() {
+        super.show();
+    }
+
+    // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
+    // (and instead properly utilize BaseTransientBottomBar hierarchy).
+    @Override
+    public void dismiss() {
+        super.dismiss();
+    }
+
+    // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
+    // (and instead properly utilize BaseTransientBottomBar hierarchy).
+    @Override
+    public boolean isShown() {
+        return super.isShown();
+    }
+
     /**
      * Make an Errorbar to display a message
      * <p>
@@ -194,6 +215,27 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
         return color;
     }
 
+    /**
+     * Make an Errorbar to display a message.
+     *
+     * <p>Errorbar will try and find a parent view to hold Errorbar's view from the value given to
+     * {@code view}. Errorbar will walk up the view tree trying to find a suitable parent, which is
+     * defined as a {@link CoordinatorLayout} or the window decor's content view, whichever comes
+     * first.
+     *
+     * <p>Having a {@link CoordinatorLayout} in your view hierarchy allows Errorbar to enable certain
+     * features, such as swipe-to-dismiss and automatically moving of widgets.
+     *
+     * @param view     The view to find a parent from.
+     * @param resId    The resource id of the string resource to use. Can be formatted text.
+     * @param duration How long to display the message. Can be {@link #LENGTH_SHORT}, {@link
+     *                 #LENGTH_LONG}, {@link #LENGTH_INDEFINITE}, or a custom duration in milliseconds.
+     */
+    @NonNull
+    public static Errorbar make(@NonNull View view, @StringRes int resId, @Duration int duration) {
+        return make(view, view.getResources().getText(resId), duration);
+    }
+
     private static ViewGroup findSuitableParent(View view) {
         ViewGroup fallback = null;
         do {
@@ -220,27 +262,6 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
 
         // If we reach here then we didn't find a CoL or a suitable content view so we'll fallback
         return fallback;
-    }
-
-    /**
-     * Make an Errorbar to display a message.
-     *
-     * <p>Errorbar will try and find a parent view to hold Errorbar's view from the value given to
-     * {@code view}. Errorbar will walk up the view tree trying to find a suitable parent, which is
-     * defined as a {@link CoordinatorLayout} or the window decor's content view, whichever comes
-     * first.
-     *
-     * <p>Having a {@link CoordinatorLayout} in your view hierarchy allows Errorbar to enable certain
-     * features, such as swipe-to-dismiss and automatically moving of widgets.
-     *
-     * @param view     The view to find a parent from.
-     * @param resId    The resource id of the string resource to use. Can be formatted text.
-     * @param duration How long to display the message. Can be {@link #LENGTH_SHORT}, {@link
-     *                 #LENGTH_LONG}, {@link #LENGTH_INDEFINITE}, or a custom duration in milliseconds.
-     */
-    @NonNull
-    public static Errorbar make(@NonNull View view, @StringRes int resId, @Duration int duration) {
-        return make(view, view.getResources().getText(resId), duration);
     }
 
     private ErrorbarContentLayout getContentLayout() {

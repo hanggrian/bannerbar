@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Errorbar">
-        <!-- Style to use for Errorbar in this theme. -->
         <attr name="errorbarStyle" format="reference" />
     </declare-styleable>
 
@@ -19,5 +18,9 @@
 
         <!-- inherited from SnackbarLayout -->
         <attr name="elevation" />
+        <attr name="animationMode">
+            <enum name="slide" value="0"/>
+            <enum name="fade" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>
