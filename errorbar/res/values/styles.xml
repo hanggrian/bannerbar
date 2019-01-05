@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="TextAppearance.Design.Errorbar.Message" parent="android:TextAppearance">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    <style name="TextAppearance.Design.Errorbar.Message" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
