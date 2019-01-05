@@ -30,7 +30,7 @@ val ktlint by configurations.creating
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
-    implementation(material())
+    implementation(material("$VERSION_ANDROIDX-alpha02"))
 
     ktlint(ktlint())
 }

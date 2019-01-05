@@ -38,12 +38,12 @@ android {
 }
 
 dependencies {
-    implementation(material())
+    implementation(material("$VERSION_ANDROIDX-alpha02"))
 
     testImplementation(junit())
     androidTestImplementation(kotlin("stdlib"))
-    androidTestImplementation(androidx("core", "core-ktx"))
-    androidTestImplementation(androidx("appcompat"))
+    androidTestImplementation(androidx("core", "core-ktx", "$VERSION_ANDROIDX-alpha03"))
+    androidTestImplementation(androidx("appcompat", version = "$VERSION_ANDROIDX-alpha01"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))

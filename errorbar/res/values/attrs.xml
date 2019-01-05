@@ -18,9 +18,6 @@
 
         <!-- inherited from SnackbarLayout -->
         <attr name="elevation" />
-        <attr name="animationMode">
-            <enum name="slide" value="0"/>
-            <enum name="fade" value="1"/>
-        </attr>
+        <attr name="animationMode" />
     </declare-styleable>
 </resources>

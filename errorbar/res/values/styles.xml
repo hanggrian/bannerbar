@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
+        <item name="animationMode">fade</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
 
         <!-- inherited from Snackbar -->

@@ -196,7 +196,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
         errorbar.view.setPadding(0, 0, 0, 0);
         errorbar.view.setBackgroundColor(getColor(parent.getContext(),
             android.R.attr.windowBackground));
-        errorbar.view.setLayoutParams(new ViewGroup.LayoutParams(
+        errorbar.view.setLayoutParams(new ViewGroup.MarginLayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         ));
