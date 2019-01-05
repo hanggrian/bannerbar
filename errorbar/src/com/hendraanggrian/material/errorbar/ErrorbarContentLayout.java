@@ -27,9 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
 
@@ -42,36 +40,29 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     private ImageView backgroundView;
     private ViewGroup containerView;
     private ImageView imageView;
-    private TextView textView;
+    private TextView messageView;
     private Button actionView;
 
     // keep TypedArray a little bit longer because views are binded in onFinishInflate()
     private TypedArray a;
 
-    public ErrorbarContentLayout(@NonNull Context context) {
+    public ErrorbarContentLayout(Context context) {
         this(context, null);
     }
 
-    public ErrorbarContentLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ErrorbarContentLayout(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.errorbarStyle);
     }
 
     @SuppressLint("CustomViewStyleable")
-    public ErrorbarContentLayout(
-        @NonNull Context context,
-        @Nullable AttributeSet attrs,
-        @AttrRes int defStyleAttr
-    ) {
+    public ErrorbarContentLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        a = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.ErrorbarLayout,
-            defStyleAttr,
-            R.style.Base_Widget_Design_Errorbar
-        );
+        a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
+            defStyleAttr, R.style.Widget_Design_Errorbar);
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -79,48 +70,42 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
         backgroundView = findViewById(R.id.errorbar_background);
         containerView = findViewById(R.id.errorbar_container);
         imageView = findViewById(R.id.errorbar_image);
-        textView = findViewById(R.id.errorbar_text);
+        messageView = findViewById(R.id.errorbar_message);
         actionView = findViewById(R.id.errorbar_action);
 
         // setImageDrawable attr and finally recycle
         if (a.hasValue(R.styleable.ErrorbarLayout_android_background)) {
             ViewCompat.setBackground(this, null);
-            ErrorbarUtils.setImageDrawable(
-                backgroundView,
-                a.getDrawable(R.styleable.ErrorbarLayout_android_background)
-            );
+            ViewUtils.setImageDrawable(backgroundView,
+                a.getDrawable(R.styleable.ErrorbarLayout_android_background));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_src)) {
-            ErrorbarUtils.setImageDrawable(
-                imageView,
-                a.getDrawable(R.styleable.ErrorbarLayout_android_src)
-            );
+            ViewUtils.setImageDrawable(imageView,
+                a.getDrawable(R.styleable.ErrorbarLayout_android_src));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            TextViewCompat.setTextAppearance(
-                textView,
-                a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0)
-            );
+            TextViewCompat.setTextAppearance(messageView,
+                a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
-            textView
-                .setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor));
+            messageView.setTextColor(
+                a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
-            textView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
+            messageView.setTextSize(
+                a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            TextViewCompat.setTextAppearance(
-                actionView,
-                a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0)
-            );
+            TextViewCompat.setTextAppearance(actionView,
+                a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
-            actionView
-                .setTextColor(a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor));
+            actionView.setTextColor(
+                a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor));
         }
         if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
-            actionView.setTextSize(a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f));
+            actionView.setTextSize(
+                a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f));
         }
         a.recycle();
     }
@@ -141,8 +126,8 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     }
 
     @NonNull
-    public TextView getTextView() {
-        return textView;
+    public TextView getMessageView() {
+        return messageView;
     }
 
     @NonNull
@@ -154,9 +139,9 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     public void animateContentIn(int delay, int duration) {
         animateView(backgroundView, delay, duration, true);
         animateView(imageView, delay, duration, true);
-        animateView(textView, delay, duration, true);
+        animateView(messageView, delay, duration, true);
         if (actionView.getVisibility() == VISIBLE) {
-            animateView(textView, delay, duration, true);
+            animateView(messageView, delay, duration, true);
         }
     }
 
@@ -164,9 +149,9 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     public void animateContentOut(int delay, int duration) {
         animateView(backgroundView, delay, duration, false);
         animateView(imageView, delay, duration, false);
-        animateView(textView, delay, duration, false);
+        animateView(messageView, delay, duration, false);
         if (actionView.getVisibility() == VISIBLE) {
-            animateView(textView, delay, duration, false);
+            animateView(messageView, delay, duration, false);
         }
     }
 

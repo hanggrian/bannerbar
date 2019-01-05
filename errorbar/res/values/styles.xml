@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
+    <style name="TextAppearance.Design.Errorbar.Message" parent="android:TextAppearance">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
 
+    <style name="Widget.Design.Errorbar" parent="android:Widget" tools:ignore="PrivateResource">
         <!-- inherited from Snackbar -->
         <item name="elevation">@dimen/design_snackbar_elevation</item>
     </style>
 
-
-    <style name="Widget.Design.Errorbar" parent="Base.Widget.Design.Errorbar">
+    <style name="Widget.Design.Errorbar.Cloud" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/errorbar_bg_cloud</item>
         <item name="android:src">@drawable/errorbar_ic_cloud</item>
     </style>

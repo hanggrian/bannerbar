@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ErrorbarStyle">
+    <declare-styleable name="Errorbar">
+        <!-- Style to use for Errorbar in this theme. -->
         <attr name="errorbarStyle" format="reference" />
     </declare-styleable>
 

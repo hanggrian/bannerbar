@@ -1,5 +1,3 @@
-import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
-
 plugins {
     android("application")
     kotlin("android")
@@ -14,7 +12,7 @@ android {
         targetSdkVersion(SDK_TARGET)
         applicationId = "$RELEASE_GROUP.demo"
         versionCode = 1
-        versionName = VERSION_ANDROIDX
+        versionName = "$VERSION_ANDROIDX-alpha01"
     }
     sourceSets {
         getByName("main") {
@@ -37,11 +35,11 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
 
     implementation(material())
-    implementation(androidx("core", "core-ktx"))
-    implementation(androidx("appcompat"))
-    implementation(androidx("coordinatorlayout"))
+    implementation(androidx("core", "core-ktx", "$VERSION_ANDROIDX-alpha03"))
+    implementation(androidx("appcompat", version = "$VERSION_ANDROIDX-alpha01"))
+    implementation(androidx("coordinatorlayout", version = "$VERSION_ANDROIDX-alpha01"))
 }

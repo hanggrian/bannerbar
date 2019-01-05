@@ -15,9 +15,9 @@ import androidx.annotation.NonNull;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-final class ErrorbarUtils {
+final class ViewUtils {
 
-    private ErrorbarUtils() {
+    private ViewUtils() {
     }
 
     static void clearImage(@NonNull ImageView view) {

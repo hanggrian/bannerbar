@@ -29,19 +29,20 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/errorbar_text"
+            android:id="@+id/errorbar_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center_horizontal"
-            android:visibility="gone" />
+            android:textAppearance="@style/TextAppearance.Design.Errorbar.Message" />
 
         <!-- action view is deliberately gone, setting action text and listener will automatically display it -->
         <Button
             android:id="@+id/errorbar_action"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"
             android:textSize="@dimen/abc_text_size_subhead_material"
             android:visibility="gone"
             tools:ignore="PrivateResource" />

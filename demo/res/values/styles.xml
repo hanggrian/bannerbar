@@ -2,6 +2,6 @@
 <resources>
 
     <style name="Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="errorbarStyle">@style/Widget.Design.Errorbar</item>
+        <item name="errorbarStyle">@style/Widget.Design.Errorbar.Cloud</item>
     </style>
 </resources>

@@ -1,3 +1,5 @@
+import javax.xml.ws.Endpoint.publish
+
 plugins {
     android("library")
     kotlin("android")
@@ -12,7 +14,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = VERSION_ANDROIDX
+        versionName = "$VERSION_ANDROIDX-alpha01"
     }
     sourceSets {
         getByName("main") {
