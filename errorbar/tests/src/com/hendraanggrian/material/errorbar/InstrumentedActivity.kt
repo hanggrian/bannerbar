@@ -1,4 +1,4 @@
-package com.hendraanggrian.material.errorbar.activity
+package com.hendraanggrian.material.errorbar
 
 import android.os.Bundle
 import android.widget.FrameLayout

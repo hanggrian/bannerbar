@@ -1,4 +1,4 @@
-package com.hendraanggrian.errorbar.demo
+package com.hendraanggrian.material.errorbar.demo
 
 import android.os.Bundle
 import android.view.Menu

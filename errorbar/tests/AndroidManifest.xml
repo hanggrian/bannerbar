@@ -10,10 +10,6 @@
 
     <application android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <uses-library android:name="android.test.runner" />
-
-        <activity android:name=".activity.InstrumentedActivity" />
-        <activity
-            android:name=".activity.CustomThemeActivity"
-            android:theme="@style/CustomTheme" />
+        <activity android:name=".InstrumentedActivity" />
     </application>
 </manifest>

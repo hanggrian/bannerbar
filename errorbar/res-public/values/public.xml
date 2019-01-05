@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="errorbarStyle" type="attr" />
-    <public name="actionTextAppearance" type="attr" />
-    <public name="actionTextColor" type="attr" />
-    <public name="actionTextSize" type="attr" />
-
-    <public name="Widget.Design.Errorbar" type="style" />
-    <public name="Widget.Design.Errorbar.Cloud" type="style" />
-
     <public name="errorbar_bg_cloud" type="drawable" />
     <public name="errorbar_ic_cloud" type="drawable" />
 </resources>

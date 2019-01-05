@@ -2,6 +2,10 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="errorbarStyle">@style/Widget.Design.Errorbar.Cloud</item>
+        <item name="snackbarStyle">@style/FadingSnackbar</item>
+    </style>
+
+    <style name="FadingSnackbar" parent="Widget.Design.Snackbar">
+        <item name="animationMode">fade</item>
     </style>
 </resources>

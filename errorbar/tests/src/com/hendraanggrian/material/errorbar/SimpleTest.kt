@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.hendraanggrian.material.errorbar.activity.InstrumentedActivity
 import com.hendraanggrian.material.errorbar.test.R
 import org.junit.Rule
 import org.junit.Test
@@ -29,9 +28,7 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view, "No internet connection.", Errorbar.LENGTH_SHORT)
-                    .setBackground(R.drawable.errorbar_bg_cloud)
-                    .setImage(R.drawable.errorbar_ic_cloud)
+                Errorbar.make(view, "No internet connection.", Errorbar.LENGTH_LONG)
                     .setAction("Retry") { v ->
                         Toast.makeText(v.context, "Clicked!", Toast.LENGTH_SHORT).show()
                     }
@@ -44,8 +41,9 @@ class SimpleTest : BaseTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Errorbar.make(view, "You have no new emails", Errorbar.LENGTH_SHORT)
+                Errorbar.make(view, "You have no new emails", Errorbar.LENGTH_LONG)
                     .setBackground(R.drawable.bg_empty)
+                    .noImage()
                     .setContentMarginBottom(150)
                     .show()
             }

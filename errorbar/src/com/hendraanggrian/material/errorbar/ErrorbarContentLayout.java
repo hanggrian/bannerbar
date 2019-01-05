@@ -16,9 +16,7 @@
 
 package com.hendraanggrian.material.errorbar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
-import androidx.core.widget.TextViewCompat;
 
 import com.google.android.material.snackbar.ContentViewCallback;
 
@@ -43,71 +39,26 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     private TextView messageView;
     private Button actionView;
 
-    // keep TypedArray a little bit longer because views are binded in onFinishInflate()
-    private TypedArray a;
-
     public ErrorbarContentLayout(Context context) {
         this(context, null);
     }
 
     public ErrorbarContentLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.errorbarStyle);
+        this(context, attrs, 0);
     }
 
-    @SuppressLint("CustomViewStyleable")
     public ErrorbarContentLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        a = context.obtainStyledAttributes(attrs, R.styleable.ErrorbarLayout,
-            defStyleAttr, R.style.Widget_Design_Errorbar);
     }
 
     @Override
-    @SuppressWarnings("ConstantConditions")
     protected void onFinishInflate() {
         super.onFinishInflate();
-
-        // bind views
         backgroundView = findViewById(R.id.errorbar_background);
         containerView = findViewById(R.id.errorbar_container);
         imageView = findViewById(R.id.errorbar_image);
         messageView = findViewById(R.id.errorbar_message);
         actionView = findViewById(R.id.errorbar_action);
-
-        // setImageDrawable attr and finally recycle
-        if (a.hasValue(R.styleable.ErrorbarLayout_android_background)) {
-            ViewCompat.setBackground(this, null);
-            ViewUtils.setImageDrawable(backgroundView,
-                a.getDrawable(R.styleable.ErrorbarLayout_android_background));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_android_src)) {
-            ViewUtils.setImageDrawable(imageView,
-                a.getDrawable(R.styleable.ErrorbarLayout_android_src));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_android_textAppearance)) {
-            TextViewCompat.setTextAppearance(messageView,
-                a.getResourceId(R.styleable.ErrorbarLayout_android_textAppearance, 0));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_android_textColor)) {
-            messageView.setTextColor(
-                a.getColorStateList(R.styleable.ErrorbarLayout_android_textColor));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_android_textSize)) {
-            messageView.setTextSize(
-                a.getDimension(R.styleable.ErrorbarLayout_android_textSize, 0f));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextAppearance)) {
-            TextViewCompat.setTextAppearance(actionView,
-                a.getResourceId(R.styleable.ErrorbarLayout_actionTextAppearance, 0));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextColor)) {
-            actionView.setTextColor(
-                a.getColorStateList(R.styleable.ErrorbarLayout_actionTextColor));
-        }
-        if (a.hasValue(R.styleable.ErrorbarLayout_actionTextSize)) {
-            actionView.setTextSize(
-                a.getDimension(R.styleable.ErrorbarLayout_actionTextSize, 0f));
-        }
-        a.recycle();
     }
 
     @NonNull

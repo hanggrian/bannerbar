@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = "$VERSION_ANDROIDX-alpha01"
+        versionName = VERSION_MATERIAL
     }
     sourceSets {
         getByName("main") {
@@ -21,7 +21,9 @@ android {
         }
     }
     libraryVariants.all {
-        generateBuildConfig?.enabled = false
+        generateBuildConfigProvider?.configure {
+            enabled = false
+        }
     }
 }
 
@@ -30,7 +32,7 @@ val ktlint by configurations.creating
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
-    implementation(material("$VERSION_ANDROIDX-alpha02"))
+    implementation(material())
 
     ktlint(ktlint())
 }
@@ -76,7 +78,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = "$RELEASE_ARTIFACT-ktx"
-    publishVersion = VERSION_ANDROIDX
+    publishVersion = VERSION_MATERIAL
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }

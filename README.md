@@ -7,7 +7,7 @@ Errorbar
 
 ![demo][demo]
 
-Errorbar is an extended version of Snackbar with logo and maximum height.
+Extended version of Snackbar with images and maximum height.
 It is useful to display an error or empty state that requires full attention in a sense that the app workflow should not continue without them being resolved.
 
 Download
