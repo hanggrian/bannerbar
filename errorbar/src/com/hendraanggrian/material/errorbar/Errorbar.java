@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.AttrRes;
@@ -135,7 +136,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     ) {
         super(parent, content, contentViewCallback);
         accessibilityManager =
-            (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
+            (AccessibilityManager) parent.getContext()
+                .getSystemService(Context.ACCESSIBILITY_SERVICE);
     }
 
     // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
@@ -177,7 +179,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public static Errorbar make(
-        @NonNull View view, @NonNull CharSequence text, @Duration int duration) {
+        @NonNull View view, @NonNull CharSequence text, @Duration int duration
+    ) {
         final ViewGroup parent = findSuitableParent(view);
         if (parent == null) {
             throw new IllegalArgumentException(
@@ -193,19 +196,18 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
         errorbar.setDuration(duration);
         // hack Snackbar's view container
         errorbar.view.setPadding(0, 0, 0, 0);
-        errorbar.view.setBackgroundColor(getColor(parent.getContext(),
-            android.R.attr.windowBackground));
+        errorbar.view.setBackgroundColor(
+            getColorAttr(parent.getContext(), android.R.attr.windowBackground));
         errorbar.view.setLayoutParams(new ViewGroup.MarginLayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        ));
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return errorbar;
     }
 
     @ColorInt
     @SuppressWarnings("SameParameterValue")
-    private static int getColor(@NonNull Context context, @AttrRes int resId) {
-        final TypedArray a = context.getTheme().obtainStyledAttributes(null, new int[]{resId}, 0, 0);
+    private static int getColorAttr(@NonNull Context context, @AttrRes int resId) {
+        final TypedArray a = context.getTheme().obtainStyledAttributes(
+            null, new int[]{resId}, 0, 0);
         if (!a.hasValue(0)) {
             throw new Resources.NotFoundException();
         }
@@ -261,7 +263,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar noBackground() {
-        ViewUtils.clearImage(getContentLayout().getBackgroundView());
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.GONE);
         return this;
     }
 
@@ -270,7 +273,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@DrawableRes int resId) {
-        ViewUtils.setImageResource(getContentLayout().getBackgroundView(), resId);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageResource(resId);
         return this;
     }
 
@@ -279,7 +284,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Uri uri) {
-        ViewUtils.setImageURI(getContentLayout().getBackgroundView(), uri);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageURI(uri);
         return this;
     }
 
@@ -288,7 +295,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Drawable drawable) {
-        ViewUtils.setImageDrawable(getContentLayout().getBackgroundView(), drawable);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageDrawable(drawable);
         return this;
     }
 
@@ -298,7 +307,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @NonNull
     @RequiresApi(23)
     public Errorbar setBackground(@NonNull Icon icon) {
-        ViewUtils.setImageIcon(getContentLayout().getBackgroundView(), icon);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageIcon(icon);
         return this;
     }
 
@@ -308,7 +319,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @NonNull
     @RequiresApi(21)
     public Errorbar setBackground(@NonNull ColorStateList tint) {
-        ViewUtils.setImageTintList(getContentLayout().getBackgroundView(), tint);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageTintList(tint);
         return this;
     }
 
@@ -317,7 +330,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Bitmap bitmap) {
-        ViewUtils.setImageBitmap(getContentLayout().getBackgroundView(), bitmap);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageBitmap(bitmap);
         return this;
     }
 
@@ -326,7 +341,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackgroundColor(@ColorInt int color) {
-        ViewUtils.setBackgroundColor(getContentLayout().getBackgroundView(), color);
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setBackgroundColor(color);
         return this;
     }
 
@@ -335,8 +352,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setContentMargin(@Px int left, @Px int top, @Px int right, @Px int bottom) {
-        ((ViewGroup.MarginLayoutParams) getContentLayout().getContainerView().getLayoutParams())
-            .setMargins(left, top, right, bottom);
+        final ViewGroup container = getContentLayout().getContainerView();
+        ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).setMargins(
+            left, top, right, bottom);
         return this;
     }
 
@@ -345,8 +363,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setContentMarginLeft(@Px int left) {
-        ((ViewGroup.MarginLayoutParams) getContentLayout().getContainerView().getLayoutParams())
-            .leftMargin = left;
+        final ViewGroup container = getContentLayout().getContainerView();
+        ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).leftMargin = left;
         return this;
     }
 
@@ -355,8 +373,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setContentMarginTop(@Px int top) {
-        ((ViewGroup.MarginLayoutParams) getContentLayout().getContainerView().getLayoutParams())
-            .topMargin = top;
+        final ViewGroup container = getContentLayout().getContainerView();
+        ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).topMargin = top;
         return this;
     }
 
@@ -365,8 +383,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setContentMarginRight(@Px int right) {
-        ((ViewGroup.MarginLayoutParams) getContentLayout().getContainerView().getLayoutParams())
-            .rightMargin = right;
+        final ViewGroup container = getContentLayout().getContainerView();
+        ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).rightMargin = right;
         return this;
     }
 
@@ -375,8 +393,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setContentMarginBottom(@Px int bottom) {
-        ((ViewGroup.MarginLayoutParams) getContentLayout().getContainerView().getLayoutParams())
-            .bottomMargin = bottom;
+        final ViewGroup container = getContentLayout().getContainerView();
+        ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).bottomMargin = bottom;
         return this;
     }
 
@@ -385,7 +403,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar noImage() {
-        ViewUtils.clearImage(getContentLayout().getImageView());
+        final ImageView image = getContentLayout().getImageView();
+        image.setImageDrawable(null);
+        image.setVisibility(View.GONE);
         return this;
     }
 
@@ -394,7 +414,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setImage(@DrawableRes int resId) {
-        ViewUtils.setImageResource(getContentLayout().getImageView(), resId);
+        final ImageView image = getContentLayout().getImageView();
+        image.setVisibility(View.VISIBLE);
+        image.setImageResource(resId);
         return this;
     }
 
@@ -403,7 +425,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setImage(@NonNull Uri uri) {
-        ViewUtils.setImageURI(getContentLayout().getImageView(), uri);
+        final ImageView image = getContentLayout().getImageView();
+        image.setVisibility(View.VISIBLE);
+        image.setImageURI(uri);
         return this;
     }
 
@@ -412,7 +436,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setImage(@NonNull Drawable drawable) {
-        ViewUtils.setImageDrawable(getContentLayout().getImageView(), drawable);
+        final ImageView image = getContentLayout().getImageView();
+        image.setVisibility(View.VISIBLE);
+        image.setImageDrawable(drawable);
         return this;
     }
 
@@ -422,7 +448,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @NonNull
     @RequiresApi(23)
     public Errorbar setImage(@NonNull Icon icon) {
-        ViewUtils.setImageIcon(getContentLayout().getImageView(), icon);
+        final ImageView image = getContentLayout().getImageView();
+        image.setVisibility(View.VISIBLE);
+        image.setImageIcon(icon);
         return this;
     }
 
@@ -431,7 +459,9 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setImage(@NonNull Bitmap bitmap) {
-        ViewUtils.setImageBitmap(getContentLayout().getImageView(), bitmap);
+        final ImageView image = getContentLayout().getImageView();
+        image.setVisibility(View.VISIBLE);
+        image.setImageBitmap(bitmap);
         return this;
     }
 
@@ -440,7 +470,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setText(@NonNull CharSequence text) {
-        getContentLayout().getMessageView().setText(text);
+        final TextView message = getContentLayout().getMessageView();
+        message.setText(text);
         return this;
     }
 
@@ -457,7 +488,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setTextColor(@ColorInt int color) {
-        getContentLayout().getMessageView().setTextColor(color);
+        final TextView message = getContentLayout().getMessageView();
+        message.setTextColor(color);
         return this;
     }
 
@@ -466,7 +498,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setTextColor(@NonNull ColorStateList tint) {
-        getContentLayout().getMessageView().setTextColor(tint);
+        final TextView message = getContentLayout().getMessageView();
+        message.setTextColor(tint);
         return this;
     }
 
@@ -482,21 +515,17 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set button text and its click listener.
      */
     @NonNull
-    public Errorbar setAction(
-        CharSequence text,
-        final View.OnClickListener listener
-    ) {
-        final TextView tv = getContentLayout().getActionView();
-
+    public Errorbar setAction(CharSequence text, final View.OnClickListener listener) {
+        final TextView action = getContentLayout().getActionView();
         if (TextUtils.isEmpty(text) || listener == null) {
-            tv.setVisibility(View.GONE);
-            tv.setOnClickListener(null);
+            action.setVisibility(View.GONE);
+            action.setOnClickListener(null);
             hasAction = false;
         } else {
             hasAction = true;
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(text);
-            tv.setOnClickListener(new View.OnClickListener() {
+            action.setVisibility(View.VISIBLE);
+            action.setText(text);
+            action.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onClick(view);
@@ -521,7 +550,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setActionTextColor(@ColorInt int color) {
-        getContentLayout().getActionView().setTextColor(color);
+        final TextView action = getContentLayout().getActionView();
+        action.setTextColor(color);
         return this;
     }
 
@@ -530,7 +560,8 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setActionTextColor(@NonNull ColorStateList tint) {
-        getContentLayout().getActionView().setTextColor(tint);
+        final TextView action = getContentLayout().getActionView();
+        action.setTextColor(tint);
         return this;
     }
 

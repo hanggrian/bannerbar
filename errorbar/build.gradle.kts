@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = VERSION_MATERIAL
+        versionName = "$VERSION_ANDROIDX-alpha02"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -40,13 +40,13 @@ android {
 }
 
 dependencies {
-    implementation(material())
+    implementation(material("$VERSION_ANDROIDX-alpha02"))
 
     testImplementation(junit())
     androidTestImplementation(kotlin("stdlib"))
-    androidTestImplementation(androidx("core", "core-ktx"))
-    androidTestImplementation(androidx("appcompat"))
-    androidTestImplementation(androidx("coordinatorlayout"))
+    androidTestImplementation(androidx("core", "core-ktx", "1.0.0"))
+    androidTestImplementation(androidx("appcompat", version = "1.0.0"))
+    androidTestImplementation(androidx("coordinatorlayout", version = "1.0.0"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))
@@ -60,7 +60,7 @@ publish {
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
-    artifactId = VERSION_MATERIAL
+    artifactId = "$VERSION_ANDROIDX-alpha02"
     publishVersion = VERSION_ANDROIDX
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE

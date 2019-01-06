@@ -8,9 +8,11 @@ fun androidx(
     repository: String,
     module: String = repository,
     version: String = VERSION_ANDROIDX
-): String = "androidx.$repository:$module:$version"
+) = "androidx.$repository:$module:$version"
 
-fun material() = "com.google.android.material:material:$VERSION_MATERIAL"
+fun material(
+    version: String = VERSION_ANDROIDX
+) = "com.google.android.material:material:$version"
 
 fun DependencyHandler.junit() = "junit:junit:$VERSION_JUNIT"
 
