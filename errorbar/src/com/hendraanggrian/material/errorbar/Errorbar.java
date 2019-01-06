@@ -272,10 +272,31 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * Set background from drawable resource.
      */
     @NonNull
-    public Errorbar setBackground(@DrawableRes int resId) {
+    public Errorbar setBackground(@DrawableRes int resId, @Nullable ImageView.ScaleType scale) {
         final ImageView background = getContentLayout().getBackgroundView();
         background.setVisibility(View.VISIBLE);
         background.setImageResource(resId);
+        background.setScaleType(scale != null ? scale : ImageView.ScaleType.CENTER_CROP);
+        return this;
+    }
+
+    /**
+     * Set background from drawable resource.
+     */
+    @NonNull
+    public Errorbar setBackground(@DrawableRes int resId) {
+        return setBackground(resId, null);
+    }
+
+    /**
+     * Set background from uri.
+     */
+    @NonNull
+    public Errorbar setBackground(@NonNull Uri uri, @Nullable ImageView.ScaleType scale) {
+        final ImageView background = getContentLayout().getBackgroundView();
+        background.setVisibility(View.VISIBLE);
+        background.setImageURI(uri);
+        background.setScaleType(scale != null ? scale : ImageView.ScaleType.CENTER_CROP);
         return this;
     }
 
@@ -284,9 +305,18 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Uri uri) {
+        return setBackground(uri, null);
+    }
+
+    /**
+     * Set background from drawable.
+     */
+    @NonNull
+    public Errorbar setBackground(@NonNull Drawable drawable, @Nullable ImageView.ScaleType scale) {
         final ImageView background = getContentLayout().getBackgroundView();
         background.setVisibility(View.VISIBLE);
-        background.setImageURI(uri);
+        background.setImageDrawable(drawable);
+        background.setScaleType(scale != null ? scale : ImageView.ScaleType.CENTER_CROP);
         return this;
     }
 
@@ -295,9 +325,19 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Drawable drawable) {
+        return setBackground(drawable, null);
+    }
+
+    /**
+     * Set background from icon.
+     */
+    @NonNull
+    @RequiresApi(23)
+    public Errorbar setBackground(@NonNull Icon icon, @Nullable ImageView.ScaleType scale) {
         final ImageView background = getContentLayout().getBackgroundView();
         background.setVisibility(View.VISIBLE);
-        background.setImageDrawable(drawable);
+        background.setImageIcon(icon);
+        background.setScaleType(scale != null ? scale : ImageView.ScaleType.CENTER_CROP);
         return this;
     }
 
@@ -307,21 +347,18 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @NonNull
     @RequiresApi(23)
     public Errorbar setBackground(@NonNull Icon icon) {
-        final ImageView background = getContentLayout().getBackgroundView();
-        background.setVisibility(View.VISIBLE);
-        background.setImageIcon(icon);
-        return this;
+        return setBackground(icon, null);
     }
 
     /**
-     * Set background from tint.
+     * Set a background from bitmap.
      */
     @NonNull
-    @RequiresApi(21)
-    public Errorbar setBackground(@NonNull ColorStateList tint) {
+    public Errorbar setBackground(@NonNull Bitmap bitmap, @Nullable ImageView.ScaleType scale) {
         final ImageView background = getContentLayout().getBackgroundView();
         background.setVisibility(View.VISIBLE);
-        background.setImageTintList(tint);
+        background.setImageBitmap(bitmap);
+        background.setScaleType(scale != null ? scale : ImageView.ScaleType.CENTER_CROP);
         return this;
     }
 
@@ -330,9 +367,18 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      */
     @NonNull
     public Errorbar setBackground(@NonNull Bitmap bitmap) {
+        return setBackground(bitmap, null);
+    }
+
+    /**
+     * Set background from tint.
+     */
+    @NonNull
+    @RequiresApi(21)
+    public Errorbar setBackgroundColor(@NonNull ColorStateList tint) {
         final ImageView background = getContentLayout().getBackgroundView();
         background.setVisibility(View.VISIBLE);
-        background.setImageBitmap(bitmap);
+        background.setImageTintList(tint);
         return this;
     }
 
@@ -504,14 +550,6 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     }
 
     /**
-     * Set button text from string resource and its click listener.
-     */
-    @NonNull
-    public Errorbar setAction(@StringRes int resId, View.OnClickListener listener) {
-        return setAction(getContext().getText(resId), listener);
-    }
-
-    /**
      * Set button text and its click listener.
      */
     @NonNull
@@ -535,6 +573,14 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
             });
         }
         return this;
+    }
+
+    /**
+     * Set button text from string resource and its click listener.
+     */
+    @NonNull
+    public Errorbar setAction(@StringRes int resId, View.OnClickListener listener) {
+        return setAction(getContext().getText(resId), listener);
     }
 
     @Override

@@ -18,7 +18,6 @@ package com.hendraanggrian.material.errorbar;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -84,35 +83,29 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
 
     @Override
     public void animateContentIn(int delay, int duration) {
-        animateView(backgroundView, delay, duration, true);
-        animateView(imageView, delay, duration, true);
-        animateView(messageView, delay, duration, true);
+        imageView.setAlpha(0f);
+        imageView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
+
+        messageView.setAlpha(0f);
+        messageView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
+
         if (actionView.getVisibility() == VISIBLE) {
-            animateView(messageView, delay, duration, true);
+            actionView.setAlpha(0f);
+            actionView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
         }
     }
 
     @Override
     public void animateContentOut(int delay, int duration) {
-        animateView(backgroundView, delay, duration, false);
-        animateView(imageView, delay, duration, false);
-        animateView(messageView, delay, duration, false);
-        if (actionView.getVisibility() == VISIBLE) {
-            animateView(messageView, delay, duration, false);
-        }
-    }
+        imageView.setAlpha(1f);
+        imageView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
 
-    private static void animateView(
-        @NonNull View view,
-        int delay,
-        int duration,
-        boolean animateIn
-    ) {
-        view.setAlpha(animateIn ? 0f : 1f);
-        view.animate()
-            .alpha(animateIn ? 1f : 0f)
-            .setDuration(duration)
-            .setStartDelay(delay)
-            .start();
+        messageView.setAlpha(1f);
+        messageView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
+
+        if (actionView.getVisibility() == VISIBLE) {
+            actionView.setAlpha(1f);
+            actionView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
+        }
     }
 }
