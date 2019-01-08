@@ -60,8 +60,8 @@ publish {
 
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
-    artifactId = "$VERSION_ANDROIDX-alpha02"
-    publishVersion = VERSION_ANDROIDX
+    artifactId = RELEASE_ARTIFACT
+    publishVersion = "$VERSION_ANDROIDX-alpha02"
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }
