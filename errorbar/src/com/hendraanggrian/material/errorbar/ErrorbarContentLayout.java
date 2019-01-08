@@ -18,6 +18,7 @@ package com.hendraanggrian.material.errorbar;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -52,7 +53,7 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
         backgroundView = findViewById(R.id.errorbar_background);
         containerView = findViewById(R.id.errorbar_container);
         imageView = findViewById(R.id.errorbar_image);
-        messageView = findViewById(R.id.errorbar_message);
+        messageView = findViewById(R.id.errorbar_text);
         actionView = findViewById(R.id.errorbar_action);
     }
 
@@ -83,29 +84,39 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
 
     @Override
     public void animateContentIn(int delay, int duration) {
-        imageView.setAlpha(0f);
-        imageView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
-
-        messageView.setAlpha(0f);
-        messageView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
-
+        if (backgroundView.getVisibility() == VISIBLE) {
+            animateIn(backgroundView, delay, duration);
+        }
+        if (imageView.getVisibility() == VISIBLE) {
+            animateIn(imageView, delay, duration);
+        }
+        animateIn(messageView, delay, duration);
         if (actionView.getVisibility() == VISIBLE) {
-            actionView.setAlpha(0f);
-            actionView.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
+            animateIn(actionView, delay, duration);
         }
     }
 
     @Override
     public void animateContentOut(int delay, int duration) {
-        imageView.setAlpha(1f);
-        imageView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
-
-        messageView.setAlpha(1f);
-        messageView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
-
-        if (actionView.getVisibility() == VISIBLE) {
-            actionView.setAlpha(1f);
-            actionView.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
+        if (backgroundView.getVisibility() == VISIBLE) {
+            animateOut(backgroundView, delay, duration);
         }
+        if (imageView.getVisibility() == VISIBLE) {
+            animateOut(imageView, delay, duration);
+        }
+        animateOut(messageView, delay, duration);
+        if (actionView.getVisibility() == VISIBLE) {
+            animateOut(actionView, delay, duration);
+        }
+    }
+
+    private static void animateIn(View view, int delay, int duration) {
+        view.setAlpha(0f);
+        view.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
+    }
+
+    private static void animateOut(View view, int delay, int duration) {
+        view.setAlpha(1f);
+        view.animate().alpha(0f).setDuration(duration).setStartDelay(delay).start();
     }
 }

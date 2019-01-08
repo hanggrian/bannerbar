@@ -1,8 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Errorbar</string>
+    <string-array name="durations">
+        <item>Indefinite</item>
+        <item>Short</item>
+        <item>Long</item>
+    </string-array>
 
-    <string name="make">Make</string>
-    <string name="short2">Short</string>
-    <string name="long2">Long</string>
-    <string name="indefinite">Indefinite</string>
+    <string-array name="duration_values">
+        <item>-2</item>
+        <item>-1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="modes">
+        <item>Slide</item>
+        <item>Fade</item>
+    </string-array>
+
+    <string-array name="mode_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 </resources>
