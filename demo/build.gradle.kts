@@ -40,8 +40,8 @@ dependencies {
     implementation(kotlin("stdlib", VERSION_KOTLIN))
 
     implementation(material("$VERSION_ANDROIDX-beta01"))
-    implementation(androidx("core", "core-ktx", VERSION_ANDROIDX))
-    implementation(androidx("appcompat", version = VERSION_ANDROIDX))
+    implementation(androidx("core", "core-ktx"))
+    implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout", version = "$VERSION_ANDROIDX-beta01"))
-    implementation(androidx("preference", version = VERSION_ANDROIDX))
+    implementation(androidx("preference"))
 }
