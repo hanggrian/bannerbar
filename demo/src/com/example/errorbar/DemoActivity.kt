@@ -1,4 +1,4 @@
-package com.hendraanggrian.material.errorbar.demo
+package com.example.errorbar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,10 @@ class DemoActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .replace(R.id.frameLayout, DemoFragment())
+            .replace(
+                R.id.frameLayout,
+                DemoFragment()
+            )
             .commitNow()
     }
 }

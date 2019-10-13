@@ -1,4 +1,4 @@
-package com.hendraanggrian.material.errorbar.demo
+package com.example.errorbar
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -16,10 +16,18 @@ class DemoFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.fragment_demo)
         findPreference<ListPreference>("duration")!!.bindSummary({ value }) {
-            getActualString(it, R.array.duration_values, R.array.durations)
+            getActualString(
+                it,
+                R.array.duration_values,
+                R.array.durations
+            )
         }
         findPreference<ListPreference>("mode")!!.bindSummary({ value }) {
-            getActualString(it, R.array.mode_values, R.array.modes)
+            getActualString(
+                it,
+                R.array.mode_values,
+                R.array.modes
+            )
         }
         findPreference<Preference>("show")!!.setOnPreferenceClickListener {
             val preferences = preferenceManager.sharedPreferences
