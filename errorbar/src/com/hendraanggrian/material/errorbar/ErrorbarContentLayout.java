@@ -16,7 +16,10 @@
 
 package com.hendraanggrian.material.errorbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +43,21 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     private TextView messageView;
     private Button actionView;
 
+    private Drawable backgroundImage;
+    private Drawable image;
+
     public ErrorbarContentLayout(@NonNull Context context) {
         this(context, null);
     }
 
     public ErrorbarContentLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        @SuppressLint("CustomViewStyleable")
+        TypedArray a = context.obtainStyledAttributes(
+            attrs, R.styleable.Errorbar, R.attr.errorbarStyle, R.style.Widget_Errorbar);
+        backgroundImage = a.getDrawable(R.styleable.Errorbar_backgroundImage);
+        image = a.getDrawable(R.styleable.Errorbar_image);
+        a.recycle();
     }
 
     @Override
@@ -56,6 +68,9 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
         imageView = findViewById(R.id.errorbar_image);
         messageView = findViewById(R.id.errorbar_text);
         actionView = findViewById(R.id.errorbar_action);
+
+        backgroundView.setImageDrawable(backgroundImage);
+        imageView.setImageDrawable(image);
     }
 
     @NonNull

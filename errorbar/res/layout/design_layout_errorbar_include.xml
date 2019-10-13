@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/errorbar_background_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/errorbar_bg_cloud" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:id="@+id/errorbar_container"
@@ -25,8 +24,7 @@
             android:id="@+id/errorbar_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/errorbar_image_description"
-            android:src="@drawable/errorbar_ic_cloud" />
+            android:contentDescription="@string/errorbar_image_description" />
 
         <TextView
             android:id="@+id/errorbar_text"

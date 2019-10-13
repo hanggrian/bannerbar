@@ -15,13 +15,13 @@ class DemoFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.fragment_demo)
-        find<ListPreference>("duration").bindSummary({ value }) {
+        findPreference<ListPreference>("duration")!!.bindSummary({ value }) {
             getActualString(it, R.array.duration_values, R.array.durations)
         }
-        find<ListPreference>("mode").bindSummary({ value }) {
+        findPreference<ListPreference>("mode")!!.bindSummary({ value }) {
             getActualString(it, R.array.mode_values, R.array.modes)
         }
-        find<Preference>("show").setOnPreferenceClickListener {
+        findPreference<Preference>("show")!!.setOnPreferenceClickListener {
             val preferences = preferenceManager.sharedPreferences
             Errorbar.make(view!!, "No internet connection.", preferences.getInt("duration"))
                 .setAnimationMode(preferences.getInt("mode"))
@@ -42,13 +42,6 @@ class DemoFragment : PreferenceFragmentCompat() {
         }
     }
 
-    @Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
-    private inline fun <T : Preference> find(key: CharSequence): T =
-        findPreference<T>(key) as T
-
-    private inline fun <T : Preference> find(key: CharSequence, block: T.() -> Unit): T =
-        find<T>(key).apply(block)
-
     /**
      * @param initial starting value can be obtained from its value, text, etc.
      * @param convert its preference value to representable summary text.
@@ -58,7 +51,7 @@ class DemoFragment : PreferenceFragmentCompat() {
         convert: (T) -> CharSequence? = { it?.toString() }
     ) {
         initial()?.let { summary = convert(it) }
-        onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        setOnPreferenceChangeListener { preference, newValue ->
             @Suppress("UNCHECKED_CAST")
             preference.summary = convert(newValue as T)
             true
