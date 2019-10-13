@@ -1,4 +1,4 @@
-@file:Suppress("NOTHING_TO_INLINE", "ClassName")
+@file:Suppress("NOTHING_TO_INLINE")
 
 package com.hendraanggrian.material.errorbar
 
@@ -14,7 +14,7 @@ interface CallbackBuilder {
 }
 
 @PublishedApi
-internal class _Callback : Errorbar.Callback(), CallbackBuilder {
+internal class CallbackBuilderImpl : Errorbar.Callback(), CallbackBuilder {
     private var onShown: ((Errorbar) -> Unit)? = null
     private var onDismissed: ((Errorbar, Int) -> Unit)? = null
 
@@ -36,8 +36,62 @@ internal class _Callback : Errorbar.Callback(), CallbackBuilder {
 }
 
 /** Add callback Kotlin DSL style. */
-fun Errorbar.addCallback(builder: CallbackBuilder.() -> Unit): Errorbar =
-    addCallback(_Callback().apply(builder))
+inline fun Errorbar.addCallback(builder: CallbackBuilder.() -> Unit): Errorbar =
+    addCallback(CallbackBuilderImpl().apply(builder))
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_SHORT] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.errorbar(text: CharSequence): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_SHORT)
+        .apply { show() }
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_SHORT] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.errorbar(@StringRes text: Int): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_SHORT)
+        .apply { show() }
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_LONG] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.longErrorbar(text: CharSequence): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_LONG)
+        .apply { show() }
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_LONG] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.longErrorbar(@StringRes text: Int): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_LONG)
+        .apply { show() }
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.indefiniteErrorbar(text: CharSequence): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_INDEFINITE)
+        .apply { show() }
+
+/**
+ * Display [Errorbar] with [Errorbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param text the text to show. Can be formatted text.
+ */
+inline fun View.indefiniteErrorbar(@StringRes text: Int): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_INDEFINITE)
+        .apply { show() }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_SHORT] duration.
@@ -45,13 +99,12 @@ fun Errorbar.addCallback(builder: CallbackBuilder.() -> Unit): Errorbar =
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-fun View.errorbar(
-    text: CharSequence,
-    builder: (Errorbar.() -> Unit)? = null
-): Errorbar = Errorbar.make(this, text, Errorbar.LENGTH_SHORT).apply {
-    if (builder != null) builder()
-    show()
-}
+inline fun View.errorbar(text: CharSequence, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_SHORT)
+        .apply {
+            builder()
+            show()
+        }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_SHORT] duration.
@@ -59,10 +112,12 @@ fun View.errorbar(
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-inline fun View.errorbar(
-    @StringRes text: Int,
-    noinline builder: (Errorbar.() -> Unit)? = null
-): Errorbar = errorbar(resources.getText(text), builder)
+inline fun View.errorbar(@StringRes text: Int, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_SHORT)
+        .apply {
+            builder()
+            show()
+        }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_LONG] duration.
@@ -70,13 +125,12 @@ inline fun View.errorbar(
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-fun View.longErrorbar(
-    text: CharSequence,
-    builder: (Errorbar.() -> Unit)? = null
-): Errorbar = Errorbar.make(this, text, Errorbar.LENGTH_LONG).apply {
-    if (builder != null) builder()
-    show()
-}
+inline fun View.longErrorbar(text: CharSequence, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_LONG)
+        .apply {
+            builder()
+            show()
+        }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_LONG] duration.
@@ -84,10 +138,12 @@ fun View.longErrorbar(
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-inline fun View.longErrorbar(
-    @StringRes text: Int,
-    noinline builder: (Errorbar.() -> Unit)? = null
-): Errorbar = longErrorbar(resources.getText(text), builder)
+inline fun View.longErrorbar(@StringRes text: Int, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_LONG)
+        .apply {
+            builder()
+            show()
+        }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_INDEFINITE] duration.
@@ -95,13 +151,12 @@ inline fun View.longErrorbar(
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-fun View.indefiniteErrorbar(
-    text: CharSequence,
-    builder: (Errorbar.() -> Unit)? = null
-): Errorbar = Errorbar.make(this, text, Errorbar.LENGTH_INDEFINITE).apply {
-    if (builder != null) builder()
-    show()
-}
+inline fun View.indefiniteErrorbar(text: CharSequence, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_INDEFINITE)
+        .apply {
+            builder()
+            show()
+        }
 
 /**
  * Display [Errorbar] with [Errorbar.LENGTH_INDEFINITE] duration.
@@ -109,7 +164,9 @@ fun View.indefiniteErrorbar(
  * @param text the text to show. Can be formatted text.
  * @param builder Kotlin DSL builder
  */
-inline fun View.indefiniteErrorbar(
-    @StringRes text: Int,
-    noinline builder: (Errorbar.() -> Unit)? = null
-): Errorbar = indefiniteErrorbar(resources.getText(text), builder)
+inline fun View.indefiniteErrorbar(@StringRes text: Int, builder: Errorbar.() -> Unit): Errorbar =
+    Errorbar.make(this, text, Errorbar.LENGTH_INDEFINITE)
+        .apply {
+            builder()
+            show()
+        }

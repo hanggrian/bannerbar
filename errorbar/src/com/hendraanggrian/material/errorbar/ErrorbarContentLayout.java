@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.ContentViewCallback;
 
@@ -39,11 +40,11 @@ public class ErrorbarContentLayout extends FrameLayout implements ContentViewCal
     private TextView messageView;
     private Button actionView;
 
-    public ErrorbarContentLayout(Context context) {
+    public ErrorbarContentLayout(@NonNull Context context) {
         this(context, null);
     }
 
-    public ErrorbarContentLayout(Context context, AttributeSet attrs) {
+    public ErrorbarContentLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 

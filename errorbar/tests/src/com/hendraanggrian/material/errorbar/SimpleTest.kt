@@ -13,8 +13,8 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.hendraanggrian.material.errorbar.test.R
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -22,7 +22,8 @@ class SimpleTest : BaseTest() {
 
     @Rule @JvmField val rule = ActivityTestRule(InstrumentedActivity::class.java)
 
-    @Test fun test() {
+    @Test
+    fun test() {
         onView(withId(R.id.toolbar)).perform(setTitle("Here's an errorbar"))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)

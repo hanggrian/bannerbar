@@ -24,6 +24,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +38,6 @@ import android.widget.TextView;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IntDef;
-import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
@@ -47,44 +47,17 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_CONTROLS;
+import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_ICONS;
+import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_TEXT;
 
 /**
  * @see com.google.android.material.snackbar.Snackbar
  */
 public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
 
-    private final AccessibilityManager accessibilityManager;
+    @Nullable private final AccessibilityManager accessibilityManager;
     private boolean hasAction;
-
-    @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
-    @IntRange(from = 1)
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Duration {
-    }
-
-    /**
-     * Show the Errorbar indefinitely. This means that the Errorbar will be displayed from the time
-     * that is {@link #show() shown} until either it is dismissed, or another Errorbar is shown.
-     *
-     * @see #setDuration
-     */
-    public static final int LENGTH_INDEFINITE = BaseTransientBottomBar.LENGTH_INDEFINITE;
-
-    /**
-     * Show the Errorbar for a short period of time.
-     *
-     * @see #setDuration
-     */
-    public static final int LENGTH_SHORT = BaseTransientBottomBar.LENGTH_SHORT;
-
-    /**
-     * Show the Errorbar for a long period of time.
-     *
-     * @see #setDuration
-     */
-    public static final int LENGTH_LONG = BaseTransientBottomBar.LENGTH_LONG;
 
     /**
      * Callback class for {@link Errorbar} instances.
@@ -130,14 +103,13 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @Nullable private BaseCallback<Errorbar> callback;
 
     private Errorbar(
-        ViewGroup parent,
-        View content,
-        com.google.android.material.snackbar.ContentViewCallback contentViewCallback
+        @NonNull ViewGroup parent,
+        @NonNull View content,
+        @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback
     ) {
         super(parent, content, contentViewCallback);
         accessibilityManager =
-            (AccessibilityManager) parent.getContext()
-                .getSystemService(Context.ACCESSIBILITY_SERVICE);
+            (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
     }
 
     // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
@@ -241,6 +213,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
      * While regular snackbar will try to find {@link com.google.android.material.appbar.CollapsingToolbarLayout}
      * as parent, errorbar accepts any {@link ViewGroup}.
      */
+    @Nullable
     private static ViewGroup findSuitableParent(View view) {
         do {
             if (view instanceof ViewGroup) {
@@ -585,10 +558,21 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
 
     @Override
     public int getDuration() {
+        int userSetDuration = super.getDuration();
+        if (userSetDuration == LENGTH_INDEFINITE) {
+            return LENGTH_INDEFINITE;
+        }
+
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+            int controlsFlag = hasAction ? FLAG_CONTENT_CONTROLS : 0;
+            return accessibilityManager.getRecommendedTimeoutMillis(
+                userSetDuration, controlsFlag | FLAG_CONTENT_ICONS | FLAG_CONTENT_TEXT);
+        }
+
         // If touch exploration is enabled override duration to give people chance to interact.
         return hasAction && accessibilityManager.isTouchExplorationEnabled()
-            ? BaseTransientBottomBar.LENGTH_INDEFINITE
-            : super.getDuration();
+            ? LENGTH_INDEFINITE
+            : userSetDuration;
     }
 
     /**

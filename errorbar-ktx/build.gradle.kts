@@ -1,18 +1,16 @@
 plugins {
     android("library")
     kotlin("android")
-    dokka
-    bintray
+    dokka("android")
     `bintray-release`
 }
 
 android {
     compileSdkVersion(SDK_TARGET)
-    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = "$VERSION_ANDROIDX-alpha02"
+        versionName = "$VERSION_ANDROIDX-beta01"
     }
     sourceSets {
         getByName("main") {
@@ -27,48 +25,48 @@ android {
     }
 }
 
-val ktlint by configurations.creating
+val configuration = configurations.register("ktlint")
 
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
-    implementation(material("$VERSION_ANDROIDX-alpha02"))
+    implementation(material("$VERSION_ANDROIDX-beta01"))
 
-    ktlint(ktlint())
+    configuration {
+        invoke(ktlint())
+    }
 }
 
 tasks {
-    register<JavaExec>("ktlint") {
-        group = org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP
+    val ktlint = register("ktlint", JavaExec::class) {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
         inputs.dir("src")
         outputs.dir("src")
         description = "Check Kotlin code style."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "src/**/*.kt")
+        classpath(configuration.get())
+        main = "com.pinterest.ktlint.Main"
+        args("src/**/*.kt")
     }
     "check" {
-        dependsOn("ktlint")
+        dependsOn(ktlint.get())
     }
-    register<JavaExec>("ktlintFormat") {
+    register("ktlintFormat", JavaExec::class) {
         group = "formatting"
         inputs.dir("src")
         outputs.dir("src")
         description = "Fix Kotlin code style deviations."
-        classpath = ktlint
-        main = "com.github.shyiko.ktlint.Main"
-        args("--android", "-F", "src/**/*.kt")
+        classpath(configuration.get())
+        main = "com.pinterest.ktlint.Main"
+        args("-F", "src/**/*.kt")
     }
 
-    withType<Javadoc> {
-        isEnabled = false
-    }
     named<org.jetbrains.dokka.gradle.DokkaTask>("dokka") {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }
 }
 
+publishKotlinFix()
 publish {
     bintrayUser = BINTRAY_USER
     bintrayKey = BINTRAY_KEY
@@ -78,7 +76,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = "$RELEASE_ARTIFACT-ktx"
-    publishVersion = "$VERSION_ANDROIDX-alpha02"
+    publishVersion = "$VERSION_ANDROIDX-beta01"
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }

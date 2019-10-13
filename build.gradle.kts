@@ -6,9 +6,8 @@ buildscript {
     dependencies {
         classpath(android())
         classpath(kotlin("gradle-plugin", VERSION_KOTLIN))
-        classpath(dokka())
+        classpath(dokka("android"))
         classpath(gitPublish())
-        classpath(bintray())
         classpath(bintrayRelease())
     }
 }
@@ -23,8 +22,5 @@ allprojects {
 tasks {
     register<Delete>("clean") {
         delete(buildDir)
-    }
-    named<Wrapper>("wrapper") {
-        gradleVersion = VERSION_GRADLE
     }
 }

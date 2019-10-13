@@ -8,8 +8,4 @@ gitPublish {
     contents.from("../$RELEASE_ARTIFACT-ktx/build/docs")
 }
 
-tasks {
-    "gitPublishCopy" {
-        dependsOn(":$RELEASE_ARTIFACT-ktx:dokka")
-    }
-}
+tasks["gitPublishCopy"].dependsOn(":$RELEASE_ARTIFACT-ktx:dokka")

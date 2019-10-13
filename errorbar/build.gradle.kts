@@ -1,17 +1,15 @@
 plugins {
     android("library")
     kotlin("android")
-    bintray
     `bintray-release`
 }
 
 android {
     compileSdkVersion(SDK_TARGET)
-    buildToolsVersion(BUILD_TOOLS)
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = "$VERSION_ANDROIDX-alpha02"
+        versionName = "$VERSION_ANDROIDX-beta01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -40,13 +38,14 @@ android {
 }
 
 dependencies {
-    implementation(material("$VERSION_ANDROIDX-alpha02"))
+    implementation(material("$VERSION_ANDROIDX-beta01"))
 
-    testImplementation(junit())
+    testImplementation(kotlin("test-junit", VERSION_KOTLIN))
     androidTestImplementation(kotlin("stdlib"))
-    androidTestImplementation(androidx("core", "core-ktx", "1.0.0"))
-    androidTestImplementation(androidx("appcompat", version = "1.0.0"))
-    androidTestImplementation(androidx("coordinatorlayout", version = "1.0.0"))
+    androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
+    androidTestImplementation(androidx("core", "core-ktx", VERSION_ANDROIDX))
+    androidTestImplementation(androidx("appcompat", version = VERSION_ANDROIDX))
+    androidTestImplementation(androidx("coordinatorlayout", version = "$VERSION_ANDROIDX-beta01"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))
@@ -61,7 +60,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = RELEASE_ARTIFACT
-    publishVersion = "$VERSION_ANDROIDX-alpha02"
+    publishVersion = "$VERSION_ANDROIDX-beta01"
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }

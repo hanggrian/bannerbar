@@ -44,7 +44,7 @@ class DemoFragment : PreferenceFragmentCompat() {
 
     @Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
     private inline fun <T : Preference> find(key: CharSequence): T =
-        findPreference(key) as T
+        findPreference<T>(key) as T
 
     private inline fun <T : Preference> find(key: CharSequence, block: T.() -> Unit): T =
         find<T>(key).apply(block)
