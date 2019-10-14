@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example"
+        applicationId = "com.example.$RELEASE_ARTIFACT"
         versionName = "$VERSION_ANDROIDX-beta01"
     }
     sourceSets {
