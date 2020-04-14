@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backdrop_background_description">Error background</string>
+    <string name="backdrop_image_description">Error image</string>
+</resources>

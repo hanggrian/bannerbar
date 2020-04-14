@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <public name="errorbarStyle" type="attr" />
-
-    <public name="backgroundImage" type="attr" />
-    <public name="image" type="attr" />
-</resources>

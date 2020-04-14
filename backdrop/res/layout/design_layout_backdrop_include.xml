@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    class="com.hendraanggrian.material.backdrop.BackdropContentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backdrop_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/backdrop_background_description"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/backdrop_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/backdrop_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/backdrop_image_description" />
+
+        <TextView
+            android:id="@+id/backdrop_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            android:id="@+id/backdrop_action"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"
+            android:textSize="@dimen/abc_text_size_subhead_material"
+            android:visibility="gone"
+            android:paddingTop="@dimen/design_snackbar_padding_vertical"
+            android:paddingBottom="@dimen/design_snackbar_padding_vertical"
+            android:paddingLeft="@dimen/design_snackbar_padding_horizontal"
+            android:paddingRight="@dimen/design_snackbar_padding_horizontal"
+            tools:ignore="PrivateResource" />
+    </LinearLayout>
+</view>

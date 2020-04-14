@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Widget.Errorbar" parent="android:Widget.TextView">
-        <item name="backgroundImage">@drawable/errorbar_bg_cloud</item>
-        <item name="image">@drawable/errorbar_ic_cloud</item>
-    </style>
-</resources>
