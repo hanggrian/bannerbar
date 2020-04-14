@@ -1,7 +1,7 @@
 plugins {
     android("library")
     kotlin("android")
-    dokka("android")
+    dokka
     `bintray-release`
 }
 
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = "$VERSION_ANDROIDX-beta01"
+        versionName = RELEASE_VERSION
     }
     sourceSets {
         getByName("main") {
@@ -30,7 +30,7 @@ val configuration = configurations.register("ktlint")
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
-    implementation(material("$VERSION_ANDROIDX-beta01"))
+    implementation(material())
 
     configuration {
         invoke(ktlint())
@@ -76,7 +76,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = "$RELEASE_ARTIFACT-ktx"
-    publishVersion = "$VERSION_ANDROIDX-beta01"
+    publishVersion = RELEASE_VERSION
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }

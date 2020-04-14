@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.material.errorbar.test.R
 
 open class InstrumentedActivity : AppCompatActivity() {
-
     lateinit var progressBar: ProgressBar
     lateinit var frameLayout: FrameLayout
 

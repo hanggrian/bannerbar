@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +53,9 @@ import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_ICONS
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_TEXT;
 
 /**
+ * Expanded {@link com.google.android.material.snackbar.Snackbar}, useful for displaying
+ * full-screen message.
+ *
  * @see com.google.android.material.snackbar.Snackbar
  */
 public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
@@ -216,7 +220,7 @@ public final class Errorbar extends BaseTransientBottomBar<Errorbar> {
     @Nullable
     private static ViewGroup findSuitableParent(View view) {
         do {
-            if (view instanceof ViewGroup) {
+            if (view instanceof FrameLayout) {
                 return (ViewGroup) view;
             }
             if (view != null) {

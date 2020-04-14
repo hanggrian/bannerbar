@@ -12,7 +12,7 @@ interface CallbackBuilder {
     fun onDismissed(callback: (Errorbar, event: Int) -> Unit)
 }
 
-internal class CallbackBuilderImpl : Errorbar.Callback(), CallbackBuilder {
+private class CallbackBuilderImpl : Errorbar.Callback(), CallbackBuilder {
     private var onShown: ((Errorbar) -> Unit)? = null
     private var onDismissed: ((Errorbar, Int) -> Unit)? = null
 
@@ -36,7 +36,7 @@ internal class CallbackBuilderImpl : Errorbar.Callback(), CallbackBuilder {
 /**
  * Add callback Kotlin DSL style.
  *
- * @param builder callback to add.
+ * @param callback callback to add.
  */
-fun Errorbar.addCallback(builder: CallbackBuilder.() -> Unit): Errorbar =
-    addCallback(CallbackBuilderImpl().apply(builder))
+fun Errorbar.addCallback(callback: CallbackBuilder.() -> Unit): Errorbar =
+    addCallback(CallbackBuilderImpl().apply(callback))

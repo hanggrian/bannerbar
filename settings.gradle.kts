@@ -1,4 +1,4 @@
-include(RELEASE_ARTIFACT)
-include("$RELEASE_ARTIFACT-ktx")
+include("errorbar")
+include("errorbar-ktx")
 include("website")
-include("demo")
+include("example")

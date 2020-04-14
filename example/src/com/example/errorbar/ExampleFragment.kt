@@ -11,31 +11,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.hendraanggrian.material.errorbar.Errorbar
 import com.hendraanggrian.material.errorbar.addCallback
 
-class DemoFragment : PreferenceFragmentCompat() {
+class ExampleFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.fragment_demo)
         findPreference<ListPreference>("duration")!!.bindSummary({ value }) {
-            getActualString(
-                it,
-                R.array.duration_values,
-                R.array.durations
-            )
+            getActualString(it, R.array.duration_values, R.array.durations)
         }
         findPreference<ListPreference>("mode")!!.bindSummary({ value }) {
-            getActualString(
-                it,
-                R.array.mode_values,
-                R.array.modes
-            )
+            getActualString(it, R.array.mode_values, R.array.modes)
         }
         findPreference<Preference>("show")!!.setOnPreferenceClickListener {
             val preferences = preferenceManager.sharedPreferences
             Errorbar.make(view!!, "No internet connection.", preferences.getInt("duration"))
                 .setAnimationMode(preferences.getInt("mode"))
-                .setAction("Retry") {
-                    Snackbar.make(view!!, "Clicked.", Snackbar.LENGTH_SHORT).show()
-                }
+                .setAction("Retry") { Snackbar.make(view!!, "Clicked.", Snackbar.LENGTH_SHORT).show() }
                 .addCallback {
                     onShown {
                         Toast.makeText(context, "shown", Toast.LENGTH_SHORT).show()
@@ -76,7 +66,5 @@ class DemoFragment : PreferenceFragmentCompat() {
         return arrays[arrayValues.indexOf(s)]
     }
 
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun SharedPreferences.getInt(key: String): Int =
-        getString(key, "")!!.toInt()
+    private fun SharedPreferences.getInt(key: String): Int = getString(key, "")!!.toInt()
 }

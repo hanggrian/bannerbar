@@ -10,7 +10,7 @@ android {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
         applicationId = "com.example.$RELEASE_ARTIFACT"
-        versionName = "$VERSION_ANDROIDX-beta01"
+        versionName = RELEASE_VERSION
     }
     sourceSets {
         getByName("main") {
@@ -39,9 +39,9 @@ dependencies {
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
 
-    implementation(material("$VERSION_ANDROIDX-beta01"))
+    implementation(material())
     implementation(androidx("core", "core-ktx"))
     implementation(androidx("appcompat"))
-    implementation(androidx("coordinatorlayout", version = "$VERSION_ANDROIDX-beta01"))
+    implementation(androidx("coordinatorlayout"))
     implementation(androidx("preference"))
 }

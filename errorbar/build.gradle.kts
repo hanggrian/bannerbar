@@ -9,7 +9,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        versionName = "$VERSION_ANDROIDX-beta01"
+        versionName = RELEASE_VERSION
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -27,9 +27,6 @@ android {
             resources.srcDir("tests/src")
         }
     }
-    lintOptions {
-        isCheckTestSources = true
-    }
     libraryVariants.all {
         generateBuildConfigProvider?.configure {
             enabled = false
@@ -38,17 +35,27 @@ android {
 }
 
 dependencies {
-    implementation(material("$VERSION_ANDROIDX-beta01"))
+    implementation(material())
 
     testImplementation(kotlin("test-junit", VERSION_KOTLIN))
     androidTestImplementation(kotlin("stdlib"))
     androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
     androidTestImplementation(androidx("core", "core-ktx"))
     androidTestImplementation(androidx("appcompat"))
-    androidTestImplementation(androidx("coordinatorlayout", version = "$VERSION_ANDROIDX-beta01"))
+    androidTestImplementation(androidx("coordinatorlayout"))
+    androidTestImplementation(androidx("test", "core-ktx", VERSION_ANDROIDX_TEST))
+    androidTestImplementation(androidx("test", "runner", VERSION_ANDROIDX_TEST))
+    androidTestImplementation(androidx("test", "rules", VERSION_ANDROIDX_TEST))
+    androidTestImplementation(androidx("test.ext", "junit-ktx", VERSION_ANDROIDX_JUNIT))
+    androidTestImplementation(androidx("test.ext", "truth", VERSION_ANDROIDX_TRUTH))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
-    androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
-    androidTestImplementation(androidx("test", "rules", VERSION_RULES))
+}
+
+tasks.withType<Javadoc> {
+    (options as CoreJavadocOptions).run {
+        addStringOption("Xdoclint:none", "-quiet")
+        addStringOption("encoding", "utf-8")
+    }
 }
 
 publish {
@@ -60,7 +67,7 @@ publish {
     userOrg = RELEASE_USER
     groupId = RELEASE_GROUP
     artifactId = RELEASE_ARTIFACT
-    publishVersion = "$VERSION_ANDROIDX-beta01"
+    publishVersion = RELEASE_VERSION
     desc = RELEASE_DESC
     website = RELEASE_WEBSITE
 }
