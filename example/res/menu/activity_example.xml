@@ -2,18 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/defaultItem"
-            android:title="Default"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/lightItem"
-            android:title="Light"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/darkItem"
-            android:title="Dark"
-            app:showAsAction="never" />
-    </group>
+    <item android:title="Theme">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/defaultThemeItem"
+                    android:title="Default"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/lightThemeItem"
+                    android:title="Light"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/darkThemeItem"
+                    android:title="Dark"
+                    app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/resetItem"
+        android:title="Reset"
+        app:showAsAction="never" />
 </menu>

@@ -48,4 +48,5 @@ dependencies {
 
     implementation(hendraanggrian("prefy", "prefy-android", VERSION_PREFY))
     kapt(hendraanggrian("prefy", "prefy-compiler", VERSION_PREFY))
+    implementation(processPhoenix())
 }

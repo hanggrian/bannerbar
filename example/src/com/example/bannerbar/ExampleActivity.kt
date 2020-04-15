@@ -9,13 +9,16 @@ import androidx.fragment.app.FragmentTransaction
 import com.hendraanggrian.prefy.BindPreference
 import com.hendraanggrian.prefy.PreferencesSaver
 import com.hendraanggrian.prefy.Prefy
-import com.hendraanggrian.prefy.android.bind
+import com.hendraanggrian.prefy.android.AndroidPreferences
+import com.hendraanggrian.prefy.android.get
+import com.hendraanggrian.prefy.bind
+import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_example.*
 
 class ExampleActivity : AppCompatActivity() {
-
     @JvmField @BindPreference("theme") var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    lateinit var saver: PreferencesSaver
+    private lateinit var preferences: AndroidPreferences
+    private lateinit var saver: PreferencesSaver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,30 +28,38 @@ class ExampleActivity : AppCompatActivity() {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(R.id.frameLayout, ExampleFragment())
             .commitNow()
-
-        saver = Prefy.bind(this)
+        preferences = Prefy[this]
+        saver = preferences.bind(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_example, menu)
         menu.findItem(
             when (theme2) {
-                AppCompatDelegate.MODE_NIGHT_NO -> R.id.lightItem
-                AppCompatDelegate.MODE_NIGHT_YES -> R.id.darkItem
-                else -> R.id.defaultItem
+                AppCompatDelegate.MODE_NIGHT_NO -> R.id.lightThemeItem
+                AppCompatDelegate.MODE_NIGHT_YES -> R.id.darkThemeItem
+                else -> R.id.defaultThemeItem
             }
         ).isChecked = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        theme2 = when (item.itemId) {
-            R.id.lightItem -> AppCompatDelegate.MODE_NIGHT_NO
-            R.id.darkItem -> AppCompatDelegate.MODE_NIGHT_YES
-            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        when (item.itemId) {
+            R.id.defaultThemeItem, R.id.lightThemeItem, R.id.darkThemeItem -> {
+                theme2 = when (item.itemId) {
+                    R.id.lightThemeItem -> AppCompatDelegate.MODE_NIGHT_NO
+                    R.id.darkThemeItem -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+                saver.save()
+                AppCompatDelegate.setDefaultNightMode(theme2)
+            }
+            R.id.resetItem -> {
+                preferences.edit { clear() }
+                ProcessPhoenix.triggerRebirth(this)
+            }
         }
-        saver.save()
-        AppCompatDelegate.setDefaultNightMode(theme2)
         return super.onOptionsItemSelected(item)
     }
 }
