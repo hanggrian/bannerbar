@@ -3,18 +3,16 @@ package com.google.android.material.snackbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -25,13 +23,13 @@ import androidx.annotation.StringRes;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.ViewCompat;
 
 import com.hendraanggrian.material.bannerbar.R;
 
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_CONTROLS;
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_ICONS;
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_TEXT;
+import static com.google.android.material.snackbar.Snackbar.hasSnackbarButtonStyleAttr;
 
 /**
  * Expanded {@link com.google.android.material.snackbar.Snackbar}, useful for displaying
@@ -39,6 +37,7 @@ import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_TEXT;
  *
  * @see com.google.android.material.snackbar.Snackbar
  */
+@SuppressLint("RestrictedApi")
 public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
 
     @Nullable private final AccessibilityManager accessibilityManager;
@@ -47,8 +46,6 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     private boolean hasAction() {
         return actionCount > 0;
     }
-
-    private static final int[] BANNERBAR_BUTTON_STYLE_ATTR = new int[]{R.attr.bannerbarButtonStyle};
 
     /**
      * Callback class for {@link Bannerbar} instances.
@@ -101,6 +98,10 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         super(parent, content, contentViewCallback);
         accessibilityManager =
             (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+        if (content instanceof BannerbarContentLayout) {
+            ((BannerbarContentLayout) content).updateActionTextColorAlphaIfNeeded(view.getActionTextColorAlpha());
+        }
     }
 
     // TODO: Delete this once custom Robolectric shadows no longer depend on this method being present
@@ -164,18 +165,6 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     }
 
     /**
-     * {@link Bannerbar}s should still work with AppCompat themes, which don't specify a {@code
-     * bannerbarButtonStyle}. This method helps to check if a valid {@code bannerbarButtonStyle} is set
-     * within the current context, so that we know whether we can use the attribute.
-     */
-    protected static boolean hasSnackbarButtonStyleAttr(@NonNull Context context) {
-        TypedArray a = context.obtainStyledAttributes(BANNERBAR_BUTTON_STYLE_ATTR);
-        int snackbarButtonStyleResId = a.getResourceId(0, -1);
-        a.recycle();
-        return snackbarButtonStyleResId != -1;
-    }
-
-    /**
      * Make an Bannerbar to display a message.
      *
      * <p>Bannerbar will try and find a parent view to hold Bannerbar's view from the value given to
@@ -233,11 +222,13 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     @NonNull
     public Bannerbar setIcon(@Nullable Drawable icon) {
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = layout.getMessageView();
-        view.setCompoundDrawables(icon, null, null, null);
-        view.setCompoundDrawablePadding(icon != null
-            ? getContext().getResources().getDimensionPixelSize(R.dimen.design_bannerbar_padding_horizontal)
-            : 0);
+        final ImageView view = layout.getIconView();
+        if (icon == null) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+            view.setImageDrawable(icon);
+        }
         return this;
     }
 
@@ -281,31 +272,24 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * @param listener callback to be invoked when the action is clicked
      */
     @NonNull
-    public Bannerbar addAction(@Nullable CharSequence text, @Nullable final View.OnClickListener listener) {
+    public Bannerbar addAction(@NonNull CharSequence text, @NonNull final View.OnClickListener listener) {
         if (actionCount >= 2) {
             throw new UnsupportedOperationException("As explained in https://material.io/components/banners/#anatomy," +
                 "Banners can contain up to two text buttons.");
         }
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = actionCount == 0 ? layout.getActionView1() : layout.getActionView2();
-        if (TextUtils.isEmpty(text) || listener == null) {
-            view.setVisibility(View.GONE);
-            view.setOnClickListener(null);
-            actionCount++;
-        } else {
-            actionCount--;
-            view.setVisibility(View.VISIBLE);
-            view.setText(text);
-            view.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        listener.onClick(view);
-                        // Now dismiss the Snackbar
-                        dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION);
-                    }
-                });
-        }
+        final TextView view = actionCount++ == 0 ? layout.getActionView1() : layout.getActionView2();
+        view.setVisibility(View.VISIBLE);
+        view.setText(text);
+        view.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onClick(view);
+                    // Now dismiss the Snackbar
+                    dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION);
+                }
+            });
         return this;
     }
 
@@ -316,7 +300,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * @param listener callback to be invoked when the action is clicked
      */
     @NonNull
-    public Bannerbar addAction(@StringRes int textId, View.OnClickListener listener) {
+    public Bannerbar addAction(@StringRes int textId, @NonNull View.OnClickListener listener) {
         return addAction(getContext().getText(textId), listener);
     }
 
@@ -441,46 +425,5 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         // time we're called
         this.callback = callback;
         return this;
-    }
-
-    /**
-     * @see com.google.android.material.snackbar.Snackbar.SnackbarLayout
-     */
-    @SuppressLint("RestrictedApi")
-    public static final class BannerbarLayout extends SnackbarBaseLayout {
-        public BannerbarLayout(Context context) {
-            super(context);
-        }
-
-        public BannerbarLayout(Context context, AttributeSet attrs) {
-            super(context, attrs);
-
-            // Recalibrate to R.styleable.BannerbarLayout
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BannerbarLayout);
-            if (a.hasValue(R.styleable.BannerbarLayout_elevation)) {
-                ViewCompat.setElevation(this, a.getDimensionPixelSize(R.styleable.BannerbarLayout_elevation, 0));
-            }
-            setAnimationMode(a.getInt(R.styleable.BannerbarLayout_animationMode, ANIMATION_MODE_SLIDE));
-            a.recycle();
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            // Work around our backwards-compatible refactoring of Snackbar and inner content
-            // being inflated against snackbar's parent (instead of against the snackbar itself).
-            // Every child that is width=MATCH_PARENT is remeasured again and given the full width
-            // minus the paddings.
-            int childCount = getChildCount();
-            int availableWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-            for (int i = 0; i < childCount; i++) {
-                View child = getChildAt(i);
-                if (child.getLayoutParams().width == ViewGroup.LayoutParams.MATCH_PARENT) {
-                    child.measure(
-                        MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.EXACTLY),
-                        MeasureSpec.makeMeasureSpec(child.getMeasuredHeight(), MeasureSpec.EXACTLY));
-                }
-            }
-        }
     }
 }

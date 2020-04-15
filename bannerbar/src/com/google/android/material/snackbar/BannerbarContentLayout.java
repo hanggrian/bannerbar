@@ -1,22 +1,26 @@
 package com.google.android.material.snackbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.color.MaterialColors;
 import com.hendraanggrian.material.bannerbar.R;
 
 /**
  * @see com.google.android.material.snackbar.SnackbarContentLayout
  */
+@SuppressLint("RestrictedApi")
 public class BannerbarContentLayout extends LinearLayout implements ContentViewCallback {
+    private ImageView iconView;
     private TextView messageView;
     private Button actionView1;
     private Button actionView2;
@@ -27,16 +31,19 @@ public class BannerbarContentLayout extends LinearLayout implements ContentViewC
 
     public BannerbarContentLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BannerbarLayout);
-        a.recycle();
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        iconView = findViewById(R.id.bannerbar_icon);
         messageView = findViewById(R.id.bannerbar_text);
         actionView1 = findViewById(R.id.bannerbar_action1);
         actionView2 = findViewById(R.id.bannerbar_action2);
+    }
+
+    public ImageView getIconView() {
+        return iconView;
     }
 
     public TextView getMessageView() {
@@ -49,6 +56,20 @@ public class BannerbarContentLayout extends LinearLayout implements ContentViewC
 
     public Button getActionView2() {
         return actionView2;
+    }
+
+    void updateActionTextColorAlphaIfNeeded(float actionTextColorAlpha) {
+        if (actionTextColorAlpha != 1) {
+            updateActionTextColorAlpha(actionView1, actionTextColorAlpha);
+            updateActionTextColorAlpha(actionView2, actionTextColorAlpha);
+        }
+    }
+
+    private void updateActionTextColorAlpha(TextView actionView, float actionTextColorAlpha) {
+        int originalActionTextColor = actionView.getCurrentTextColor();
+        int colorSurface = MaterialColors.getColor(this, R.attr.colorSurface);
+        int actionTextColor = MaterialColors.layer(colorSurface, originalActionTextColor, actionTextColorAlpha);
+        actionView.setTextColor(actionTextColor);
     }
 
     @Override

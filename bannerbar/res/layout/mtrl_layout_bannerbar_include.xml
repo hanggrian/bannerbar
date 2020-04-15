@@ -4,34 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@id/bannerbar_text"
-        style="?attr/bannerbarTextViewStyle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start" />
+        android:paddingLeft="@dimen/design_snackbar_padding_horizontal"
+        android:paddingTop="@dimen/design_snackbar_padding_vertical_2lines"
+        android:paddingRight="@dimen/design_snackbar_padding_horizontal">
 
-    <androidx.appcompat.widget.ButtonBarLayout
+        <ImageView
+            android:id="@id/bannerbar_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/design_snackbar_padding_horizontal"
+            android:layout_marginRight="@dimen/design_snackbar_padding_horizontal"
+            android:src="@android:drawable/arrow_up_float"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@id/bannerbar_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left|start"
+            android:layout_weight="1"
+            android:alpha="@dimen/material_emphasis_high_type"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorSurface" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="center_vertical|right|end"
+        android:paddingBottom="@dimen/design_snackbar_padding_vertical">
 
         <Button
             android:id="@id/bannerbar_action1"
-            style="?attr/bannerbarButtonStyle"
+            style="?attr/snackbarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorAccent"
             android:visibility="gone" />
 
         <Button
             android:id="@id/bannerbar_action2"
-            style="?attr/bannerbarButtonStyle"
+            style="?attr/snackbarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorAccent"
             android:visibility="gone" />
-    </androidx.appcompat.widget.ButtonBarLayout>
+    </LinearLayout>
 </view>

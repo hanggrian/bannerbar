@@ -11,18 +11,18 @@
         android:id="@id/bannerbar_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:paddingLeft="@dimen/design_bannerbar_padding_horizontal"
-        android:paddingTop="@dimen/design_bannerbar_padding_vertical"
-        android:paddingRight="@dimen/design_bannerbar_padding_horizontal"
-        android:paddingBottom="@dimen/design_bannerbar_padding_vertical"
+        android:layout_gravity="center_vertical|left|start"
+        android:paddingLeft="@dimen/design_snackbar_padding_horizontal"
+        android:paddingTop="@dimen/design_snackbar_padding_vertical_2lines"
+        android:paddingRight="@dimen/design_snackbar_padding_horizontal"
         android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Design.Bannerbar.Message" />
+        android:textAppearance="@style/TextAppearance.Design.Snackbar.Message" />
 
-    <androidx.appcompat.widget.ButtonBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="center_vertical|right|end"
+        android:paddingBottom="@dimen/design_snackbar_padding_vertical">
 
         <Button
             android:id="@id/bannerbar_action1"
@@ -39,5 +39,5 @@
             android:layout_height="wrap_content"
             android:textColor="?attr/colorAccent"
             android:visibility="gone" />
-    </androidx.appcompat.widget.ButtonBarLayout>
+    </LinearLayout>
 </view>

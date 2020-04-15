@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <public name="bannerbarStyle" type="attr" />
-    <public name="bannerbarButtonStyle" type="attr" />
-    <public name="bannerbarTextViewStyle" type="attr" />
-    <public name="Widget.Design.Bannerbar" type="style" />
-    <public name="Widget.MaterialComponents.Bannerbar" type="style" />
-    <public name="Widget.MaterialComponents.Bannerbar.TextView" type="style" />
-</resources>

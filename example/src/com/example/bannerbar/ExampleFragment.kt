@@ -16,7 +16,7 @@ import com.hendraanggrian.prefy.android.get
 class ExampleFragment : PreferenceFragmentCompat() {
 
     companion object {
-        const val TEXT = "You have lost connection to the internet. This app is offline"
+        const val TEXT = "You have lost connection to the internet. This app is offline."
         const val ACTION_TEXT1 = "Dismiss"
         const val ACTION_TEXT2 = "Turn on WiFi"
     }
@@ -37,11 +37,12 @@ class ExampleFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("show")!!.setOnPreferenceClickListener {
             val bannerbar = Bannerbar.make(view!!, TEXT, preferences["duration"]!!.toInt())
             if (preferences.getBoolean("showIcon")!!) {
-                bannerbar.setIcon(R.drawable.ic_show_icon)
+                bannerbar.setIcon(R.drawable.ic_no_wifi)
             }
             repeat(preferences.getInt("actionCount")!!) {
                 bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2) { Log.d("Prefy", "Clicked") }
             }
+            bannerbar.animationMode = preferences["animationMode"]!!.toInt()
             bannerbar.addCallback {
                 onShown { Log.d("Prefy", "Shown") }
                 onDismissed { _, event -> Log.d("Prefy", "Dismissed event: $event") }
@@ -52,6 +53,7 @@ class ExampleFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("showSnackbar")!!.setOnPreferenceClickListener {
             Snackbar.make(view!!, TEXT, preferences["duration"]!!.toInt())
                 .setAction(ACTION_TEXT1) { }
+                .setAnimationMode(preferences["animationMode"]!!.toInt())
                 .show()
             false
         }
