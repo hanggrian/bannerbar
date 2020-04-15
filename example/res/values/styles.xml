@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="snackbarStyle">@style/FadingSnackbar</item>
-    </style>
-
-    <style name="FadingSnackbar" parent="Widget.Design.Snackbar">
-        <item name="animationMode">fade</item>
-    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 </resources>

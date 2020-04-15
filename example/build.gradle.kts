@@ -2,6 +2,7 @@ plugins {
     android("application")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -44,4 +45,7 @@ dependencies {
     implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout"))
     implementation(androidx("preference"))
+
+    implementation(hendraanggrian("prefy", "prefy-android", VERSION_PREFY))
+    kapt(hendraanggrian("prefy", "prefy-compiler", VERSION_PREFY))
 }

@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import com.google.android.material.snackbar.Bannerbar
 import com.hendraanggrian.material.bannerbar.test.R
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -22,26 +23,23 @@ class SimpleTest : BaseTest() {
     @Rule @JvmField val rule = ActivityTestRule(InstrumentedActivity::class.java)
 
     @Test fun test() {
-        onView(withId(R.id.toolbar)).perform(setTitle("Here's a backdrop"))
+        onView(withId(R.id.toolbar)).perform(setTitle("Here's one"))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
                 Bannerbar.make(view, "No internet connection.", Bannerbar.LENGTH_LONG)
-                    .setAction("Retry") { v -> Toast.makeText(v.context, "Clicked!", Toast.LENGTH_SHORT).show() }
                     .show()
             }
         })
         onView(withId(R.id.progressBar)).perform(delay(4000))
-        onView(withId(R.id.toolbar)).perform(setTitle("Here's one with a backdrop"))
+        onView(withId(R.id.toolbar)).perform(setTitle("Here's one with a button"))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
-                Bannerbar.make(view, "You have no new emails", Bannerbar.LENGTH_LONG)
-                    .setBackground(R.drawable.bg_empty)
-                    .noImage()
-                    .setContentMarginBottom(150)
+                Bannerbar.make(view, "No internet connection.", Bannerbar.LENGTH_LONG)
+                    .addAction("Retry") { v -> Toast.makeText(v.context, "Clicked!", Toast.LENGTH_SHORT).show() }
                     .show()
             }
         })

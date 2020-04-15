@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="BannerbarStyle">
+    <declare-styleable name="Bannerbar">
         <attr name="bannerbarStyle" format="reference" />
+        <attr name="bannerbarButtonStyle" format="reference" />
+        <attr name="bannerbarTextViewStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="BannerbarLayout">
+        <attr name="elevation" />
         <attr name="icon" format="reference" />
+        <attr name="animationMode" />
+        <attr name="backgroundOverlayColorAlpha" />
+        <attr name="backgroundTint" />
+        <attr name="backgroundTintMode" />
+        <attr name="actionTextColorAlpha" />
     </declare-styleable>
 </resources>

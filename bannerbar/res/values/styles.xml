@@ -4,7 +4,7 @@
     <style name="TextAppearance.Design.Bannerbar.Message" parent="TextAppearance.Design.Snackbar.Message" />
 
     <style name="Widget.Design.Bannerbar" parent="android:Widget">
-        <item name="android:background">@drawable/design_snackbar_background</item>
+        <item name="android:background">@drawable/design_bannerbar_background</item>
         <item name="android:paddingLeft">@dimen/design_bannerbar_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/design_bannerbar_padding_horizontal</item>
         <item name="elevation">@dimen/design_bannerbar_elevation</item>

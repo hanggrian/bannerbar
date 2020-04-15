@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bannerbar_text" type="id" />
+    <item name="bannerbar_action1" type="id" />
+    <item name="bannerbar_action2" type="id" />
+</resources>

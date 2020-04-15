@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bannerbar_bg_cloud" type="drawable" />
-    <public name="bannerbar_ic_cloud" type="drawable" />
-
     <public name="bannerbarStyle" type="attr" />
-    <public name="icon" type="attr" />
-
-    <public name="Widget.Bannerbar" type="style" />
+    <public name="bannerbarButtonStyle" type="attr" />
+    <public name="bannerbarTextViewStyle" type="attr" />
+    <public name="Widget.Design.Bannerbar" type="style" />
+    <public name="Widget.MaterialComponents.Bannerbar" type="style" />
+    <public name="Widget.MaterialComponents.Bannerbar.TextView" type="style" />
 </resources>

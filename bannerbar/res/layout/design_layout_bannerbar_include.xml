@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view xmlns:android="http://schemas.android.com/apk/res/android"
-    class="com.hendraanggrian.material.bannerbar.BannerbarContentLayout"
+    class="com.google.android.material.snackbar.BannerbarContentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
+    android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
-        android:id="@+id/bannerbar_text"
+        android:id="@id/bannerbar_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
         android:paddingLeft="@dimen/design_bannerbar_padding_horizontal"
         android:paddingTop="@dimen/design_bannerbar_padding_vertical"
         android:paddingRight="@dimen/design_bannerbar_padding_horizontal"
         android:paddingBottom="@dimen/design_bannerbar_padding_vertical"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.Design.Bannerbar.Message" />
 
-    <Button
-        android:id="@+id/bannerbar_action_neutral"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.ButtonBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bannerbar_text"
-        android:textColor="?attr/colorAccent"
-        android:visibility="visible" />
+        android:gravity="end">
 
-    <Button
-        android:id="@+id/bannerbar_action_negative"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bannerbar_text"
-        android:layout_toStartOf="@id/bannerbar_action_positive"
-        android:layout_toLeftOf="@id/bannerbar_action_positive"
-        android:textColor="?attr/colorAccent"
-        android:visibility="visible" />
+        <Button
+            android:id="@id/bannerbar_action1"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/bannerbar_action_positive"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bannerbar_text"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:textColor="?attr/colorAccent"
-        android:visibility="visible" />
+        <Button
+            android:id="@id/bannerbar_action2"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorAccent"
+            android:visibility="gone" />
+    </androidx.appcompat.widget.ButtonBarLayout>
 </view>
