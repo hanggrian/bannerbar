@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    class="com.hendraanggrian.material.bannerbar.BannerbarContentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/bannerbar_text"
+        style="@style/Widget.MaterialComponents.Bannerbar.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bannerbar_action_neutral"
+        style="?attr/snackbarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bannerbar_text"
+        android:textColor="?attr/colorAccent"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/bannerbar_action_negative"
+        style="?attr/snackbarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bannerbar_text"
+        android:layout_toStartOf="@id/bannerbar_action_positive"
+        android:layout_toLeftOf="@id/bannerbar_action_positive"
+        android:textColor="?attr/colorAccent"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/bannerbar_action_positive"
+        style="?attr/snackbarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bannerbar_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="?attr/colorAccent"
+        android:visibility="visible" />
+</view>

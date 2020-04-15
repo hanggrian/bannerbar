@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <public name="backdrop_bg_cloud" type="drawable" />
-    <public name="backdrop_ic_cloud" type="drawable" />
-</resources>
