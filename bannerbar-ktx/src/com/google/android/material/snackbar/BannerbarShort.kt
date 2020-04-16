@@ -14,7 +14,7 @@ import androidx.annotation.StringRes
  *
  * @param text the text message.
  */
-inline fun View.bannerbar(@NonNull text: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.shortBannerbar(@NonNull text: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, text, Bannerbar.LENGTH_SHORT)
         .apply {
             configuration()
@@ -26,7 +26,7 @@ inline fun View.bannerbar(@NonNull text: CharSequence, configuration: Bannerbar.
  *
  * @param textId the text message.
  */
-inline fun View.bannerbar(@StringRes textId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.shortBannerbar(@StringRes textId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, textId, Bannerbar.LENGTH_SHORT)
         .apply {
             configuration()
@@ -39,7 +39,7 @@ inline fun View.bannerbar(@StringRes textId: Int, configuration: Bannerbar.() ->
  * @param icon option on the left side of message.
  * @param text the text message.
  */
-inline fun View.bannerbar(
+inline fun View.shortBannerbar(
     @NonNull icon: Drawable,
     @NonNull text: CharSequence,
     configuration: Bannerbar.() -> Unit
@@ -56,7 +56,7 @@ inline fun View.bannerbar(
  * @param icon option on the left side of message.
  * @param textId the text message.
  */
-inline fun View.bannerbar(
+inline fun View.shortBannerbar(
     @NonNull icon: Drawable,
     @StringRes textId: Int,
     configuration: Bannerbar.() -> Unit
@@ -73,7 +73,7 @@ inline fun View.bannerbar(
  * @param iconId option on the left side of message.
  * @param text the text message.
  */
-inline fun View.bannerbar(
+inline fun View.shortBannerbar(
     @DrawableRes iconId: Int,
     @NonNull text: CharSequence,
     configuration: Bannerbar.() -> Unit
@@ -90,7 +90,7 @@ inline fun View.bannerbar(
  * @param iconId option on the left side of message.
  * @param textId the text message.
  */
-inline fun View.bannerbar(
+inline fun View.shortBannerbar(
     @DrawableRes iconId: Int,
     @StringRes textId: Int,
     configuration: Bannerbar.() -> Unit

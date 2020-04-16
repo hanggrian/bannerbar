@@ -4,35 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:paddingLeft="@dimen/design_bannerbar_padding_horizontal"
-    android:paddingTop="@dimen/design_bannerbar_padding_top"
-    android:paddingRight="@dimen/design_bannerbar_padding_horizontal"
-    android:paddingBottom="@dimen/design_bannerbar_padding_bottom"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <FrameLayout
-        android:id="@id/bannerbar_icon_container"
+    <ImageView
+        android:id="@id/bannerbar_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@id/bannerbar_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/design_bannerbar_gap_horizontal"
-            android:layout_marginRight="@dimen/design_bannerbar_gap_horizontal"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/design_bannerbar_gap_horizontal"
+        android:layout_marginRight="@dimen/design_bannerbar_gap_horizontal"
+        android:visibility="gone" />
 
     <TextView
         android:id="@id/bannerbar_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|left|start"
-        android:layout_toEndOf="@id/bannerbar_icon_container"
-        android:layout_toRightOf="@id/bannerbar_icon_container"
+        android:layout_toEndOf="@id/bannerbar_icon"
+        android:layout_toRightOf="@id/bannerbar_icon"
         android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.Design.Snackbar.Message" />
+        android:textAppearance="@style/TextAppearance.Design.Bannerbar.Title"
+        android:textColor="?attr/colorSurface" />
 
     <TextView
         android:id="@id/bannerbar_subtitle"

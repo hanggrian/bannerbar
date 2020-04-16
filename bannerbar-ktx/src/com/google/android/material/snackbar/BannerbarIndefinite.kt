@@ -14,7 +14,7 @@ import androidx.annotation.StringRes
  *
  * @param text the text message.
  */
-inline fun View.indefiniteBannerbar(@NonNull text: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.bannerbar(@NonNull text: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, text, Bannerbar.LENGTH_INDEFINITE)
         .apply {
             configuration()
@@ -26,7 +26,7 @@ inline fun View.indefiniteBannerbar(@NonNull text: CharSequence, configuration: 
  *
  * @param textId the text message.
  */
-inline fun View.indefiniteBannerbar(@StringRes textId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.bannerbar(@StringRes textId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, textId, Bannerbar.LENGTH_INDEFINITE)
         .apply {
             configuration()
@@ -39,7 +39,7 @@ inline fun View.indefiniteBannerbar(@StringRes textId: Int, configuration: Banne
  * @param icon option on the left side of message.
  * @param text the text message.
  */
-inline fun View.indefiniteBannerbar(
+inline fun View.bannerbar(
     @NonNull icon: Drawable,
     @NonNull text: CharSequence,
     configuration: Bannerbar.() -> Unit
@@ -56,7 +56,7 @@ inline fun View.indefiniteBannerbar(
  * @param icon option on the left side of message.
  * @param textId the text message.
  */
-inline fun View.indefiniteBannerbar(
+inline fun View.bannerbar(
     @NonNull icon: Drawable,
     @StringRes textId: Int,
     configuration: Bannerbar.() -> Unit
@@ -73,7 +73,7 @@ inline fun View.indefiniteBannerbar(
  * @param iconId option on the left side of message.
  * @param text the text message.
  */
-inline fun View.indefiniteBannerbar(
+inline fun View.bannerbar(
     @DrawableRes iconId: Int,
     @NonNull text: CharSequence,
     configuration: Bannerbar.() -> Unit
@@ -90,7 +90,7 @@ inline fun View.indefiniteBannerbar(
  * @param iconId option on the left side of message.
  * @param textId the text message.
  */
-inline fun View.indefiniteBannerbar(
+inline fun View.bannerbar(
     @DrawableRes iconId: Int,
     @StringRes textId: Int,
     configuration: Bannerbar.() -> Unit

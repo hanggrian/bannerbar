@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="design_bannerbar_gap_horizontal">18dp</dimen>
+    <dimen name="design_bannerbar_gap_horizontal">@dimen/design_snackbar_padding_horizontal</dimen>
     <dimen name="design_bannerbar_gap_vertical">6dp</dimen>
-
-    <dimen name="design_bannerbar_padding_horizontal">@dimen/design_snackbar_padding_horizontal</dimen>
-    <dimen name="design_bannerbar_padding_top">@dimen/design_snackbar_padding_vertical_2lines</dimen>
-    <dimen name="design_bannerbar_padding_bottom">@dimen/design_snackbar_padding_vertical</dimen>
 
     <dimen name="design_bannerbar_title_size">17sp</dimen>
     <dimen name="design_bannerbar_subtitle_size">@dimen/design_snackbar_text_size</dimen>

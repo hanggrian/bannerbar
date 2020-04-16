@@ -5,15 +5,22 @@
 
 Bannerbar
 =========
-![demo][demo]
+![example_light][example_light]
+![example_dark][example_dark]
 
-Extended version of Snackbar with images and maximum height.
-It is useful to display an error or empty state that requires full attention in a sense that the app workflow should not continue without them being resolved.
+Bannerbar is essentially a [material banner](https://material.io/components/banners) displayed like a snackbar.
+* Following material guideline, it can only have up to **2 actions**.
+* Title are always present, icon and subtitle are optional.
+* Dismissible by a swipe, just like a snackbar.
+
+### Caveats
+Since it uses a lot of Snackbar resources and API, there are a few: 
+* Only safe to use on the specific version of material components.
+* Android will treat a Bannerbar like a Snackbar, only one of them can appear at once.
 
 Download
 --------
-This library relies heavily on private resources and internal classes from [Android's support design library][design].
-Which is why the versioning is tied to Android support library versioning.
+This library follows [AndroidX's revisions][androidx-rn].
 
 ```gradle
 repositories {
@@ -30,53 +37,27 @@ dependencies {
 
 Usage
 -----
-Bannerbar is everything a Snackbar is, with some modifications:
- * Bannerbar stretch its height to match its parent size, unlike Snackbar's wrapping height.
- * Bannerbar has default current app theme's background color, unlike Snackbar's dark background.
- * In addition to Snackbar's properties, Bannerbar supports background and icon.
-
-#### Programatically
-Create Bannerbar just like a Snackbar.
+Bannerbar usage is similar to Snackbar.
 
 ```kotlin
 Bannerbar.make(parent, "No internet connection", Bannerbar.LENGTH_INDEFINITE)
-    .setImage(R.drawable.my_image)
-    .setAction("Retry") { v ->
-        // do something
-    }
+    .setIcon(R.drawable.my_image)
+    .addAction("Retry") { }
     .show()
 ```
 
 With `bannerbar-ktx`, this process if simplified.
 
 ```kotlin
-parent.indefiniteBannerbar("No internet connection", "Retry") {
+parent.bannerbar("No internet connection", "Retry") {
     // do something
 }
 ```
 
-#### Styling
-Customize Bannerbar default text appearance, logo, etc. with styling.
-
-```xml
-<resources>
-    <style name="MyAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="bannerbarStyle">@style/MyBannerbarStyle</item>
-    </style>
-
-    <style name="MyBannerbarStyle" parent="Widget.Bannerbar">
-        <item name="android:textSize">24sp</item>
-        <item name="actionTextColor">@color/blue</item>
-    </style>
-</resources>
-```
-
-See [attrs.xml][attrs] for complete list of attributes.
-
-#### Limitation
-Since Bannerbar borrows Snackbar's codebase, Android will treat it as another Snackbar.
-It would mean that a parent cannot have more than one Snackbar or Bannerbar at the same time.
-When a Snackbar appear, an attached Bannerbar will disappear, and vice-versa.
+### Styling
+Bannerbar does not have a new attributes or styles.
+Any styling made to Snackbar in `styles.xml` will also be picked up by Bannerbar.
+This includes text color, action text colors, elevation, animation mode, etc.
 
 License
 -------
@@ -94,6 +75,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[demo]: /art/demo.gif
-[attrs]: /bannerbar/res/values/attrs.xml
-[design]: https://github.com/android/platform_frameworks_support/tree/master/design
+[example_light]: /art/example_light.png
+[example_dark]: /art/example_dark.png
+[androidx-rn]: https://developer.android.com/topic/libraries/support-library/androidx-rn

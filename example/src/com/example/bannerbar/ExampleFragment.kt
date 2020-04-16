@@ -79,7 +79,6 @@ class ExampleFragment : PreferenceFragmentCompat() {
     ) {
         initial()?.let { summary = convert(it) }
         setOnPreferenceChangeListener { preference, newValue ->
-            @Suppress("UNCHECKED_CAST")
             preference.summary = convert(newValue as T)
             true
         }

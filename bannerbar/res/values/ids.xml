@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="bannerbar_icon_container" type="id" />
     <item name="bannerbar_icon" type="id" />
     <item name="bannerbar_title" type="id" />
     <item name="bannerbar_subtitle" type="id" />

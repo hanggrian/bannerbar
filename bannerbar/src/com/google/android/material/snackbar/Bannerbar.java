@@ -1,6 +1,5 @@
 package com.google.android.material.snackbar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -38,7 +37,6 @@ import static com.google.android.material.snackbar.Snackbar.hasSnackbarButtonSty
  *
  * @see com.google.android.material.snackbar.Snackbar
  */
-@SuppressLint("RestrictedApi")
 public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
 
     @Nullable
@@ -97,13 +95,13 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * @see SnackbarContentLayout#updateActionTextColorAlphaIfNeeded(float)
      */
     private Bannerbar(
-            @NonNull ViewGroup parent,
-            @NonNull View content,
-            @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback
+        @NonNull ViewGroup parent,
+        @NonNull View content,
+        @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback
     ) {
         super(parent, content, contentViewCallback);
         accessibilityManager =
-                (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
+            (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
 
         if (content instanceof BannerbarContentLayout) {
             ((BannerbarContentLayout) content).updateActionTextColorAlphaIfNeeded(view.getActionTextColorAlpha());
@@ -152,16 +150,16 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         final ViewGroup parent = findSuitableParent(view);
         if (parent == null) {
             throw new IllegalArgumentException(
-                    "No suitable parent found from the given view. Please provide a valid view.");
+                "No suitable parent found from the given view. Please provide a valid view.");
         }
 
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final BannerbarContentLayout content = (BannerbarContentLayout) inflater.inflate(
-                hasSnackbarButtonStyleAttr(parent.getContext())
-                        ? R.layout.mtrl_layout_bannerbar_include
-                        : R.layout.design_layout_bannerbar_include,
-                parent,
-                false);
+            hasSnackbarButtonStyleAttr(parent.getContext())
+                ? R.layout.mtrl_layout_bannerbar_include
+                : R.layout.design_layout_bannerbar_include,
+            parent,
+            false);
         final Bannerbar bannerbar = new Bannerbar(parent, content, content);
         bannerbar.setTitle(title);
         bannerbar.setDuration(duration);
@@ -218,6 +216,11 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         return fallback;
     }
 
+    @NonNull
+    public BannerbarContentLayout getContentLayout() {
+        return (BannerbarContentLayout) view.getChildAt(0);
+    }
+
     /**
      * Update the icon in this {@link Bannerbar}.
      *
@@ -225,8 +228,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setIcon(@Nullable Drawable icon) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final ImageView view = layout.getIconView();
+        final ImageView view = getContentLayout().getIconView();
         if (icon == null) {
             view.setVisibility(View.GONE);
         } else {
@@ -253,8 +255,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setTitle(@Nullable CharSequence title) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        layout.getTitleView().setText(title);
+        getContentLayout().getTitleView().setText(title);
         return this;
     }
 
@@ -275,8 +276,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setSubtitle(@Nullable CharSequence subtitle) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = layout.getSubtitleView();
+        final TextView view = getContentLayout().getSubtitleView();
         if (TextUtils.isEmpty(subtitle)) {
             view.setVisibility(View.GONE);
         } else {
@@ -306,10 +306,11 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     public Bannerbar addAction(@NonNull CharSequence text, @Nullable final View.OnClickListener listener) {
         if (actionCount >= 2) {
             throw new UnsupportedOperationException("As explained in https://material.io/components/banners/#anatomy," +
-                    "Banners can contain up to two text buttons.");
+                "Banners can contain up to two text buttons.");
         }
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = actionCount++ == 0 ? layout.getActionView1() : layout.getActionView2();
+        final TextView view = actionCount++ == 0
+            ? getContentLayout().getActionView1()
+            : getContentLayout().getActionView2();
         view.setVisibility(View.VISIBLE);
         view.setText(text);
         view.setOnClickListener(new View.OnClickListener() {
@@ -366,13 +367,13 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             int controlsFlag = hasAction() ? FLAG_CONTENT_CONTROLS : 0;
             return accessibilityManager.getRecommendedTimeoutMillis(
-                    userSetDuration, controlsFlag | FLAG_CONTENT_ICONS | FLAG_CONTENT_TEXT);
+                userSetDuration, controlsFlag | FLAG_CONTENT_ICONS | FLAG_CONTENT_TEXT);
         }
 
         // If touch exploration is enabled override duration to give people chance to interact.
         return hasAction() && accessibilityManager.isTouchExplorationEnabled()
-                ? LENGTH_INDEFINITE
-                : userSetDuration;
+            ? LENGTH_INDEFINITE
+            : userSetDuration;
     }
 
     /**
@@ -381,8 +382,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setTextColor(ColorStateList colors) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        layout.getSubtitleView().setTextColor(colors);
+        getContentLayout().getSubtitleView().setTextColor(colors);
         return this;
     }
 
@@ -392,8 +392,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setTextColor(@ColorInt int color) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        layout.getSubtitleView().setTextColor(color);
+        getContentLayout().getSubtitleView().setTextColor(color);
         return this;
     }
 
@@ -403,7 +402,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setActionTextColors(ColorStateList colors) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
+        final BannerbarContentLayout layout = getContentLayout();
         layout.getActionView1().setTextColor(colors);
         layout.getActionView2().setTextColor(colors);
         return this;
@@ -415,7 +414,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @NonNull
     public Bannerbar setActionTextColors(@ColorInt int color) {
-        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
+        final BannerbarContentLayout layout = getContentLayout();
         layout.getActionView1().setTextColor(color);
         layout.getActionView2().setTextColor(color);
         return this;

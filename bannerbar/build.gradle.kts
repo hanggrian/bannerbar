@@ -51,13 +51,6 @@ dependencies {
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
 }
 
-tasks.withType<Javadoc> {
-    (options as CoreJavadocOptions).run {
-        addStringOption("Xdoclint:none", "-quiet")
-        addStringOption("encoding", "utf-8")
-    }
-}
-
 publish {
     bintrayUser = BINTRAY_USER
     bintrayKey = BINTRAY_KEY

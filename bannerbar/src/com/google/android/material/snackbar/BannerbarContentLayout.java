@@ -1,6 +1,5 @@
 package com.google.android.material.snackbar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 
 import com.google.android.material.color.MaterialColors;
 import com.hendraanggrian.material.bannerbar.R;
@@ -18,7 +18,6 @@ import com.hendraanggrian.material.bannerbar.R;
 /**
  * @see com.google.android.material.snackbar.SnackbarContentLayout
  */
-@SuppressLint("RestrictedApi")
 public class BannerbarContentLayout extends RelativeLayout implements ContentViewCallback {
     private ImageView iconView;
     private TextView titleView;
@@ -42,6 +41,34 @@ public class BannerbarContentLayout extends RelativeLayout implements ContentVie
         subtitleView = findViewById(R.id.bannerbar_subtitle);
         actionView1 = findViewById(R.id.bannerbar_action1);
         actionView2 = findViewById(R.id.bannerbar_action2);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final int extraHorizontal = getResources().getDimensionPixelSize(R.dimen.design_snackbar_padding_horizontal);
+        final int defaultVertical =
+            getResources().getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical_2lines);
+        final int shortVertical = getResources().getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical);
+
+        int horizontal = 0;
+        int bottom = defaultVertical;
+
+        // when an icon is not shown, apply horizontal padding to make it look more like a snackbar
+        if (iconView.getDrawable() == null) {
+            horizontal = extraHorizontal;
+        }
+
+        // when there are buttons, reduce bottom padding
+        if (actionView1.getVisibility() == VISIBLE || actionView2.getVisibility() == VISIBLE) {
+            bottom = shortVertical;
+        }
+
+        if (ViewCompat.isPaddingRelative(this)) {
+            ViewCompat.setPaddingRelative(this, horizontal, defaultVertical, horizontal, bottom);
+        } else {
+            setPadding(horizontal, defaultVertical, horizontal, bottom);
+        }
     }
 
     public ImageView getIconView() {
