@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +19,10 @@ import com.hendraanggrian.material.bannerbar.R;
  * @see com.google.android.material.snackbar.SnackbarContentLayout
  */
 @SuppressLint("RestrictedApi")
-public class BannerbarContentLayout extends LinearLayout implements ContentViewCallback {
+public class BannerbarContentLayout extends RelativeLayout implements ContentViewCallback {
     private ImageView iconView;
-    private TextView messageView;
+    private TextView titleView;
+    private TextView subtitleView;
     private Button actionView1;
     private Button actionView2;
 
@@ -37,7 +38,8 @@ public class BannerbarContentLayout extends LinearLayout implements ContentViewC
     protected void onFinishInflate() {
         super.onFinishInflate();
         iconView = findViewById(R.id.bannerbar_icon);
-        messageView = findViewById(R.id.bannerbar_text);
+        titleView = findViewById(R.id.bannerbar_title);
+        subtitleView = findViewById(R.id.bannerbar_subtitle);
         actionView1 = findViewById(R.id.bannerbar_action1);
         actionView2 = findViewById(R.id.bannerbar_action2);
     }
@@ -46,8 +48,12 @@ public class BannerbarContentLayout extends LinearLayout implements ContentViewC
         return iconView;
     }
 
-    public TextView getMessageView() {
-        return messageView;
+    public TextView getTitleView() {
+        return titleView;
+    }
+
+    public TextView getSubtitleView() {
+        return subtitleView;
     }
 
     public Button getActionView1() {
@@ -74,14 +80,16 @@ public class BannerbarContentLayout extends LinearLayout implements ContentViewC
 
     @Override
     public void animateContentIn(int delay, int duration) {
-        animateIn(messageView, delay, duration);
+        animateIn(subtitleView, delay, duration);
+        if (titleView.getVisibility() == VISIBLE) animateIn(titleView, delay, duration);
         if (actionView1.getVisibility() == VISIBLE) animateIn(actionView1, delay, duration);
         if (actionView2.getVisibility() == VISIBLE) animateIn(actionView2, delay, duration);
     }
 
     @Override
     public void animateContentOut(int delay, int duration) {
-        animateOut(messageView, delay, duration);
+        animateOut(subtitleView, delay, duration);
+        if (titleView.getVisibility() == VISIBLE) animateOut(titleView, delay, duration);
         if (actionView1.getVisibility() == VISIBLE) animateOut(actionView1, delay, duration);
         if (actionView2.getVisibility() == VISIBLE) animateOut(actionView2, delay, duration);
     }

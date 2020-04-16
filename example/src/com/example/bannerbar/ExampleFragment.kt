@@ -16,7 +16,8 @@ import com.hendraanggrian.prefy.android.get
 class ExampleFragment : PreferenceFragmentCompat() {
 
     companion object {
-        const val TEXT = "You have lost connection to the internet. This app is offline."
+        const val TITLE = "Mobile data is off"
+        const val SUBTITLE = "No data connection. Consider turning on mobile data or turning on Wi-Fi."
         const val ACTION_TEXT1 = "Dismiss"
         const val ACTION_TEXT2 = "Turn on WiFi"
     }
@@ -34,13 +35,16 @@ class ExampleFragment : PreferenceFragmentCompat() {
             getActualString(it, R.array.mode_values, R.array.modes)
         }
 
-        findPreference<Preference>("show")!!.setOnPreferenceClickListener {
-            val bannerbar = Bannerbar.make(view!!, TEXT, preferences["duration"]!!.toInt())
+        findPreference<Preference>("showBannerbar")!!.setOnPreferenceClickListener {
+            val bannerbar = Bannerbar.make(view!!, TITLE, preferences["duration"]!!.toInt())
             if (preferences.getBoolean("showIcon")!!) {
-                bannerbar.setIcon(R.drawable.ic_no_wifi)
+                bannerbar.setIcon(R.drawable.ic_error)
+            }
+            if (preferences.getBoolean("showSubtitle")!!) {
+                bannerbar.setSubtitle(SUBTITLE)
             }
             repeat(preferences.getInt("actionCount")!!) {
-                bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2) { Log.d("Prefy", "Clicked") }
+                bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2)
             }
             bannerbar.animationMode = preferences["animationMode"]!!.toInt()
             bannerbar.addCallback {
@@ -51,10 +55,16 @@ class ExampleFragment : PreferenceFragmentCompat() {
             false
         }
         findPreference<Preference>("showSnackbar")!!.setOnPreferenceClickListener {
-            Snackbar.make(view!!, TEXT, preferences["duration"]!!.toInt())
-                .setAction(ACTION_TEXT1) { }
-                .setAnimationMode(preferences["animationMode"]!!.toInt())
-                .show()
+            val snacbar = Snackbar.make(view!!, TITLE, preferences["duration"]!!.toInt())
+            snacbar.setAction(
+                when (preferences.getInt("actionCount")!!) {
+                    1 -> ACTION_TEXT1
+                    2 -> ACTION_TEXT2
+                    else -> null
+                }
+            ) { }
+            snacbar.animationMode = preferences["animationMode"]!!.toInt()
+            snacbar.show()
             false
         }
     }

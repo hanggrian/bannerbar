@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ import static com.google.android.material.snackbar.Snackbar.hasSnackbarButtonSty
 @SuppressLint("RestrictedApi")
 public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
 
-    @Nullable private final AccessibilityManager accessibilityManager;
+    @Nullable
+    private final AccessibilityManager accessibilityManager;
     private int actionCount = 0;
 
     private boolean hasAction() {
@@ -88,16 +90,20 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         }
     }
 
-    @Nullable private BaseCallback<Bannerbar> callback;
+    @Nullable
+    private BaseCallback<Bannerbar> callback;
 
+    /**
+     * @see SnackbarContentLayout#updateActionTextColorAlphaIfNeeded(float)
+     */
     private Bannerbar(
-        @NonNull ViewGroup parent,
-        @NonNull View content,
-        @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback
+            @NonNull ViewGroup parent,
+            @NonNull View content,
+            @NonNull com.google.android.material.snackbar.ContentViewCallback contentViewCallback
     ) {
         super(parent, content, contentViewCallback);
         accessibilityManager =
-            (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
+                (AccessibilityManager) parent.getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
 
         if (content instanceof BannerbarContentLayout) {
             ((BannerbarContentLayout) content).updateActionTextColorAlphaIfNeeded(view.getActionTextColorAlpha());
@@ -137,29 +143,27 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * features, such as swipe-to-dismiss and automatically moving of widgets.
      *
      * @param view     The view to find a parent from.
-     * @param text     The text to show. Can be formatted text.
+     * @param title    The text to show. Can be formatted text.
      * @param duration How long to display the message. Either {@link #LENGTH_SHORT} or {@link
      *                 #LENGTH_LONG}
      */
     @NonNull
-    public static Bannerbar make(@NonNull View view, @NonNull CharSequence text, @Duration int duration) {
+    public static Bannerbar make(@NonNull View view, @NonNull CharSequence title, @Duration int duration) {
         final ViewGroup parent = findSuitableParent(view);
         if (parent == null) {
             throw new IllegalArgumentException(
-                "No suitable parent found from the given view. Please provide a valid view.");
+                    "No suitable parent found from the given view. Please provide a valid view.");
         }
 
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final BannerbarContentLayout content =
-            (BannerbarContentLayout)
-                inflater.inflate(
-                    hasSnackbarButtonStyleAttr(parent.getContext())
+        final BannerbarContentLayout content = (BannerbarContentLayout) inflater.inflate(
+                hasSnackbarButtonStyleAttr(parent.getContext())
                         ? R.layout.mtrl_layout_bannerbar_include
                         : R.layout.design_layout_bannerbar_include,
-                    parent,
-                    false);
+                parent,
+                false);
         final Bannerbar bannerbar = new Bannerbar(parent, content, content);
-        bannerbar.setText(text);
+        bannerbar.setTitle(title);
         bannerbar.setDuration(duration);
         return bannerbar;
     }
@@ -176,13 +180,13 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * features, such as swipe-to-dismiss and automatically moving of widgets.
      *
      * @param view     The view to find a parent from.
-     * @param textId   The resource id of the string resource to use. Can be formatted text.
+     * @param titleId  The resource id of the string resource to use. Can be formatted text.
      * @param duration How long to display the message. Can be {@link #LENGTH_SHORT}, {@link
      *                 #LENGTH_LONG}, {@link #LENGTH_INDEFINITE}, or a custom duration in milliseconds.
      */
     @NonNull
-    public static Bannerbar make(@NonNull View view, @StringRes int textId, @Duration int duration) {
-        return make(view, view.getResources().getText(textId), duration);
+    public static Bannerbar make(@NonNull View view, @StringRes int titleId, @Duration int duration) {
+        return make(view, view.getResources().getText(titleId), duration);
     }
 
     @Nullable
@@ -243,26 +247,53 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     }
 
     /**
-     * Update the text in this {@link Bannerbar}.
+     * Update the title in this {@link Bannerbar}.
      *
-     * @param message The new text for this {@link BaseTransientBottomBar}.
+     * @param title The new title for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setText(@NonNull CharSequence message) {
+    public Bannerbar setTitle(@Nullable CharSequence title) {
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = layout.getMessageView();
-        view.setText(message);
+        layout.getTitleView().setText(title);
         return this;
     }
 
     /**
-     * Update the text in this {@link Bannerbar}.
+     * Update the title in this {@link Bannerbar}.
      *
-     * @param textId The new text for this {@link BaseTransientBottomBar}.
+     * @param titleId The new title for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setText(@StringRes int textId) {
-        return setText(getContext().getText(textId));
+    public Bannerbar setTitle(@StringRes int titleId) {
+        return setTitle(getContext().getText(titleId));
+    }
+
+    /**
+     * Update the subtitle in this {@link Bannerbar}.
+     *
+     * @param subtitle The new subtitle for this {@link BaseTransientBottomBar}.
+     */
+    @NonNull
+    public Bannerbar setSubtitle(@Nullable CharSequence subtitle) {
+        final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
+        final TextView view = layout.getSubtitleView();
+        if (TextUtils.isEmpty(subtitle)) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+            view.setText(subtitle);
+        }
+        return this;
+    }
+
+    /**
+     * Update the subtitle in this {@link Bannerbar}.
+     *
+     * @param subtitleId The new subtitle for this {@link BaseTransientBottomBar}.
+     */
+    @NonNull
+    public Bannerbar setSubtitle(@StringRes int subtitleId) {
+        return setSubtitle(getContext().getText(subtitleId));
     }
 
     /**
@@ -272,25 +303,36 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * @param listener callback to be invoked when the action is clicked
      */
     @NonNull
-    public Bannerbar addAction(@NonNull CharSequence text, @NonNull final View.OnClickListener listener) {
+    public Bannerbar addAction(@NonNull CharSequence text, @Nullable final View.OnClickListener listener) {
         if (actionCount >= 2) {
             throw new UnsupportedOperationException("As explained in https://material.io/components/banners/#anatomy," +
-                "Banners can contain up to two text buttons.");
+                    "Banners can contain up to two text buttons.");
         }
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
         final TextView view = actionCount++ == 0 ? layout.getActionView1() : layout.getActionView2();
         view.setVisibility(View.VISIBLE);
         view.setText(text);
-        view.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
                     listener.onClick(view);
-                    // Now dismiss the Snackbar
-                    dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION);
                 }
-            });
+                // Now dismiss the Snackbar
+                dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION);
+            }
+        });
         return this;
+    }
+
+    /**
+     * Add the action to be displayed in this {@link BaseTransientBottomBar}.
+     *
+     * @param text Text to display for the action
+     */
+    @NonNull
+    public Bannerbar addAction(@NonNull CharSequence text) {
+        return addAction(text, null);
     }
 
     /**
@@ -300,8 +342,18 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * @param listener callback to be invoked when the action is clicked
      */
     @NonNull
-    public Bannerbar addAction(@StringRes int textId, @NonNull View.OnClickListener listener) {
+    public Bannerbar addAction(@StringRes int textId, @Nullable View.OnClickListener listener) {
         return addAction(getContext().getText(textId), listener);
+    }
+
+    /**
+     * Set the action to be displayed in this {@link BaseTransientBottomBar}.
+     *
+     * @param textId String resource to display for the action
+     */
+    @NonNull
+    public Bannerbar addAction(@StringRes int textId) {
+        return addAction(getContext().getText(textId), null);
     }
 
     @Duration
@@ -314,36 +366,34 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             int controlsFlag = hasAction() ? FLAG_CONTENT_CONTROLS : 0;
             return accessibilityManager.getRecommendedTimeoutMillis(
-                userSetDuration, controlsFlag | FLAG_CONTENT_ICONS | FLAG_CONTENT_TEXT);
+                    userSetDuration, controlsFlag | FLAG_CONTENT_ICONS | FLAG_CONTENT_TEXT);
         }
 
         // If touch exploration is enabled override duration to give people chance to interact.
         return hasAction() && accessibilityManager.isTouchExplorationEnabled()
-            ? LENGTH_INDEFINITE
-            : userSetDuration;
+                ? LENGTH_INDEFINITE
+                : userSetDuration;
     }
 
     /**
-     * Sets the text color of the message specified in {@link #setText(CharSequence)} and {@link
-     * #setText(int)}.
+     * Sets the text color of the message specified in {@link #setSubtitle(CharSequence)} and {@link
+     * #setSubtitle(int)}.
      */
     @NonNull
     public Bannerbar setTextColor(ColorStateList colors) {
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = layout.getMessageView();
-        view.setTextColor(colors);
+        layout.getSubtitleView().setTextColor(colors);
         return this;
     }
 
     /**
-     * Sets the text color of the message specified in {@link #setText(CharSequence)} and {@link
-     * #setText(int)}.
+     * Sets the text color of the message specified in {@link #setSubtitle(CharSequence)} and {@link
+     * #setSubtitle(int)}.
      */
     @NonNull
     public Bannerbar setTextColor(@ColorInt int color) {
         final BannerbarContentLayout layout = (BannerbarContentLayout) view.getChildAt(0);
-        final TextView view = layout.getMessageView();
-        view.setTextColor(color);
+        layout.getSubtitleView().setTextColor(color);
         return this;
     }
 

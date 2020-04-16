@@ -4,54 +4,81 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/design_snackbar_padding_horizontal"
-        android:paddingTop="@dimen/design_snackbar_padding_vertical_2lines"
-        android:paddingRight="@dimen/design_snackbar_padding_horizontal">
+        android:background="@android:color/holo_orange_dark"
+        android:paddingLeft="@dimen/design_bannerbar_padding_horizontal"
+        android:paddingTop="@dimen/design_bannerbar_padding_top"
+        android:paddingRight="@dimen/design_bannerbar_padding_horizontal"
+        android:paddingBottom="@dimen/design_bannerbar_padding_bottom">
 
-        <ImageView
-            android:id="@id/bannerbar_icon"
+        <FrameLayout
+            android:id="@id/bannerbar_icon_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/design_snackbar_padding_horizontal"
-            android:layout_marginRight="@dimen/design_snackbar_padding_horizontal"
-            android:src="@android:drawable/arrow_up_float"
-            android:visibility="gone" />
+            android:background="@android:color/holo_blue_dark">
+
+            <ImageView
+                android:id="@id/bannerbar_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/design_bannerbar_gap_horizontal"
+                android:layout_marginRight="@dimen/design_bannerbar_gap_horizontal"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <TextView
-            android:id="@id/bannerbar_text"
-            android:layout_width="0dp"
+            android:id="@id/bannerbar_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|left|start"
-            android:layout_weight="1"
+            android:layout_toEndOf="@id/bannerbar_icon_container"
+            android:layout_toRightOf="@id/bannerbar_icon_container"
             android:alpha="@dimen/material_emphasis_high_type"
-            android:textAppearance="?attr/textAppearanceBody2"
+            android:background="@android:color/holo_purple"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.Design.Bannerbar.Title"
             android:textColor="?attr/colorSurface" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|right|end"
-        android:paddingBottom="@dimen/design_snackbar_padding_vertical">
-
-        <Button
-            android:id="@id/bannerbar_action1"
-            style="?attr/snackbarButtonStyle"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@id/bannerbar_subtitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/bannerbar_title"
+            android:layout_alignStart="@id/bannerbar_title"
+            android:layout_alignLeft="@id/bannerbar_title"
+            android:layout_gravity="center_vertical|left|start"
+            android:layout_marginTop="@dimen/design_bannerbar_gap_vertical"
+            android:alpha="@dimen/material_emphasis_medium"
+            android:background="@android:color/holo_green_dark"
+            android:textAlignment="viewStart"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorSurface"
             android:visibility="gone" />
 
-        <Button
-            android:id="@id/bannerbar_action2"
-            style="?attr/snackbarButtonStyle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:layout_below="@id/bannerbar_subtitle"
+            android:background="@android:color/holo_red_dark"
+            android:gravity="center_vertical|right|end">
+
+            <Button
+                android:id="@id/bannerbar_action1"
+                style="?attr/snackbarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@id/bannerbar_action2"
+                style="?attr/snackbarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
 </view>

@@ -16,9 +16,14 @@
             android:key="showIcon"
             android:title="Show icon" />
 
+        <androidx.preference.SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_show_subtitle"
+            android:key="showSubtitle"
+            android:title="Show Subtitle" />
+
         <androidx.preference.SeekBarPreference
             android:defaultValue="0"
-            android:icon="@drawable/ic_action_count"
             android:key="actionCount"
             android:max="2"
             android:title="Number of actions" />
@@ -27,7 +32,6 @@
             android:defaultValue="0"
             android:entries="@array/modes"
             android:entryValues="@array/mode_values"
-            android:icon="@drawable/ic_animation_mode"
             android:key="animationMode"
             android:title="Animation mode" />
     </androidx.preference.PreferenceCategory>
@@ -49,9 +53,9 @@
             android:title="Background tint" />
     </androidx.preference.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="Ready">
         <androidx.preference.Preference
-            android:key="show"
+            android:key="showBannerbar"
             android:title="Show Bannerbar" />
 
         <androidx.preference.Preference
