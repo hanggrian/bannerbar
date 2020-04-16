@@ -11,11 +11,17 @@ android {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
         versionName = RELEASE_VERSION
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
+        }
+        getByName("androidTest") {
+            setRoot("tests")
+            manifest.srcFile("tests/AndroidManifest.xml")
+            java.srcDir("tests/src")
         }
     }
     libraryVariants.all {
@@ -31,6 +37,8 @@ dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
     implementation(material())
+
+    androidTestImplementation(project(":testing"))
 
     configuration {
         invoke(ktlint())

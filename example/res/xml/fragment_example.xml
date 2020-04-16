@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="Customize">
         <androidx.preference.ListPreference
             android:defaultValue="-1"
             android:entries="@array/durations"
@@ -36,30 +36,25 @@
             android:title="Animation mode" />
     </androidx.preference.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory>
-        <androidx.preference.EditTextPreference
-            android:defaultValue="0"
-            android:key="textColor"
-            android:title="Text color" />
+    <androidx.preference.PreferenceCategory android:title="Theming">
+        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
+            android:defaultValue="@android:color/transparent"
+            android:key="titleColor"
+            android:title="Title text color" />
 
-        <androidx.preference.EditTextPreference
-            android:defaultValue="0"
+        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
+            android:defaultValue="@android:color/transparent"
+            android:key="subtitleColor"
+            android:title="Subtitle text color" />
+
+        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
+            android:defaultValue="@android:color/transparent"
             android:key="actionTextColors"
             android:title="Action text colors" />
 
-        <androidx.preference.EditTextPreference
-            android:defaultValue="0"
-            android:key="backgroundColor"
+        <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
+            android:defaultValue="@android:color/transparent"
+            android:key="backgroundTint"
             android:title="Background tint" />
-    </androidx.preference.PreferenceCategory>
-
-    <androidx.preference.PreferenceCategory android:title="Ready">
-        <androidx.preference.Preference
-            android:key="showBannerbar"
-            android:title="Show Bannerbar" />
-
-        <androidx.preference.Preference
-            android:key="showSnackbar"
-            android:title="Show Snackbar" />
     </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>

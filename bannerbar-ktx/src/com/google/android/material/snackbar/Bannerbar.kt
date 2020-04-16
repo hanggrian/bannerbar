@@ -3,40 +3,78 @@
 
 package com.google.android.material.snackbar
 
-/** Interface to invoke [Bannerbar.Callback] Kotlin DSL style. */
-interface CallbackBuilder {
-
-    fun onShown(callback: (Bannerbar) -> Unit)
-
-    fun onDismissed(callback: (Bannerbar, event: Int) -> Unit)
-}
-
-private class CallbackBuilderImpl : Bannerbar.Callback(),
-    CallbackBuilder {
-    private var onShown: ((Bannerbar) -> Unit)? = null
-    private var onDismissed: ((Bannerbar, Int) -> Unit)? = null
-
-    override fun onShown(callback: (Bannerbar) -> Unit) {
-        onShown = callback
-    }
-
-    override fun onShown(bannerbar: Bannerbar) {
-        onShown?.invoke(bannerbar)
-    }
-
-    override fun onDismissed(callback: (Bannerbar, event: Int) -> Unit) {
-        onDismissed = callback
-    }
-
-    override fun onDismissed(bannerbar: Bannerbar, event: Int) {
-        onDismissed?.invoke(bannerbar, event)
-    }
-}
+import android.view.View
+import androidx.annotation.NonNull
+import androidx.annotation.StringRes
 
 /**
- * Add callback Kotlin DSL style.
+ * Display [Bannerbar] with [Bannerbar.LENGTH_SHORT] duration.
  *
- * @param callback callback to add.
+ * @param title the title message.
  */
-fun Bannerbar.addCallback(callback: CallbackBuilder.() -> Unit): Bannerbar =
-    addCallback(CallbackBuilderImpl().apply(callback))
+inline fun View.shortBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_SHORT)
+        .apply {
+            configuration()
+            show()
+        }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_SHORT] duration.
+ *
+ * @param titleId the title message.
+ */
+inline fun View.shortBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_SHORT)
+        .apply {
+            configuration()
+            show()
+        }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_LONG] duration.
+ *
+ * @param title the title message.
+ */
+inline fun View.longBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_LONG)
+        .apply {
+            configuration()
+            show()
+        }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_LONG] duration.
+ *
+ * @param titleId the title message.
+ */
+inline fun View.longBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_LONG)
+        .apply {
+            configuration()
+            show()
+        }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param title the title message.
+ */
+inline fun View.bannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_INDEFINITE)
+        .apply {
+            configuration()
+            show()
+        }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param titleId the title message.
+ */
+inline fun View.bannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_INDEFINITE)
+        .apply {
+            configuration()
+            show()
+        }

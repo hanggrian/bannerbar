@@ -1,4 +1,4 @@
-package com.hendraanggrian.material.bannerbar
+package com.hendraanggrian.material.bannerbar.test
 
 import android.os.Build
 import android.os.CountDownTimer
@@ -11,7 +11,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 
-abstract class BaseTest {
+abstract class AbstractTest {
 
     fun setTitle(title: String) = object : ViewAction {
         override fun getConstraints() = isAssignableFrom(Toolbar::class.java)

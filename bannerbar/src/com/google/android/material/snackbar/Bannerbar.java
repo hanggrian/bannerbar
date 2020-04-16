@@ -92,6 +92,8 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     private BaseCallback<Bannerbar> callback;
 
     /**
+     * This is the only reason why bannerbar can't use a custom package name.
+     *
      * @see SnackbarContentLayout#updateActionTextColorAlphaIfNeeded(float)
      */
     private Bannerbar(
@@ -377,11 +379,31 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     }
 
     /**
+     * Sets the text color of the message specified in {@link #setTitle(CharSequence)} and {@link
+     * #setSubtitle(int)}.
+     */
+    @NonNull
+    public Bannerbar setTitleColor(ColorStateList colors) {
+        getContentLayout().getTitleView().setTextColor(colors);
+        return this;
+    }
+
+    /**
+     * Sets the text color of the message specified in {@link #setTitle(CharSequence)} and {@link
+     * #setSubtitle(int)}.
+     */
+    @NonNull
+    public Bannerbar setTitleColor(@ColorInt int color) {
+        getContentLayout().getTitleView().setTextColor(color);
+        return this;
+    }
+
+    /**
      * Sets the text color of the message specified in {@link #setSubtitle(CharSequence)} and {@link
      * #setSubtitle(int)}.
      */
     @NonNull
-    public Bannerbar setTextColor(ColorStateList colors) {
+    public Bannerbar setSubtitleColor(ColorStateList colors) {
         getContentLayout().getSubtitleView().setTextColor(colors);
         return this;
     }
@@ -391,7 +413,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * #setSubtitle(int)}.
      */
     @NonNull
-    public Bannerbar setTextColor(@ColorInt int color) {
+    public Bannerbar setSubtitleColor(@ColorInt int color) {
         getContentLayout().getSubtitleView().setTextColor(color);
         return this;
     }

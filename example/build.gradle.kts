@@ -8,7 +8,7 @@ plugins {
 android {
     compileSdkVersion(SDK_TARGET)
     defaultConfig {
-        minSdkVersion(SDK_MIN)
+        minSdkVersion(21)
         targetSdkVersion(SDK_TARGET)
         applicationId = "com.example.$RELEASE_ARTIFACT"
         versionName = RELEASE_VERSION
@@ -49,4 +49,6 @@ dependencies {
     implementation(hendraanggrian("prefy", "prefy-android", VERSION_PREFY))
     kapt(hendraanggrian("prefy", "prefy-compiler", VERSION_PREFY))
     implementation(processPhoenix())
+    implementation(colorPreference("core"))
+    implementation(colorPreference("support"))
 }

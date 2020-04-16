@@ -13,7 +13,9 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.google.android.material.snackbar.Bannerbar
+import com.hendraanggrian.material.bannerbar.test.AbstractTest
 import com.hendraanggrian.material.bannerbar.test.R
+import com.hendraanggrian.material.bannerbar.test.TestActivity
 import org.junit.Rule
 import org.junit.runner.RunWith
 import kotlin.test.BeforeTest
@@ -23,10 +25,10 @@ import kotlin.test.assertNotEquals
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class PaddingTest : BaseTest() {
-    @Rule @JvmField val rule = ActivityTestRule(InstrumentedActivity::class.java)
+class PaddingTest : AbstractTest() {
+    @Rule @JvmField val rule = ActivityTestRule(TestActivity::class.java)
 
-    @BeforeTest fun yo() {
+    @BeforeTest fun title() {
         onView(withId(R.id.toolbar)).perform(setTitle("Padding Test"))
     }
 

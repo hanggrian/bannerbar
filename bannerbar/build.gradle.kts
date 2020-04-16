@@ -17,14 +17,11 @@ android {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
             res.srcDir("res")
-            resources.srcDir("src")
         }
         getByName("androidTest") {
             setRoot("tests")
             manifest.srcFile("tests/AndroidManifest.xml")
             java.srcDir("tests/src")
-            res.srcDir("tests/res")
-            resources.srcDir("tests/src")
         }
     }
     libraryVariants.all {
@@ -37,18 +34,14 @@ android {
 dependencies {
     implementation(material())
 
-    testImplementation(kotlin("test-junit", VERSION_KOTLIN))
-    androidTestImplementation(kotlin("stdlib"))
-    androidTestImplementation(kotlin("test-junit", VERSION_KOTLIN))
-    androidTestImplementation(androidx("core", "core-ktx"))
-    androidTestImplementation(androidx("appcompat"))
-    androidTestImplementation(androidx("coordinatorlayout"))
-    androidTestImplementation(androidx("test", "core-ktx", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test", "runner", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test", "rules", VERSION_ANDROIDX_TEST))
-    androidTestImplementation(androidx("test.ext", "junit-ktx", VERSION_ANDROIDX_JUNIT))
-    androidTestImplementation(androidx("test.ext", "truth", VERSION_ANDROIDX_TRUTH))
-    androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
+    androidTestImplementation(project(":testing"))
+}
+
+tasks.withType<Javadoc> {
+    (options as CoreJavadocOptions).run {
+        addStringOption("Xdoclint:none", "-quiet")
+        addStringOption("encoding", "utf-8")
+    }
 }
 
 publish {
