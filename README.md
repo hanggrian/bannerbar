@@ -11,7 +11,7 @@ Bannerbar
 Bannerbar is essentially a [material banner](https://material.io/components/banners) displayed like a snackbar.
 * Following material guideline, it can only have up to **2 actions**.
 * Title are always present, icon and subtitle are optional.
-* Shares Snackbar abilities: respects floating action button, dismissible by a swipe, etc. 
+* Shares Snackbar abilities: respects floating action button position, dismissible by a swipe, etc. 
 
 ### Caveats
 Since it uses a lot of Snackbar resources and API, there are a few: 
@@ -46,11 +46,12 @@ Bannerbar.make(parent, "No internet connection", Bannerbar.LENGTH_INDEFINITE)
     .show()
 ```
 
-With `bannerbar-ktx`, this process if simplified.
+With `bannerbar-ktx`, this process can be quicker.
 
 ```kotlin
-parent.bannerbar("No internet connection", "Retry") {
-    // do something
+parent.bannerbar("No internet connection") {
+    setIcon(R.drawable.my_image)
+    addAction("Retry") { }
 }
 ```
 
