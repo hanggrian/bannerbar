@@ -9,9 +9,10 @@ Bannerbar
 ![example_dark][example_dark]
 
 Bannerbar is essentially a [material banner](https://material.io/components/banners) displayed like a snackbar.
-* Following material guideline, it can only have up to **2 actions**.
+Imagine it as a dialog that doesn't interrupt the whole Activity.
+* Following material guidelines, it can only have up to **2 actions**.
 * Title are always present, icon and subtitle are optional.
-* Shares Snackbar abilities: respects floating action button position, dismissible by a swipe, etc. 
+* Shares Snackbar styles and abilities: respects floating action button position, dismissible by a swipe, etc. 
 
 ### Caveats
 Since it uses a lot of Snackbar resources and API, there are a few: 
@@ -55,11 +56,6 @@ parent.bannerbar("No internet connection") {
 }
 ```
 
-### Styling
-Bannerbar does not have a new attributes or styles.
-Any styling made to Snackbar in `styles.xml` will also be picked up by Bannerbar.
-This includes text color, action text colors, elevation, animation mode, etc.
-
 License
 -------
     Copyright 2017 Hendra Anggrian
@@ -74,6 +70,12 @@ License
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
+    limitations under the License.
+
+[example_light]: /art/example_light.png
+[example_dark]: /art/example_dark.png
+[androidx-rn]: https://developer.android.com/topic/libraries/support-library/androidx-rn
+rning permissions and
     limitations under the License.
 
 [example_light]: /art/example_light.png
