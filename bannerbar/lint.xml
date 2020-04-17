@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
-    <!-- Bannerbar use a lot of snackbar private resources -->
     <issue id="PrivateResource">
         <ignore path="src/com/google/android/material/snackbar/Bannerbar.java" />
         <ignore path="src/com/google/android/material/snackbar/BannerbarContentLayout.java" />
     </issue>
 
-    <!-- Bannerbar use a lot of snackbar restricted API -->
     <issue id="RestrictedApi">
         <ignore path="src/com/google/android/material/snackbar/Bannerbar.java" />
         <ignore path="src/com/google/android/material/snackbar/BannerbarContentLayout.java" />
     </issue>
 
-    <!-- I believe this is a bug -->
     <issue id="RtlHardcoded">
         <ignore path="res/layout/design_layout_bannerbar_include.xml" />
         <ignore path="res/layout/mtrl_layout_bannerbar_include.xml" />
     </issue>
 
-    <!-- Bannerbar icon doesn't have a description -->
     <issue id="ContentDescription">
         <ignore path="res/layout/design_layout_bannerbar_include.xml" />
         <ignore path="res/layout/mtrl_layout_bannerbar_include.xml" />
     </issue>
 
-    <!-- Ignoring rtl support for now -->
     <issue id="RtlEnabled">
         <ignore path="AndroidManifest.xml" />
     </issue>

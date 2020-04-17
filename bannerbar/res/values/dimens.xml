@@ -4,5 +4,4 @@
     <dimen name="design_bannerbar_gap_vertical">6dp</dimen>
 
     <dimen name="design_bannerbar_title_size">17sp</dimen>
-    <dimen name="design_bannerbar_subtitle_size">@dimen/design_snackbar_text_size</dimen>
 </resources>

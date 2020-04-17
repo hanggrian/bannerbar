@@ -3,11 +3,7 @@
 
     <style name="TextAppearance.Design.Bannerbar.Title" parent="TextAppearance.Design.Snackbar.Message">
         <item name="android:textSize">@dimen/design_bannerbar_title_size</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="TextAppearance.Design.Bannerbar.Subtitle" parent="TextAppearance.Design.Snackbar.Message">
-        <item name="android:textSize">@dimen/design_bannerbar_subtitle_size</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
-    </style>
+    <style name="TextAppearance.Design.Bannerbar.Subtitle" parent="TextAppearance.Design.Snackbar.Message" />
 </resources>
