@@ -22,29 +22,19 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_example.*
 
 class ExampleActivity : AppCompatActivity() {
-
-    companion object {
-        const val TITLE = "Mobile data is off"
-        const val SUBTITLE = "No data connection. Consider turning on mobile data or turning on Wi-Fi."
-        const val ACTION_TEXT1 = "Dismiss"
-        const val ACTION_TEXT2 = "Turn on WiFi"
-    }
+    @BindPreference("theme") @JvmField var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    @BindPreference lateinit var duration: String
+    @BindPreference @JvmField var showIcon = false
+    @BindPreference @JvmField var showSubtitle = false
+    @BindPreference @JvmField var actionCount = 0
+    @BindPreference lateinit var animationMode: String
+    @BindPreference("titleColor") @JvmField @ColorInt var titleColor2 = Color.TRANSPARENT
+    @BindPreference @JvmField @ColorInt var subtitleColor = Color.TRANSPARENT
+    @BindPreference @JvmField @ColorInt var actionTextColors = Color.TRANSPARENT
+    @BindPreference @JvmField @ColorInt var backgroundTint = Color.TRANSPARENT
 
     private lateinit var preferences: AndroidPreferences
     private lateinit var saver: PreferencesSaver
-
-    @JvmField @BindPreference("theme") var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    @BindPreference("duration") lateinit var duration: String
-    @JvmField @BindPreference("showIcon") var showIcon = false
-    @JvmField @BindPreference("showSubtitle") var showSubtitle = false
-    @JvmField @BindPreference("actionCount") var actionCount = 0
-    @BindPreference("animationMode") lateinit var animationMode: String
-    @JvmField @BindPreference("titleColor") var titleColor2 = 0
-    @JvmField @BindPreference("subtitleColor") var subtitleColor = 0
-    @JvmField @BindPreference("actionTextColors") var actionTextColors = 0
-    @JvmField @BindPreference("backgroundTint") var backgroundTint = 0
-
-    @ColorInt private var transparent = Color.TRANSPARENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +48,7 @@ class ExampleActivity : AppCompatActivity() {
         saver = preferences.bind(this)
 
         fab.setOnClickListener {
-            preferences.bind(this)
+            saver = preferences.bind(this)
             val bannerbar = Bannerbar.make(fab, TITLE, duration.toInt())
             if (showIcon) bannerbar.setIcon(R.drawable.ic_error)
             if (showSubtitle) bannerbar.setSubtitle(SUBTITLE)
@@ -66,10 +56,10 @@ class ExampleActivity : AppCompatActivity() {
                 bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2)
             }
             bannerbar.animationMode = animationMode.toInt()
-            if (titleColor2 != transparent) bannerbar.setTitleColor(titleColor2)
-            if (subtitleColor != transparent) bannerbar.setSubtitleColor(subtitleColor)
-            if (actionTextColors != transparent) bannerbar.setActionTextColors(actionTextColors)
-            if (backgroundTint != transparent) bannerbar.setBackgroundTint(backgroundTint)
+            titleColor2.ifConfigured { bannerbar.setTitleColor(it) }
+            subtitleColor.ifConfigured { bannerbar.setSubtitleColor(it) }
+            actionTextColors.ifConfigured { bannerbar.setActionTextColors(it) }
+            backgroundTint.ifConfigured { bannerbar.setBackgroundTint(it) }
             bannerbar.addCallback {
                 onShown { Log.d("Bannerbar", "Shown") }
                 onDismissed { _, event -> Log.d("Bannerbar", "Dismissed event: $event") }
@@ -77,7 +67,7 @@ class ExampleActivity : AppCompatActivity() {
             bannerbar.show()
         }
         fab.setOnLongClickListener {
-            preferences.bind(this)
+            saver = preferences.bind(this)
             val snackbar = Snackbar.make(fab, TITLE, duration.toInt())
             snackbar.setAction(
                 when (actionCount) {
@@ -87,9 +77,9 @@ class ExampleActivity : AppCompatActivity() {
                 }
             ) { }
             snackbar.animationMode = animationMode.toInt()
-            if (titleColor2 != transparent) snackbar.setTextColor(titleColor2)
-            if (actionTextColors != transparent) snackbar.setActionTextColor(actionTextColors)
-            if (backgroundTint != transparent) snackbar.setBackgroundTint(backgroundTint)
+            titleColor2.ifConfigured { snackbar.setTextColor(it) }
+            actionTextColors.ifConfigured { snackbar.setActionTextColor(it) }
+            backgroundTint.ifConfigured { snackbar.setBackgroundTint(it) }
             snackbar.show()
             false
         }
@@ -124,5 +114,16 @@ class ExampleActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        const val TITLE = "Mobile data is off"
+        const val SUBTITLE = "No data connection. Consider turning on mobile data or turning on Wi-Fi."
+        const val ACTION_TEXT1 = "Dismiss"
+        const val ACTION_TEXT2 = "Turn on WiFi"
+
+        private fun @receiver:ColorInt Int.ifConfigured(action: (Int) -> Unit) {
+            if (this != Color.TRANSPARENT) action(this)
+        }
     }
 }

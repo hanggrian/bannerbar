@@ -1,4 +1,4 @@
-const val VERSION_PREFY = "0.1"
+const val VERSION_PREFY = "0.2"
 
 fun Dependencies.hendraanggrian(repo: String, version: String) = hendraanggrian(repo, repo, version)
 

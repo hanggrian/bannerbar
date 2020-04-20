@@ -16,8 +16,8 @@ import com.google.android.material.snackbar.bannerbar
 import com.google.android.material.snackbar.longBannerbar
 import com.google.android.material.snackbar.shortBannerbar
 import com.hendraanggrian.material.bannerbar.test.AbstractTest
-import com.hendraanggrian.material.bannerbar.test.TestActivity
 import com.hendraanggrian.material.bannerbar.test.R
+import com.hendraanggrian.material.bannerbar.test.TestActivity
 import org.junit.Rule
 import org.junit.runner.RunWith
 import kotlin.test.BeforeTest
@@ -41,6 +41,7 @@ class KotlinExtensionsTest : AbstractTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
+                assertEquals(Bannerbar.LENGTH_SHORT, view.shortBannerbar(title).duration)
                 view.shortBannerbar(title) {
                     addCallback { onShown { assertEquals(Bannerbar.LENGTH_SHORT, duration) } }
                 }
@@ -55,6 +56,7 @@ class KotlinExtensionsTest : AbstractTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
+                assertEquals(Bannerbar.LENGTH_LONG, view.longBannerbar(title).duration)
                 view.longBannerbar(title) {
                     addCallback { onShown { assertEquals(Bannerbar.LENGTH_LONG, duration) } }
                 }
@@ -69,6 +71,7 @@ class KotlinExtensionsTest : AbstractTest() {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
             override fun perform(uiController: UiController, view: View) {
+                assertEquals(Bannerbar.LENGTH_INDEFINITE, view.bannerbar(title).duration)
                 view.bannerbar(title) {
                     addCallback { onShown { assertEquals(Bannerbar.LENGTH_INDEFINITE, duration) } }
                 }

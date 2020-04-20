@@ -12,6 +12,16 @@ import androidx.annotation.StringRes
  *
  * @param title the title message.
  */
+fun View.shortBannerbar(@NonNull title: CharSequence): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_SHORT)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_SHORT] duration.
+ *
+ * @param title the title message.
+ * @param configuration custom initialization of bannerbar.
+ */
 inline fun View.shortBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_SHORT)
         .apply {
@@ -23,6 +33,16 @@ inline fun View.shortBannerbar(@NonNull title: CharSequence, configuration: Bann
  * Display [Bannerbar] with [Bannerbar.LENGTH_SHORT] duration.
  *
  * @param titleId the title message.
+ */
+fun View.shortBannerbar(@StringRes titleId: Int): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_SHORT)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_SHORT] duration.
+ *
+ * @param titleId the title message.
+ * @param configuration custom initialization of bannerbar.
  */
 inline fun View.shortBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_SHORT)
@@ -36,6 +56,16 @@ inline fun View.shortBannerbar(@StringRes titleId: Int, configuration: Bannerbar
  *
  * @param title the title message.
  */
+fun View.longBannerbar(@NonNull title: CharSequence): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_LONG)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_LONG] duration.
+ *
+ * @param title the title message.
+ * @param configuration custom initialization of bannerbar.
+ */
 inline fun View.longBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_LONG)
         .apply {
@@ -47,6 +77,16 @@ inline fun View.longBannerbar(@NonNull title: CharSequence, configuration: Banne
  * Display [Bannerbar] with [Bannerbar.LENGTH_LONG] duration.
  *
  * @param titleId the title message.
+ */
+fun View.longBannerbar(@StringRes titleId: Int): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_LONG)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_LONG] duration.
+ *
+ * @param titleId the title message.
+ * @param configuration custom initialization of bannerbar.
  */
 inline fun View.longBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_LONG)
@@ -60,6 +100,16 @@ inline fun View.longBannerbar(@StringRes titleId: Int, configuration: Bannerbar.
  *
  * @param title the title message.
  */
+fun View.bannerbar(@NonNull title: CharSequence): Bannerbar =
+    Bannerbar.make(this, title, Bannerbar.LENGTH_INDEFINITE)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param title the title message.
+ * @param configuration custom initialization of bannerbar.
+ */
 inline fun View.bannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_INDEFINITE)
         .apply {
@@ -71,6 +121,16 @@ inline fun View.bannerbar(@NonNull title: CharSequence, configuration: Bannerbar
  * Display [Bannerbar] with [Bannerbar.LENGTH_INDEFINITE] duration.
  *
  * @param titleId the title message.
+ */
+fun View.bannerbar(@StringRes titleId: Int): Bannerbar =
+    Bannerbar.make(this, titleId, Bannerbar.LENGTH_INDEFINITE)
+        .apply { show() }
+
+/**
+ * Display [Bannerbar] with [Bannerbar.LENGTH_INDEFINITE] duration.
+ *
+ * @param titleId the title message.
+ * @param configuration custom initialization of bannerbar.
  */
 inline fun View.bannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_INDEFINITE)
