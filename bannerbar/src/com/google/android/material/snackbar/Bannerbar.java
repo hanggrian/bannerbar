@@ -253,37 +253,37 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     /**
      * Update the title in this {@link Bannerbar}.
      *
-     * @param title The new title for this {@link BaseTransientBottomBar}.
+     * @param text The new title for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setTitle(@Nullable CharSequence title) {
-        getContentLayout().getTitleView().setText(title);
+    public Bannerbar setTitle(@Nullable CharSequence text) {
+        getContentLayout().getTitleView().setText(text);
         return this;
     }
 
     /**
      * Update the title in this {@link Bannerbar}.
      *
-     * @param titleId The new title for this {@link BaseTransientBottomBar}.
+     * @param textId The new title for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setTitle(@StringRes int titleId) {
-        return setTitle(getContext().getText(titleId));
+    public Bannerbar setTitle(@StringRes int textId) {
+        return setTitle(getContext().getText(textId));
     }
 
     /**
      * Update the subtitle in this {@link Bannerbar}.
      *
-     * @param subtitle The new subtitle for this {@link BaseTransientBottomBar}.
+     * @param text The new subtitle for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setSubtitle(@Nullable CharSequence subtitle) {
+    public Bannerbar setSubtitle(@Nullable CharSequence text) {
         final TextView view = getContentLayout().getSubtitleView();
-        if (TextUtils.isEmpty(subtitle)) {
+        if (TextUtils.isEmpty(text)) {
             view.setVisibility(View.GONE);
         } else {
             view.setVisibility(View.VISIBLE);
-            view.setText(subtitle);
+            view.setText(text);
         }
         return this;
     }
@@ -291,11 +291,11 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
     /**
      * Update the subtitle in this {@link Bannerbar}.
      *
-     * @param subtitleId The new subtitle for this {@link BaseTransientBottomBar}.
+     * @param textId The new subtitle for this {@link BaseTransientBottomBar}.
      */
     @NonNull
-    public Bannerbar setSubtitle(@StringRes int subtitleId) {
-        return setSubtitle(getContext().getText(subtitleId));
+    public Bannerbar setSubtitle(@StringRes int textId) {
+        return setSubtitle(getContext().getText(textId));
     }
 
     /**
@@ -383,7 +383,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * #setSubtitle(int)}.
      */
     @NonNull
-    public Bannerbar setTitleColor(ColorStateList colors) {
+    public Bannerbar setTitleColor(@NonNull ColorStateList colors) {
         getContentLayout().getTitleView().setTextColor(colors);
         return this;
     }
@@ -403,7 +403,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * #setSubtitle(int)}.
      */
     @NonNull
-    public Bannerbar setSubtitleColor(ColorStateList colors) {
+    public Bannerbar setSubtitleColor(@NonNull ColorStateList colors) {
         getContentLayout().getSubtitleView().setTextColor(colors);
         return this;
     }
@@ -423,7 +423,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * View.OnClickListener)}.
      */
     @NonNull
-    public Bannerbar setActionTextColors(ColorStateList colors) {
+    public Bannerbar setActionsTextColor(@NonNull ColorStateList colors) {
         final BannerbarContentLayout layout = getContentLayout();
         layout.getActionView1().setTextColor(colors);
         layout.getActionView2().setTextColor(colors);
@@ -435,7 +435,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * View.OnClickListener)}.
      */
     @NonNull
-    public Bannerbar setActionTextColors(@ColorInt int color) {
+    public Bannerbar setActionsTextColor(@ColorInt int color) {
         final BannerbarContentLayout layout = getContentLayout();
         layout.getActionView1().setTextColor(color);
         layout.getActionView2().setTextColor(color);
@@ -465,7 +465,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      * Sets the tint color state list of the background Drawable.
      */
     @NonNull
-    public Bannerbar setBackgroundTintList(ColorStateList colorStateList) {
+    public Bannerbar setBackgroundTintList(@NonNull ColorStateList colorStateList) {
         DrawableCompat.setTintList(view.getBackground().mutate(), colorStateList);
         return this;
     }
@@ -483,7 +483,7 @@ public final class Bannerbar extends BaseTransientBottomBar<Bannerbar> {
      */
     @Deprecated
     @NonNull
-    public Bannerbar setCallback(Callback callback) {
+    public Bannerbar setCallback(@Nullable Callback callback) {
         // The logic in this method emulates what we had before support for multiple
         // registered callbacks.
         if (this.callback != null) {

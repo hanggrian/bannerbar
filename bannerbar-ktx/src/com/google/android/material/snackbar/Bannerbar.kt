@@ -22,10 +22,10 @@ fun View.shortBannerbar(@NonNull title: CharSequence): Bannerbar =
  * @param title the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.shortBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.shortBannerbar(@NonNull title: CharSequence, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_SHORT)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }
 
@@ -44,10 +44,10 @@ fun View.shortBannerbar(@StringRes titleId: Int): Bannerbar =
  * @param titleId the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.shortBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.shortBannerbar(@StringRes titleId: Int, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_SHORT)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }
 
@@ -66,10 +66,10 @@ fun View.longBannerbar(@NonNull title: CharSequence): Bannerbar =
  * @param title the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.longBannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.longBannerbar(@NonNull title: CharSequence, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_LONG)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }
 
@@ -88,10 +88,10 @@ fun View.longBannerbar(@StringRes titleId: Int): Bannerbar =
  * @param titleId the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.longBannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.longBannerbar(@StringRes titleId: Int, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_LONG)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }
 
@@ -110,10 +110,10 @@ fun View.bannerbar(@NonNull title: CharSequence): Bannerbar =
  * @param title the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.bannerbar(@NonNull title: CharSequence, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.bannerbar(@NonNull title: CharSequence, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, title, Bannerbar.LENGTH_INDEFINITE)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }
 
@@ -132,9 +132,9 @@ fun View.bannerbar(@StringRes titleId: Int): Bannerbar =
  * @param titleId the title message.
  * @param configuration custom initialization of bannerbar.
  */
-inline fun View.bannerbar(@StringRes titleId: Int, configuration: Bannerbar.() -> Unit): Bannerbar =
+inline fun View.bannerbar(@StringRes titleId: Int, configuration: BannerbarScope.() -> Unit): Bannerbar =
     Bannerbar.make(this, titleId, Bannerbar.LENGTH_INDEFINITE)
         .apply {
-            configuration()
+            BannerbarScope(this).configuration()
             show()
         }

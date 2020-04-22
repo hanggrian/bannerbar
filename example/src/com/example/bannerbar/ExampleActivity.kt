@@ -92,7 +92,7 @@ class ExampleActivity : AppCompatActivity(), View.OnLongClickListener {
         bannerbar.animationMode = animationMode.toInt()
         titleColor2.ifConfigured { bannerbar.setTitleColor(it) }
         subtitleColor.ifConfigured { bannerbar.setSubtitleColor(it) }
-        actionTextColors.ifConfigured { bannerbar.setActionTextColors(it) }
+        actionTextColors.ifConfigured { bannerbar.setActionsTextColor(it) }
         backgroundTint.ifConfigured { bannerbar.setBackgroundTint(it) }
         bannerbar.addCallback {
             onShown { Log.d("Bannerbar", "Shown") }

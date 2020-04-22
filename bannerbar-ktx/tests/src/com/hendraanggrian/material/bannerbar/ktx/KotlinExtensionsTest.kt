@@ -11,7 +11,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.google.android.material.snackbar.Bannerbar
-import com.google.android.material.snackbar.addCallback
 import com.google.android.material.snackbar.bannerbar
 import com.google.android.material.snackbar.longBannerbar
 import com.google.android.material.snackbar.shortBannerbar
