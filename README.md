@@ -75,9 +75,3 @@ License
 [example_light]: /art/example_light.png
 [example_dark]: /art/example_dark.png
 [androidx-rn]: https://developer.android.com/topic/libraries/support-library/androidx-rn
-rning permissions and
-    limitations under the License.
-
-[example_light]: /art/example_light.png
-[example_dark]: /art/example_dark.png
-[androidx-rn]: https://developer.android.com/topic/libraries/support-library/androidx-rn

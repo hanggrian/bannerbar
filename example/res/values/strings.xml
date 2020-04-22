@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bannerbar Example</string>
-
     <string-array name="durations">
         <item>Indefinite</item>
         <item>Short</item>

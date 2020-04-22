@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,7 +22,7 @@ import com.hendraanggrian.prefy.bind
 import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_example.*
 
-class ExampleActivity : AppCompatActivity() {
+class ExampleActivity : AppCompatActivity(), View.OnLongClickListener {
     @BindPreference("theme") @JvmField var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     @BindPreference lateinit var duration: String
     @BindPreference @JvmField var showIcon = false
@@ -46,43 +47,7 @@ class ExampleActivity : AppCompatActivity() {
             .commitNow()
         preferences = Prefy[this]
         saver = preferences.bind(this)
-
-        fab.setOnClickListener {
-            saver = preferences.bind(this)
-            val bannerbar = Bannerbar.make(fab, TITLE, duration.toInt())
-            if (showIcon) bannerbar.setIcon(R.drawable.ic_error)
-            if (showSubtitle) bannerbar.setSubtitle(SUBTITLE)
-            repeat(actionCount) {
-                bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2)
-            }
-            bannerbar.animationMode = animationMode.toInt()
-            titleColor2.ifConfigured { bannerbar.setTitleColor(it) }
-            subtitleColor.ifConfigured { bannerbar.setSubtitleColor(it) }
-            actionTextColors.ifConfigured { bannerbar.setActionTextColors(it) }
-            backgroundTint.ifConfigured { bannerbar.setBackgroundTint(it) }
-            bannerbar.addCallback {
-                onShown { Log.d("Bannerbar", "Shown") }
-                onDismissed { _, event -> Log.d("Bannerbar", "Dismissed event: $event") }
-            }
-            bannerbar.show()
-        }
-        fab.setOnLongClickListener {
-            saver = preferences.bind(this)
-            val snackbar = Snackbar.make(fab, TITLE, duration.toInt())
-            snackbar.setAction(
-                when (actionCount) {
-                    1 -> ACTION_TEXT1
-                    2 -> ACTION_TEXT2
-                    else -> null
-                }
-            ) { }
-            snackbar.animationMode = animationMode.toInt()
-            titleColor2.ifConfigured { snackbar.setTextColor(it) }
-            actionTextColors.ifConfigured { snackbar.setActionTextColor(it) }
-            backgroundTint.ifConfigured { snackbar.setBackgroundTint(it) }
-            snackbar.show()
-            false
-        }
+        fab.setOnLongClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -116,6 +81,26 @@ class ExampleActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    fun show(view: View) {
+        saver = preferences.bind(this)
+        val bannerbar = Bannerbar.make(fab, TITLE, duration.toInt())
+        if (showIcon) bannerbar.setIcon(R.drawable.ic_error)
+        if (showSubtitle) bannerbar.setSubtitle(SUBTITLE)
+        repeat(actionCount) {
+            bannerbar.addAction(if (it == 0) ACTION_TEXT1 else ACTION_TEXT2)
+        }
+        bannerbar.animationMode = animationMode.toInt()
+        titleColor2.ifConfigured { bannerbar.setTitleColor(it) }
+        subtitleColor.ifConfigured { bannerbar.setSubtitleColor(it) }
+        actionTextColors.ifConfigured { bannerbar.setActionTextColors(it) }
+        backgroundTint.ifConfigured { bannerbar.setBackgroundTint(it) }
+        bannerbar.addCallback {
+            onShown { Log.d("Bannerbar", "Shown") }
+            onDismissed { _, event -> Log.d("Bannerbar", "Dismissed event: $event") }
+        }
+        bannerbar.show()
+    }
+
     companion object {
         const val TITLE = "Mobile data is off"
         const val SUBTITLE = "No data connection. Consider turning on mobile data or turning on Wi-Fi."
@@ -125,5 +110,23 @@ class ExampleActivity : AppCompatActivity() {
         private fun @receiver:ColorInt Int.ifConfigured(action: (Int) -> Unit) {
             if (this != Color.TRANSPARENT) action(this)
         }
+    }
+
+    override fun onLongClick(view: View): Boolean {
+        saver = preferences.bind(this)
+        val snackbar = Snackbar.make(fab, TITLE, duration.toInt())
+        snackbar.setAction(
+            when (actionCount) {
+                1 -> ACTION_TEXT1
+                2 -> ACTION_TEXT2
+                else -> null
+            }
+        ) { }
+        snackbar.animationMode = animationMode.toInt()
+        titleColor2.ifConfigured { snackbar.setTextColor(it) }
+        actionTextColors.ifConfigured { snackbar.setActionTextColor(it) }
+        backgroundTint.ifConfigured { snackbar.setBackgroundTint(it) }
+        snackbar.show()
+        return false
     }
 }
