@@ -1,7 +1,7 @@
 [![download](https://api.bintray.com/packages/hendraanggrian/material/bannerbar/images/download.svg)](https://bintray.com/hendraanggrian/material/bannerbar/_latestVersion)
 [![build](https://travis-ci.com/hendraanggrian/bannerbar.svg)](https://travis-ci.com/hendraanggrian/bannerbar)
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-[![license](https://img.shields.io/github/license/hendraanggrian/banner)](http://www.apache.org/licenses/LICENSE-2.0)
+[![license](https://img.shields.io/github/license/hendraanggrian/bannerbar)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Bannerbar
 =========
