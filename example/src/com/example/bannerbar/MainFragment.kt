@@ -6,10 +6,10 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 
-class ExampleFragment : PreferenceFragmentCompat() {
+class MainFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.fragment_example)
+        addPreferencesFromResource(R.xml.fragment_main)
         findPreference<ListPreference>("duration")!!.bindSummary({ value }) {
             getActualString(it, R.array.duration_values, R.array.durations)
         }

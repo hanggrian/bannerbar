@@ -20,9 +20,9 @@ import com.hendraanggrian.prefy.android.AndroidPreferences
 import com.hendraanggrian.prefy.android.get
 import com.hendraanggrian.prefy.bind
 import com.jakewharton.processphoenix.ProcessPhoenix
-import kotlinx.android.synthetic.main.activity_example.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class ExampleActivity : AppCompatActivity(), View.OnLongClickListener {
+class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     @BindPreference("theme") @JvmField var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     @BindPreference lateinit var duration: String
     @BindPreference @JvmField var showIcon = false
@@ -39,11 +39,11 @@ class ExampleActivity : AppCompatActivity(), View.OnLongClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example)
+        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .replace(R.id.frameLayout, ExampleFragment())
+            .replace(R.id.frameLayout, MainFragment())
             .commitNow()
         preferences = Prefy[this]
         saver = preferences.bind(this)
@@ -51,7 +51,7 @@ class ExampleActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_example, menu)
+        menuInflater.inflate(R.menu.activity_main, menu)
         menu.findItem(
             when (theme2) {
                 AppCompatDelegate.MODE_NIGHT_NO -> R.id.lightThemeItem
