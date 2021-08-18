@@ -13,12 +13,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Bannerbar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.addCallback
-import com.hendraanggrian.prefy.BindPreference
-import com.hendraanggrian.prefy.PreferencesSaver
-import com.hendraanggrian.prefy.Prefy
-import com.hendraanggrian.prefy.android.AndroidPreferences
-import com.hendraanggrian.prefy.android.get
-import com.hendraanggrian.prefy.bind
+import com.hendraanggrian.prefs.BindPreference
+import com.hendraanggrian.prefs.PreferencesSaver
+import com.hendraanggrian.prefs.android.bindPreferences
+import com.hendraanggrian.prefs.android.preferences
 import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     @BindPreference @JvmField @ColorInt var actionTextColors = Color.TRANSPARENT
     @BindPreference @JvmField @ColorInt var backgroundTint = Color.TRANSPARENT
 
-    private lateinit var preferences: AndroidPreferences
     private lateinit var saver: PreferencesSaver
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +42,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(R.id.frameLayout, MainFragment())
             .commitNow()
-        preferences = Prefy[this]
-        saver = preferences.bind(this)
+        saver = bindPreferences()
         fab.setOnLongClickListener(this)
     }
 
@@ -82,7 +78,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     fun show(view: View) {
-        saver = preferences.bind(this)
+        saver = bindPreferences()
         val bannerbar = Bannerbar.make(fab, TITLE, duration.toInt())
         if (showIcon) bannerbar.setIcon(R.drawable.ic_error)
         if (showSubtitle) bannerbar.setSubtitle(SUBTITLE)
@@ -113,7 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     override fun onLongClick(view: View): Boolean {
-        saver = preferences.bind(this)
+        saver = bindPreferences()
         val snackbar = Snackbar.make(fab, TITLE, duration.toInt())
         snackbar.setAction(
             when (actionCount) {

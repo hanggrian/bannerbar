@@ -2,15 +2,15 @@ plugins {
     android("library")
     kotlin("android")
     dokka
-    `bintray-release`
+    `maven-publish`
+    signing
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
+    compileSdk = SDK_TARGET
     defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
+        minSdk = SDK_MIN
+        targetSdk = SDK_TARGET
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -31,60 +31,33 @@ android {
     }
 }
 
-val configuration = configurations.register("ktlint")
+ktlint()
 
 dependencies {
     api(kotlin("stdlib", VERSION_KOTLIN))
     api(project(":$RELEASE_ARTIFACT"))
     implementation(material())
-
     androidTestImplementation(project(":testing"))
-
-    configuration {
-        invoke(ktlint())
-    }
 }
 
 tasks {
-    val ktlint = register("ktlint", JavaExec::class) {
-        group = LifecycleBasePlugin.VERIFICATION_GROUP
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Check Kotlin code style."
-        classpath(configuration.get())
-        main = "com.pinterest.ktlint.Main"
-        args("src/**/*.kt")
+    dokkaJavadoc {
+        dokkaSourceSets {
+            "main" {
+                sourceLink {
+                    localDirectory.set(projectDir.resolve("src"))
+                    remoteUrl.set(getGithubRemoteUrl())
+                    remoteLineSuffix.set("#L")
+                }
+            }
+        }
     }
-    "check" {
-        dependsOn(ktlint.get())
-    }
-    register("ktlintFormat", JavaExec::class) {
-        group = "formatting"
-        inputs.dir("src")
-        outputs.dir("src")
-        description = "Fix Kotlin code style deviations."
-        classpath(configuration.get())
-        main = "com.pinterest.ktlint.Main"
-        args("-F", "src/**/*.kt")
-    }
-
-    named<org.jetbrains.dokka.gradle.DokkaTask>("dokka") {
-        outputDirectory = "$buildDir/docs"
-        doFirst { file(outputDirectory).deleteRecursively() }
+    dokkaHtml {
+        outputDirectory.set(buildDir.resolve("dokka/$RELEASE_ARTIFACT-ktx"))
     }
 }
 
-publishKotlinFix()
-publish {
-    bintrayUser = BINTRAY_USER
-    bintrayKey = BINTRAY_KEY
-    dryRun = false
-    repoName = RELEASE_REPO
-
-    userOrg = RELEASE_USER
-    groupId = RELEASE_GROUP
-    artifactId = "$RELEASE_ARTIFACT-ktx"
-    publishVersion = RELEASE_VERSION
-    desc = RELEASE_DESC
-    website = RELEASE_WEBSITE
-}
+mavenPublishAndroid(
+    "$RELEASE_ARTIFACT-ktx",
+    sources = android.sourceSets["main"].java.srcDirs
+)

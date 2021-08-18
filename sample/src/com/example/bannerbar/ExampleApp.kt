@@ -2,17 +2,17 @@ package com.example.bannerbar
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.hendraanggrian.prefy.PreferencesLogger
-import com.hendraanggrian.prefy.Prefy
-import com.hendraanggrian.prefy.android.Android
-import com.hendraanggrian.prefy.android.get
+import com.hendraanggrian.prefs.PreferencesLogger
+import com.hendraanggrian.prefs.Prefs
+import com.hendraanggrian.prefs.android.Android
+import com.hendraanggrian.prefs.android.preferences
 
 class ExampleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Prefy.setLogger(PreferencesLogger.Android)
-        val theme = Prefy[this].getInt("theme")
+        Prefs.setLogger(PreferencesLogger.Android)
+        val theme = preferences.getInt("theme")
         if (theme != null && theme != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             AppCompatDelegate.setDefaultNightMode(theme)
         }

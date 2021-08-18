@@ -4,11 +4,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
+    compileSdk = SDK_TARGET
     defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
+        minSdk = SDK_MIN
+        targetSdk = SDK_TARGET
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -31,7 +30,7 @@ dependencies {
     api(material())
     api(androidx("core", "core-ktx"))
     api(androidx("appcompat"))
-    api(androidx("coordinatorlayout"))
+    api(androidx("coordinatorlayout", version = "1.1.0"))
     api(androidx("test", "core-ktx", VERSION_ANDROIDX_TEST))
     api(androidx("test", "runner", VERSION_ANDROIDX_TEST))
     api(androidx("test", "rules", VERSION_ANDROIDX_TEST))

@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
+    compileSdk = SDK_TARGET
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(SDK_TARGET)
+        minSdk = 21
+        targetSdk = SDK_TARGET
         applicationId = "com.example.$RELEASE_ARTIFACT"
         versionName = RELEASE_VERSION
     }
@@ -31,7 +31,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
-    lintOptions {
+    lint {
         isAbortOnError = false
     }
 }
@@ -39,15 +39,13 @@ android {
 dependencies {
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
-
     implementation(material())
     implementation(androidx("core", "core-ktx"))
     implementation(androidx("appcompat"))
-    implementation(androidx("coordinatorlayout"))
-    implementation(androidx("preference"))
-
-    implementation(hendraanggrian("prefy", "prefy-android", VERSION_PREFY))
-    kapt(hendraanggrian("prefy", "prefy-compiler", VERSION_PREFY))
+    implementation(androidx("coordinatorlayout", version = "1.1.0"))
+    implementation(androidx("preference", version = "1.1.0"))
+    implementation(hendraanggrian("auto.prefs", "prefs-android", VERSION_PREFS))
+    kapt(hendraanggrian("auto.prefs", "prefs-compiler", VERSION_PREFS))
     implementation(processPhoenix())
     implementation(colorPreference("core"))
     implementation(colorPreference("support"))

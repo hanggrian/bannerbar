@@ -1,15 +1,15 @@
 plugins {
     android("library")
     kotlin("android")
-    `bintray-release`
+    `maven-publish`
+    signing
 }
 
 android {
-    compileSdkVersion(SDK_TARGET)
+    compileSdk = SDK_TARGET
     defaultConfig {
-        minSdkVersion(SDK_MIN)
-        targetSdkVersion(SDK_TARGET)
-        versionName = RELEASE_VERSION
+        minSdk = SDK_MIN
+        targetSdk = SDK_TARGET
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -33,27 +33,18 @@ android {
 
 dependencies {
     implementation(material())
-
     androidTestImplementation(project(":testing"))
 }
 
-tasks.withType<Javadoc> {
-    (options as CoreJavadocOptions).run {
-        addStringOption("Xdoclint:none", "-quiet")
-        addStringOption("encoding", "utf-8")
+tasks {
+    val javadoc by registering(Javadoc::class) {
+        isFailOnError = false
+        source = android.sourceSets["main"].java.getSourceFiles()
+        classpath += project.files(android.bootClasspath.joinToString(File.pathSeparator))
     }
 }
 
-publish {
-    bintrayUser = BINTRAY_USER
-    bintrayKey = BINTRAY_KEY
-    dryRun = false
-    repoName = RELEASE_REPO
-
-    userOrg = RELEASE_USER
-    groupId = RELEASE_GROUP
-    artifactId = RELEASE_ARTIFACT
-    publishVersion = RELEASE_VERSION
-    desc = RELEASE_DESC
-    website = RELEASE_WEBSITE
-}
+mavenPublishAndroid(
+    RELEASE_ARTIFACT,
+    sources = android.sourceSets["main"].java.srcDirs
+)

@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:label="Bannerbar Example"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <activity
             android:name=".MainActivity"
             android:forceDarkAllowed="true"
