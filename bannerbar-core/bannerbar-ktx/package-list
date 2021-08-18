@@ -1,0 +1,39 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.google.android.material.snackbar////PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/index.html
+$dokka.location:com.google.android.material.snackbar//addCallback/com.google.android.material.snackbar.Bannerbar#kotlin.Function1[com.google.android.material.snackbar.CallbackBuilder,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/add-callback.html
+$dokka.location:com.google.android.material.snackbar//bannerbar/android.view.View#kotlin.CharSequence#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/bannerbar.html
+$dokka.location:com.google.android.material.snackbar//bannerbar/android.view.View#kotlin.CharSequence/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/bannerbar.html
+$dokka.location:com.google.android.material.snackbar//bannerbar/android.view.View#kotlin.Int#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/bannerbar.html
+$dokka.location:com.google.android.material.snackbar//bannerbar/android.view.View#kotlin.Int/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/bannerbar.html
+$dokka.location:com.google.android.material.snackbar//longBannerbar/android.view.View#kotlin.CharSequence#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/long-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//longBannerbar/android.view.View#kotlin.CharSequence/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/long-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//longBannerbar/android.view.View#kotlin.Int#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/long-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//longBannerbar/android.view.View#kotlin.Int/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/long-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//shortBannerbar/android.view.View#kotlin.CharSequence#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/short-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//shortBannerbar/android.view.View#kotlin.CharSequence/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/short-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//shortBannerbar/android.view.View#kotlin.Int#kotlin.Function1[com.google.android.material.snackbar.BannerbarScope,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/short-bannerbar.html
+$dokka.location:com.google.android.material.snackbar//shortBannerbar/android.view.View#kotlin.Int/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/short-bannerbar.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope///PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/index.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/actionsTextColor/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/actions-text-color.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/actionsTextColors/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/actions-text-colors.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/addAction/#kotlin.CharSequence#android.view.View.OnClickListener?/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/add-action.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/addAction/#kotlin.Int#android.view.View.OnClickListener?/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/add-action.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/duration/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/duration.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/icon/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/icon.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/iconId/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/icon-id.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/invoke/kotlin.CharSequence#kotlin.Function1[android.view.View,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/invoke.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/invoke/kotlin.Int#kotlin.Function1[android.view.View,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/invoke.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/subtitle/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/subtitle.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/subtitleColor/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/subtitle-color.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/subtitleColors/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/subtitle-colors.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/subtitleId/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/subtitle-id.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/title/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/title.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/titleColor/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/title-color.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/titleColors/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/title-colors.html
+$dokka.location:com.google.android.material.snackbar/BannerbarScope/titleId/#/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-bannerbar-scope/title-id.html
+$dokka.location:com.google.android.material.snackbar/CallbackBuilder///PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-callback-builder/index.html
+$dokka.location:com.google.android.material.snackbar/CallbackBuilder/onDismissed/#kotlin.Function2[com.google.android.material.snackbar.Bannerbar,kotlin.Int,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-callback-builder/on-dismissed.html
+$dokka.location:com.google.android.material.snackbar/CallbackBuilder/onShown/#kotlin.Function1[com.google.android.material.snackbar.Bannerbar,kotlin.Unit]/PointingToDeclaration/bannerbar-ktx/com.google.android.material.snackbar/-callback-builder/on-shown.html
+com.google.android.material.snackbar
+
