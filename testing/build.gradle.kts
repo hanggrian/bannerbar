@@ -8,6 +8,7 @@ android {
     defaultConfig {
         minSdk = SDK_MIN
         targetSdk = SDK_TARGET
+        multiDexEnabled = true
     }
     sourceSets {
         getByName("main") {
