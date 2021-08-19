@@ -15,7 +15,7 @@ android {
         multiDexEnabled = true
     }
     sourceSets {
-        getByName("main") {
+        named("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
             res.srcDir("res")
@@ -23,11 +23,11 @@ android {
         }
     }
     buildTypes {
-        getByName("debug") {
+        named("debug") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-        getByName("release") {
+        named("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
@@ -46,8 +46,8 @@ dependencies {
     implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout", version = "1.1.0"))
     implementation(androidx("preference", version = "1.1.0"))
-    implementation(hendraanggrian("auto.prefs", "prefs-android", VERSION_PREFS))
-    kapt(hendraanggrian("auto.prefs", "prefs-compiler", VERSION_PREFS))
+    implementation(hendraanggrian("auto", "prefs-android", VERSION_PREFS))
+    kapt(hendraanggrian("auto", "prefs-compiler", VERSION_PREFS))
     implementation(processPhoenix())
     implementation(colorPreference("core"))
     implementation(colorPreference("support"))

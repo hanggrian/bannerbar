@@ -11,16 +11,15 @@ android {
         multiDexEnabled = true
     }
     sourceSets {
-        getByName("main") {
+        named("main") {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDir("src")
             res.srcDir("res")
+            resources.srcDir("src")
         }
     }
     libraryVariants.all {
-        generateBuildConfigProvider?.configure {
-            enabled = false
-        }
+        generateBuildConfigProvider.orNull?.enabled = false
     }
 }
 

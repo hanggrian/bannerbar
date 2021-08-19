@@ -21,16 +21,16 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnLongClickListener {
-    @BindPreference("theme") @JvmField var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    @BindPreference lateinit var duration: String
-    @BindPreference @JvmField var showIcon = false
-    @BindPreference @JvmField var showSubtitle = false
-    @BindPreference @JvmField var actionCount = 0
-    @BindPreference lateinit var animationMode: String
-    @BindPreference("titleColor") @JvmField @ColorInt var titleColor2 = Color.TRANSPARENT
-    @BindPreference @JvmField @ColorInt var subtitleColor = Color.TRANSPARENT
-    @BindPreference @JvmField @ColorInt var actionTextColors = Color.TRANSPARENT
-    @BindPreference @JvmField @ColorInt var backgroundTint = Color.TRANSPARENT
+    @JvmField @BindPreference("theme") var theme2 = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    @JvmField @BindPreference var duration: String = ""
+    @JvmField @BindPreference var showIcon = false
+    @JvmField @BindPreference var showSubtitle = false
+    @JvmField @BindPreference var actionCount = 0
+    @JvmField @BindPreference var animationMode: String = ""
+    @JvmField @BindPreference("titleColor") @ColorInt var titleColor2 = Color.TRANSPARENT
+    @JvmField @BindPreference @ColorInt var subtitleColor = Color.TRANSPARENT
+    @JvmField @BindPreference @ColorInt var actionTextColors = Color.TRANSPARENT
+    @JvmField @BindPreference @ColorInt var backgroundTint = Color.TRANSPARENT
 
     private lateinit var saver: PreferencesSaver
 
