@@ -12,6 +12,7 @@ android {
         targetSdk = SDK_TARGET
         applicationId = "com.example.$RELEASE_ARTIFACT"
         versionName = RELEASE_VERSION
+        multiDexEnabled = true
     }
     sourceSets {
         getByName("main") {
@@ -40,6 +41,7 @@ dependencies {
     implementation(project(":$RELEASE_ARTIFACT-ktx"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
     implementation(material())
+    implementation(androidx("multidex", version = VERSION_MULTIDEX))
     implementation(androidx("core", "core-ktx"))
     implementation(androidx("appcompat"))
     implementation(androidx("coordinatorlayout", version = "1.1.0"))

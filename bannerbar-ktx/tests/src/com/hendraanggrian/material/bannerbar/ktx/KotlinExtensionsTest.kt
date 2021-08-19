@@ -29,12 +29,14 @@ import kotlin.test.assertEquals
 class KotlinExtensionsTest : AbstractTest() {
     @Rule @JvmField val rule = ActivityTestRule(TestActivity::class.java)
 
-    @BeforeTest fun title() {
+    @BeforeTest
+    fun title() {
         onView(withId(R.id.toolbar)).perform(setTitle("Kotlin extensions test"))
     }
 
     @Ignore("Falsely returning Bannerbar.LENGTH_LONG")
-    @Test fun short() {
+    @Test
+    fun short() {
         val title = "Is this a short bannerbar?"
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
@@ -42,14 +44,16 @@ class KotlinExtensionsTest : AbstractTest() {
             override fun perform(uiController: UiController, view: View) {
                 assertEquals(Bannerbar.LENGTH_SHORT, view.shortBannerbar(title).duration)
                 view.shortBannerbar(title) {
-                    addCallback { onShown { assertEquals(Bannerbar.LENGTH_SHORT, duration) } }
+                    addCallback {
+                        onShown { assertEquals(Bannerbar.LENGTH_SHORT, duration) }
+                    }
                 }
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
     }
 
-    @Test fun long() {
+    @Test
+    fun long() {
         val title = "Is this a long bannerbar?"
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
@@ -57,14 +61,16 @@ class KotlinExtensionsTest : AbstractTest() {
             override fun perform(uiController: UiController, view: View) {
                 assertEquals(Bannerbar.LENGTH_LONG, view.longBannerbar(title).duration)
                 view.longBannerbar(title) {
-                    addCallback { onShown { assertEquals(Bannerbar.LENGTH_LONG, duration) } }
+                    addCallback {
+                        onShown { assertEquals(Bannerbar.LENGTH_LONG, duration) }
+                    }
                 }
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
     }
 
-    @Test fun indefinite() {
+    @Test
+    fun indefinite() {
         val title = "Is this an indefinite bannerbar?"
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
@@ -76,6 +82,5 @@ class KotlinExtensionsTest : AbstractTest() {
                 }
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
     }
 }

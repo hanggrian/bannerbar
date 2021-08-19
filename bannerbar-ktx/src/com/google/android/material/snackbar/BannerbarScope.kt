@@ -164,4 +164,11 @@ class BannerbarScope @PublishedApi internal constructor(private val bannerbar: B
         set(@ColorInt value) {
             bannerbar.setActionsTextColor(value)
         }
+
+    /**
+     * @see com.google.android.material.snackbar.addCallback
+     */
+    fun addCallback(@NonNull callback: CallbackBuilder.() -> Unit) {
+        bannerbar.addCallback(CallbackBuilderImpl().apply(callback))
+    }
 }

@@ -31,7 +31,7 @@ interface CallbackBuilder {
     fun onDismissed(action: (Bannerbar, event: Int) -> Unit)
 }
 
-private class CallbackBuilderImpl : Bannerbar.Callback(), CallbackBuilder {
+internal class CallbackBuilderImpl : Bannerbar.Callback(), CallbackBuilder {
     private var onShown: ((Bannerbar) -> Unit)? = null
     private var onDismissed: ((Bannerbar, Int) -> Unit)? = null
 

@@ -28,11 +28,13 @@ import kotlin.test.assertNotEquals
 class PaddingTest : AbstractTest() {
     @Rule @JvmField val rule = ActivityTestRule(TestActivity::class.java)
 
-    @BeforeTest fun title() {
+    @BeforeTest
+    fun title() {
         onView(withId(R.id.toolbar)).perform(setTitle("Padding Test"))
     }
 
-    @Test fun horizontal() {
+    @Test
+    fun horizontal() {
         val title = "Checking horizontal padding..."
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
@@ -50,7 +52,6 @@ class PaddingTest : AbstractTest() {
                     .show()
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
@@ -68,10 +69,10 @@ class PaddingTest : AbstractTest() {
                     .show()
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
     }
 
-    @Test fun vertical() {
+    @Test
+    fun vertical() {
         val resources = InstrumentationRegistry.getInstrumentation().targetContext.resources
         val defaultVertical = resources.getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical_2lines)
         val shortVertical = resources.getDimensionPixelSize(R.dimen.design_snackbar_padding_vertical)
@@ -92,7 +93,6 @@ class PaddingTest : AbstractTest() {
                     .show()
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
         onView(withId(R.id.frameLayout)).perform(object : ViewAction {
             override fun getConstraints() = isAssignableFrom(FrameLayout::class.java)
             override fun getDescription() = FrameLayout::class.java.name
@@ -110,6 +110,5 @@ class PaddingTest : AbstractTest() {
                     .show()
             }
         })
-        onView(withId(R.id.progressBar)).perform(delay(4000))
     }
 }

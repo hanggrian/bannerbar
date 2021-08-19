@@ -8,7 +8,6 @@ android {
     defaultConfig {
         minSdk = SDK_MIN
         targetSdk = SDK_TARGET
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
         getByName("main") {
@@ -28,6 +27,7 @@ dependencies {
     api(kotlin("stdlib"))
     api(kotlin("test-junit", VERSION_KOTLIN))
     api(material())
+    api(androidx("multidex", version = VERSION_MULTIDEX))
     api(androidx("core", "core-ktx"))
     api(androidx("appcompat"))
     api(androidx("coordinatorlayout", version = "1.1.0"))
