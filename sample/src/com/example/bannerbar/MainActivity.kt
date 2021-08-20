@@ -13,10 +13,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Bannerbar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.addCallback
-import com.hendraanggrian.prefs.BindPreference
-import com.hendraanggrian.prefs.PreferencesSaver
-import com.hendraanggrian.prefs.android.bindPreferences
-import com.hendraanggrian.prefs.android.preferences
+import com.hendraanggrian.auto.prefs.BindPreference
+import com.hendraanggrian.auto.prefs.PreferencesSaver
+import com.hendraanggrian.auto.prefs.android.bindPreferences
+import com.hendraanggrian.auto.prefs.android.preferences
 import com.jakewharton.processphoenix.ProcessPhoenix
 import kotlinx.android.synthetic.main.activity_main.*
 

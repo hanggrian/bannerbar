@@ -2,10 +2,10 @@ package com.example.bannerbar
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
-import com.hendraanggrian.prefs.PreferencesLogger
-import com.hendraanggrian.prefs.Prefs
-import com.hendraanggrian.prefs.android.Android
-import com.hendraanggrian.prefs.android.preferences
+import com.hendraanggrian.auto.prefs.PreferencesLogger
+import com.hendraanggrian.auto.prefs.Prefs
+import com.hendraanggrian.auto.prefs.android.Android
+import com.hendraanggrian.auto.prefs.android.preferences
 
 class ExampleApp : MultiDexApplication() {
 

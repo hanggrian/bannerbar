@@ -1,6 +1,6 @@
 [![version](https://img.shields.io/maven-central/v/com.hendraanggrian.material/bannerbar)](https://search.maven.org/artifact/com.hendraanggrian.material/bannerbar)
 [![build](https://img.shields.io/travis/com/hendraanggrian/bannerbar)](https://www.travis-ci.com/github/hendraanggrian/bannerbar)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081)](https://ktlint.github.io/)
+[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081)](https://ktlint.github.io)
 
 Bannerbar
 =========
@@ -25,6 +25,8 @@ Since it uses a lot of Snackbar resources and API, there are a few:
 Download
 --------
 
+This library follows [AndroidX's revisions](https://developer.android.com/topic/libraries/support-library/androidx-rn).
+
 ```gradle
 repositories {
     mavenCentral()
@@ -38,8 +40,7 @@ dependencies {
 }
 ```
 
-This library follows [AndroidX's revisions](https://developer.android.com/topic/libraries/support-library/androidx-rn).
-Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/).
+Snapshots of the development version are available in [Sonatype's snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots).
 
 Usage
 -----
