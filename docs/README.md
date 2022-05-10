@@ -10,17 +10,15 @@ Bannerbar
 
 Bannerbar is essentially a [material banner](https://material.io/components/banners) displayed like a snackbar.
 Imagine it as a dialog that doesn't interrupt the whole Activity.
-
-* Following material guidelines, it can only have up to **2 actions**.
-* Title are always present, icon and subtitle are optional.
-* Shares Snackbar styles and abilities: respects floating action button position, dismissible by a swipe, etc.
+- Following material guidelines, it can only have up to **2 actions**.
+- Title are always present, icon and subtitle are optional.
+- Shares Snackbar styles and abilities: respects floating action button position, dismissible by a swipe, etc.
 
 ### Caveats
 
 Since it uses a lot of Snackbar resources and API, there are a few:
-
-* Only safe to use with the same version of material components.
-* Deceptive package name.
+- Only safe to use with the same version of material components.
+- Deceptive package name.
 
 Download
 --------
