@@ -37,8 +37,8 @@ android {
 ktlint()
 
 dependencies {
-    api(kotlin("stdlib", VERSION_KOTLIN))
-    api(project(":$RELEASE_ARTIFACT"))
+    implementation(kotlin("stdlib", VERSION_KOTLIN))
+    implementation(project(":$RELEASE_ARTIFACT"))
     implementation(material())
     androidTestImplementation(project(":testing"))
 }
