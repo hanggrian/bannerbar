@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Bannerbar">
+        <!-- Style to use for Bannerbars in this theme. -->
+        <attr format="reference" name="bannerbarStyle"/>
+        <!-- Style to use for icon image within a Bannerbar in this theme. -->
+        <attr format="reference" name="bannerbarIconStyle"/>
+        <!-- Style to use for title message within a Bannerbar in this theme. -->
+        <attr format="reference" name="bannerbarTitleStyle"/>
+        <!-- Style to use for subtitle message within a Bannerbar in this theme. -->
+        <attr format="reference" name="bannerbarSubtitleStyle"/>
+        <!-- Style to use for action button within a Bannerbar in this theme. -->
+        <attr format="reference" name="bannerbarButtonStyle"/>
+    </declare-styleable>
+</resources>

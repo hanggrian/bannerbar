@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
     <issue id="PrivateResource">
-        <ignore path="src/com/google/android/material/snackbar/Bannerbar.java" />
-        <ignore path="src/com/google/android/material/snackbar/BannerbarContentLayout.java" />
+        <ignore path="src/main/java/com/google/android/material/snackbar/Bannerbar.java" />
+        <ignore path="src/main/java/com/google/android/material/snackbar/BannerbarContentLayout.java" />
     </issue>
 
     <issue id="RestrictedApi">
-        <ignore path="src/com/google/android/material/snackbar/Bannerbar.java" />
-        <ignore path="src/com/google/android/material/snackbar/BannerbarContentLayout.java" />
+        <ignore path="src/main/java/com/google/android/material/snackbar/Bannerbar.java" />
+        <ignore path="src/main/java/com/google/android/material/snackbar/BannerbarContentLayout.java" />
     </issue>
 
     <issue id="RtlHardcoded">
-        <ignore path="res/layout/design_layout_bannerbar_include.xml" />
-        <ignore path="res/layout/mtrl_layout_bannerbar_include.xml" />
+        <ignore path="src/main/res/layout/design_layout_bannerbar_include.xml" />
+        <ignore path="src/main/res/layout/mtrl_layout_bannerbar_include.xml" />
     </issue>
 
     <issue id="ContentDescription">
-        <ignore path="res/layout/design_layout_bannerbar_include.xml" />
-        <ignore path="res/layout/mtrl_layout_bannerbar_include.xml" />
+        <ignore path="src/main/res/layout/design_layout_bannerbar_include.xml" />
+        <ignore path="src/main/res/layout/mtrl_layout_bannerbar_include.xml" />
     </issue>
 
     <issue id="RtlEnabled">
-        <ignore path="AndroidManifest.xml" />
+        <ignore path="src/main/AndroidManifest.xml" />
     </issue>
 </lint>

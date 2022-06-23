@@ -1,5 +1,6 @@
 [![Travis CI](https://img.shields.io/travis/com/hendraanggrian/bannerbar)](https://www.travis-ci.com/github/hendraanggrian/bannerbar/)
 [![Maven Central](https://img.shields.io/maven-central/v/com.hendraanggrian.material/bannerbar)](https://search.maven.org/artifact/com.hendraanggrian.material/bannerbar/)
+[![OpenJDK](https://img.shields.io/badge/jdk-11+-informational)](https://openjdk.java.net/projects/jdk/11/)
 
 # Bannerbar
 
